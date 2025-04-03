@@ -10,15 +10,7 @@ pc_component_project/
 │   │   ├── DatabaseHelper.java
 │   ├── main/          <-- Main application entry point
 │   │   ├── App.java
-│	│	├── resources/ <-- Images, etc.
+│	├── resources/ <-- Images, etc.
 │── README.md
 
-Segoe UI
-Segoe UI Black
-Segoe UI Emoji
-Segoe UI Historic
-Segoe UI Light
-Segoe UI Semibold
-Segoe UI Semilight
-Segoe UI Symbol
-Segoe UI Variable
+UI Font: 'Segoe UI'
