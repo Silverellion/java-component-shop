@@ -2,12 +2,14 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.URL;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -60,27 +62,46 @@ public class MainWindow extends JFrame implements ActionListener{
     }
     
     private JButton createSidebarButton(String text, String iconPath) {
-        JButton button = new JButton(text, new ImageIcon(getClass().getResource(iconPath)));
-        button.setAlignmentX(Component.CENTER_ALIGNMENT);
+        String resourcePath = "/resources/icons/" + iconPath;
+        ImageIcon icon = null;
+        
+        try {
+            URL imgURL = getClass().getResource(resourcePath);
+            if (imgURL != null) {
+                ImageIcon originalIcon = new ImageIcon(imgURL);
+                Image img = originalIcon.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+                icon = new ImageIcon(img);
+            }
+        } catch (Exception e) {
+            System.err.println("Error loading icon: " + e.getMessage());
+        }
+        
+        JButton button = new JButton(text, icon);
+        
+        button.setHorizontalAlignment(JButton.LEFT);
+        
+        button.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 0));        
+        button.setAlignmentX(LEFT_ALIGNMENT);
         button.setMaximumSize(new Dimension(Integer.MAX_VALUE, 60));
         button.setBackground(new Color(45, 45, 45));
         button.setForeground(Color.WHITE);
         button.setFont(new Font("Segoe UI", Font.BOLD, 16));
-        button.setBorderPainted(false);
         button.setFocusPainted(false);
+        
+        button.setHorizontalTextPosition(JButton.RIGHT);
+        button.setIconTextGap(10);
+        
         return button;
     }
 
     private void updateLoginStatus() {
         pnlSidebar.remove(btnLogin);
         pnlSidebar.remove(btnLogout);
-
         if (isLoggedIn) {
             pnlSidebar.add(btnLogout);
         } else {
             pnlSidebar.add(btnLogin);
         }
-
         pnlSidebar.revalidate();
         pnlSidebar.repaint();
     }
