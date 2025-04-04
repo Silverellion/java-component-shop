@@ -24,12 +24,21 @@ public class MainWindow extends JFrame implements ActionListener{
 	private JButton btnLogout;
     private JPanel pnlSidebar;
     private boolean isLoggedIn = false;
+	private JPanel pnlEast;
+	PnlManageProducts pnlManageProducts;
+	PnlSettings pnlSettings;
 
     public MainWindow() {
         setTitle("Cửa hàng linh kiện");
         setSize(1280, 720);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
+        
+        pnlManageProducts = new PnlManageProducts();
+        pnlSettings = new PnlSettings();
+        
+        JPanel pnlMain = new JPanel(new BorderLayout());
+        pnlMain.setBackground(new Color(30, 30, 30));
 
         pnlSidebar = new JPanel();
         pnlSidebar.setPreferredSize(new Dimension(250, getHeight()));
@@ -43,28 +52,25 @@ public class MainWindow extends JFrame implements ActionListener{
 
         pnlSidebar.add(btnManageProducts);
         pnlSidebar.add(btnSettings);
-        updateLoginStatus();
-
-        btnLogin.addActionListener(e -> {
-            isLoggedIn = true;
-            updateLoginStatus();
-        });
-
-        btnLogout.addActionListener(e -> {
-            isLoggedIn = false;
-            updateLoginStatus();
-        });
-
-        JPanel pnlMain = new JPanel(new BorderLayout());
-        pnlMain.setBackground(new Color(30, 30, 30));
         pnlMain.add(pnlSidebar, BorderLayout.WEST);
+        updateLoginStatus();
+        
+        pnlEast = new JPanel();
+        pnlEast.setLayout(new BorderLayout());
+        pnlEast.setBackground(new Color(30, 30, 30));
+        pnlMain.add(pnlEast);
+
         add(pnlMain);
+        
+        btnManageProducts.addActionListener(this);
+        btnSettings.addActionListener(this);
+        btnLogin.addActionListener(this);
+        btnLogout.addActionListener(this);
     }
     
     private JButton createSidebarButton(String text, String iconPath) {
         String resourcePath = "/resources/icons/" + iconPath;
         ImageIcon icon = null;
-        
         try {
             URL imgURL = getClass().getResource(resourcePath);
             if (imgURL != null) {
@@ -72,28 +78,43 @@ public class MainWindow extends JFrame implements ActionListener{
                 Image img = originalIcon.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
                 icon = new ImageIcon(img);
             }
-        } catch (Exception e) {
-            System.err.println("Error loading icon: " + e.getMessage());
-        }
+        } catch (Exception e) {}
+        JButton jButton = new JButton(text, icon);
+        jButton.setHorizontalAlignment(JButton.LEFT);
+        jButton.setHorizontalTextPosition(JButton.RIGHT);
         
-        JButton button = new JButton(text, icon);
+        jButton.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 0));        
+        jButton.setAlignmentX(LEFT_ALIGNMENT);
+        jButton.setMaximumSize(new Dimension(Integer.MAX_VALUE, 60));
+        jButton.setBackground(new Color(45, 45, 45));
+        jButton.setForeground(Color.WHITE);
+        jButton.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        jButton.setFocusPainted(false);
+        jButton.setIconTextGap(10);
         
-        button.setHorizontalAlignment(JButton.LEFT);
-        
-        button.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 0));        
-        button.setAlignmentX(LEFT_ALIGNMENT);
-        button.setMaximumSize(new Dimension(Integer.MAX_VALUE, 60));
-        button.setBackground(new Color(45, 45, 45));
-        button.setForeground(Color.WHITE);
-        button.setFont(new Font("Segoe UI", Font.BOLD, 16));
-        button.setFocusPainted(false);
-        
-        button.setHorizontalTextPosition(JButton.RIGHT);
-        button.setIconTextGap(10);
-        
-        return button;
+        return jButton;
     }
 
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		Object src = e.getSource();
+		
+		if(src == btnManageProducts) {
+			loadPnlEast(btnManageProducts, pnlManageProducts);
+		}
+		if(src == btnSettings) {
+			loadPnlEast(btnSettings, pnlSettings);
+		}
+		if(src == btnLogin) {
+            isLoggedIn = true;
+            updateLoginStatus();
+		}
+		if(src == btnLogout) {
+            isLoggedIn = false;
+            updateLoginStatus();
+		}
+	}
+	
     private void updateLoginStatus() {
         pnlSidebar.remove(btnLogin);
         pnlSidebar.remove(btnLogout);
@@ -105,9 +126,17 @@ public class MainWindow extends JFrame implements ActionListener{
         pnlSidebar.revalidate();
         pnlSidebar.repaint();
     }
+    
+    private void loadPnlEast(JButton jButton, JPanel jPanel) {
+    	pnlEast.removeAll();
+    	pnlEast.add(jPanel);
+    	
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-
-	}
+    	btnManageProducts.setBackground(new Color(45, 45, 45));
+    	btnSettings.setBackground(new Color(45, 45, 45));
+    	jButton.setBackground(new Color(30, 30, 30));
+    	
+    	pnlEast.revalidate();
+    	pnlEast.repaint();
+    }
 }
