@@ -35,7 +35,7 @@ public class LoginWindow extends JFrame implements ActionListener {
         lblUsername.setFont(new Font("Segoe UI", Font.BOLD, 16));
         lblUsername.setForeground(Color.WHITE);
         
-        lblPassword = new JLabel("Mật khẩu: ");
+        lblPassword = new JLabel("Password: ");
         lblPassword.setFont(new Font("Segoe UI", Font.BOLD, 16));
         lblPassword.setForeground(Color.WHITE);
         
