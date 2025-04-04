@@ -13,7 +13,7 @@ component-shop/
 │   │   ├── DatabaseHelper.java
 │   ├── main/          <-- Main application entry point
 │   │   ├── App.java
-│	├── resources/ <-- Images, etc.
+│   ├── resources/ <-- Images, etc.
 │── README.md
 ```
 
