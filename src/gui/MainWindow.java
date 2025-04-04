@@ -61,6 +61,7 @@ public class MainWindow extends JFrame implements ActionListener{
         pnlMain.add(pnlEast);
 
         add(pnlMain);
+        setVisible(true);
         
         btnManageProducts.addActionListener(this);
         btnSettings.addActionListener(this);
@@ -108,11 +109,18 @@ public class MainWindow extends JFrame implements ActionListener{
 		if(src == btnLogin) {
             isLoggedIn = true;
             updateLoginStatus();
+            this.dispose();
+            new LoginWindow();
 		}
 		if(src == btnLogout) {
             isLoggedIn = false;
             updateLoginStatus();
+            this.dispose();
 		}
+	}
+	
+	private void login() {
+		
 	}
 	
     private void updateLoginStatus() {
