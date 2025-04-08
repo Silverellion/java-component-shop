@@ -1,0 +1,78 @@
+package models;
+
+import java.io.Serializable;
+import java.util.Objects;
+
+public class TaiKhoan implements Serializable {
+    private String tenDangNhap;
+    private String matKhau;
+    private String loaiTaiKhoan;
+    private final NhanVien nhanVien;
+
+    TaiKhoan(String tenDangNhap, String matKhau, String loaiTaiKhoan, NhanVien nhanVien) {
+        setTenDangNhap(tenDangNhap);
+        setMatKhau(matKhau);
+        setLoaiTaiKhoan(loaiTaiKhoan);
+        this.nhanVien = nhanVien;
+    }
+
+    public String getTenDangNhap() {
+        return tenDangNhap;
+    }
+
+    public void setTenDangNhap(String tenDangNhap) {
+        this.tenDangNhap = tenDangNhap;
+    }
+
+    public String getMatKhau() {
+        return matKhau;
+    }
+
+    public void setMatKhau(String matKhau) {
+        this.matKhau = matKhau;
+    }
+
+    public String getLoaiTaiKhoan() {
+        return loaiTaiKhoan;
+    }
+
+    public void setLoaiTaiKhoan(String loaiTaiKhoan) {
+        this.loaiTaiKhoan = loaiTaiKhoan;
+    }
+
+    public String getMaNhanVien() {
+        return nhanVien.getMaNhanVien();
+    }
+
+    public String getHoTen() {
+        return nhanVien.getHoTen();
+    }
+
+    public String getChucVu() {
+        return nhanVien.getChucVu();
+    }
+
+    public String getSoDienThoai() {
+        return nhanVien.getSoDienThoai();
+    }
+
+    public String getDiaChi() {
+        return nhanVien.getDiaChi();
+    }
+
+    public double getLuong() {
+        return nhanVien.getLuong();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        TaiKhoan taiKhoan = (TaiKhoan) o;
+        return Objects.equals(tenDangNhap, taiKhoan.tenDangNhap) && Objects.equals(matKhau, taiKhoan.matKhau) && Objects.equals(loaiTaiKhoan, taiKhoan.loaiTaiKhoan);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(tenDangNhap, matKhau, loaiTaiKhoan);
+    }
+}
