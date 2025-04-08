@@ -2,86 +2,116 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.Box;
-import javax.swing.BoxLayout;
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 public class LoginWindow extends JFrame implements ActionListener {
-	private static final long serialVersionUID = 1L;
-	private JLabel lblUsername;
-	private JLabel lblPassword;
-	private JTextField txtUsername;
-	private JTextField txtPassword;
-	private JButton btnLogin;
+    private static final long serialVersionUID = 1L;
+    private JLabel lblUsername;
+    private JLabel lblPassword;
+    private JTextField txtUsername;
+    private JTextField txtPassword;
+    private JButton btnDangNhap;
 
     public LoginWindow() {
         setSize(400, 720);
         setTitle("Đăng nhập");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         getContentPane().setBackground(new Color(45, 45, 45));
+
+        JLabel lblLogin = new JLabel("Đăng Nhập");
+        lblLogin.setFont(new Font("Segoe UI", Font.BOLD, 30));
+        lblLogin.setForeground(Color.WHITE);
+        lblLogin.setHorizontalAlignment(JLabel.CENTER);
+
+        JPanel formPanel = new JPanel(new GridBagLayout());
+        formPanel.setBackground(new Color(45, 45, 45));
         
-        JLabel lblTitle = new JLabel("Đăng Nhập");
-        lblTitle.setFont(new Font("Segoe UI", Font.BOLD, 30));
-        lblTitle.setForeground(Color.WHITE);
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(5, 5, 5, 5);
+        gbc.anchor = GridBagConstraints.WEST;
         
-        lblUsername = new JLabel("Tên đăng nhập: ");
+        lblUsername = new JLabel("Tên đăng nhập:");
         lblUsername.setFont(new Font("Segoe UI", Font.BOLD, 16));
         lblUsername.setForeground(Color.WHITE);
         
-        lblPassword = new JLabel("Password: ");
+        lblPassword = new JLabel("Mật khẩu:");
         lblPassword.setFont(new Font("Segoe UI", Font.BOLD, 16));
         lblPassword.setForeground(Color.WHITE);
         
-        lblUsername.setPreferredSize(lblUsername.getPreferredSize());
-        lblPassword.setPreferredSize(lblUsername.getPreferredSize());
+        txtUsername = new JTextField(15);
+        txtUsername.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        txtUsername.setPreferredSize(new Dimension(150, 25));
         
-        txtUsername = new JTextField();
-        txtPassword = new JTextField();
+        txtPassword = new JPasswordField(15);
+        txtPassword.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        txtPassword.setPreferredSize(new Dimension(150, 25));
         
-        Box box1 = new Box(BoxLayout.X_AXIS);
-        Box box2 = new Box(BoxLayout.X_AXIS);
-        Box boxCenter = new Box(BoxLayout.Y_AXIS);
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.gridwidth = 1;
+        formPanel.add(lblUsername, gbc);
         
-        box1.setOpaque(true);
-        box2.setOpaque(true);
-        boxCenter.setOpaque(true);
+        gbc.gridy = 1;
+        gbc.gridwidth = 2;
+        formPanel.add(txtUsername, gbc);
         
-        box1.setBackground(new Color(45, 45, 45));
-        box2.setBackground(new Color(45, 45, 45));
-        boxCenter.setBackground(new Color(45, 45, 45));
+        gbc.gridy = 2;
+        gbc.gridwidth = 1;
+        formPanel.add(lblPassword, gbc);
         
-        box1.add(lblUsername);
-        box1.add(txtUsername);
+        gbc.gridy = 3;
+        gbc.gridwidth = 2;
+        formPanel.add(txtPassword, gbc);
         
-        box2.add(lblPassword);
-        box2.add(txtPassword);
+        btnDangNhap = new JButton("Đăng Nhập");
+        btnDangNhap.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        btnDangNhap.setBackground(new Color(30, 30, 30));
+        btnDangNhap.setForeground(Color.white);
+        btnDangNhap.setPreferredSize(new Dimension(150, 30));
         
-        btnLogin = new JButton("Đăng Nhập");
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setBackground(new Color(45, 45, 45));
+        buttonPanel.add(btnDangNhap);
         
-        boxCenter.add(lblTitle);
-        boxCenter.add(box1);
-        boxCenter.add(box2);
-        boxCenter.add(btnLogin);
-        add(boxCenter, BorderLayout.CENTER);
+        JPanel headerPanel = new JPanel(new BorderLayout(0, 10));
+        headerPanel.setBackground(new Color(45, 45, 45));
+        headerPanel.add(lblLogin, BorderLayout.CENTER);
         
-        btnLogin.addActionListener(this);
+        JPanel mainPanel = new JPanel(new BorderLayout(0, 20));
+        mainPanel.setBackground(new Color(45, 45, 45));
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        
+        mainPanel.add(headerPanel, BorderLayout.NORTH);
+        mainPanel.add(formPanel, BorderLayout.CENTER);
+        mainPanel.add(buttonPanel, BorderLayout.SOUTH);
+        
+        add(mainPanel);
+        
+        btnDangNhap.addActionListener(this);
         setVisible(true);
     }
-	
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		Object src = e.getSource();
-		if(src == btnLogin) {
-			this.dispose();
-			new MainWindow();
-		}
-	}
+    
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        Object src = e.getSource();
+        if(src == btnDangNhap) {
+            this.dispose();
+            new MainWindow();
+        }
+    }
 
 }

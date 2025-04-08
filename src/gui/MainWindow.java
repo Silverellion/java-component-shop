@@ -18,15 +18,15 @@ import javax.swing.JPanel;
 
 public class MainWindow extends JFrame implements ActionListener{
 	private static final long serialVersionUID = 1L;
-	private JButton btnManageProducts;
-	private JButton btnSettings;
-	private JButton btnLogin;
-	private JButton btnLogout;
+	private JButton btnKhoPanel;
+	private JButton btnCaiDatPanel;
+	private JButton btnDangNhap;
+	private JButton btnDangXuat;
     private JPanel pnlSidebar;
     private boolean isLoggedIn = false;
 	private JPanel pnlEast;
-	PnlManageProducts pnlManageProducts;
-	PnlSettings pnlSettings;
+	PnlQuanLyKho pnlQuanLyKho;
+	PnlCaiDat pnlCaiDat;
 
     public MainWindow() {
         setTitle("Cửa hàng linh kiện");
@@ -34,8 +34,8 @@ public class MainWindow extends JFrame implements ActionListener{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
         
-        pnlManageProducts = new PnlManageProducts();
-        pnlSettings = new PnlSettings();
+        pnlQuanLyKho = new PnlQuanLyKho();
+        pnlCaiDat = new PnlCaiDat();
         
         JPanel pnlMain = new JPanel(new BorderLayout());
         pnlMain.setBackground(new Color(30, 30, 30));
@@ -45,13 +45,13 @@ public class MainWindow extends JFrame implements ActionListener{
         pnlSidebar.setBackground(new Color(45, 45, 45));
         pnlSidebar.setLayout(new BoxLayout(pnlSidebar, BoxLayout.Y_AXIS));
 
-        btnManageProducts = createSidebarButton("Quản lý linh kiện", "icons8-manage-50.png");
-        btnSettings = createSidebarButton("Cài đặt", "icons8-settings-50.png");
-        btnLogin = createSidebarButton("Đăng nhập", "icons8-login-50.png");
-        btnLogout = createSidebarButton("Đăng xuất", "icons8-logout-50.png");
+        btnKhoPanel = createSidebarButton("Quản lý kho", "icons8-manage-50.png");
+        btnCaiDatPanel = createSidebarButton("Cài đặt", "icons8-settings-50.png");
+        btnDangNhap = createSidebarButton("Đăng nhập", "icons8-login-50.png");
+        btnDangXuat = createSidebarButton("Đăng xuất", "icons8-logout-50.png");
 
-        pnlSidebar.add(btnManageProducts);
-        pnlSidebar.add(btnSettings);
+        pnlSidebar.add(btnKhoPanel);
+        pnlSidebar.add(btnCaiDatPanel);
         pnlMain.add(pnlSidebar, BorderLayout.WEST);
         updateLoginStatus();
         
@@ -63,10 +63,10 @@ public class MainWindow extends JFrame implements ActionListener{
         add(pnlMain);
         setVisible(true);
         
-        btnManageProducts.addActionListener(this);
-        btnSettings.addActionListener(this);
-        btnLogin.addActionListener(this);
-        btnLogout.addActionListener(this);
+        btnKhoPanel.addActionListener(this);
+        btnCaiDatPanel.addActionListener(this);
+        btnDangNhap.addActionListener(this);
+        btnDangXuat.addActionListener(this);
     }
     
     private JButton createSidebarButton(String text, String iconPath) {
@@ -100,19 +100,19 @@ public class MainWindow extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		Object src = e.getSource();
 		
-		if(src == btnManageProducts) {
-			loadPnlEast(btnManageProducts, pnlManageProducts);
+		if(src == btnKhoPanel) {
+			loadPnlEast(btnKhoPanel, pnlQuanLyKho);
 		}
-		if(src == btnSettings) {
-			loadPnlEast(btnSettings, pnlSettings);
+		if(src == btnCaiDatPanel) {
+			loadPnlEast(btnCaiDatPanel, pnlCaiDat);
 		}
-		if(src == btnLogin) {
+		if(src == btnDangNhap) {
             isLoggedIn = true;
             updateLoginStatus();
             this.dispose();
             new LoginWindow();
 		}
-		if(src == btnLogout) {
+		if(src == btnDangXuat) {
             isLoggedIn = false;
             updateLoginStatus();
             this.dispose();
@@ -124,12 +124,12 @@ public class MainWindow extends JFrame implements ActionListener{
 	}
 	
     private void updateLoginStatus() {
-        pnlSidebar.remove(btnLogin);
-        pnlSidebar.remove(btnLogout);
+        pnlSidebar.remove(btnDangNhap);
+        pnlSidebar.remove(btnDangXuat);
         if (isLoggedIn) {
-            pnlSidebar.add(btnLogout);
+            pnlSidebar.add(btnDangXuat);
         } else {
-            pnlSidebar.add(btnLogin);
+            pnlSidebar.add(btnDangNhap);
         }
         pnlSidebar.revalidate();
         pnlSidebar.repaint();
@@ -138,10 +138,9 @@ public class MainWindow extends JFrame implements ActionListener{
     private void loadPnlEast(JButton jButton, JPanel jPanel) {
     	pnlEast.removeAll();
     	pnlEast.add(jPanel);
-    	
 
-    	btnManageProducts.setBackground(new Color(45, 45, 45));
-    	btnSettings.setBackground(new Color(45, 45, 45));
+    	btnKhoPanel.setBackground(new Color(45, 45, 45));
+    	btnCaiDatPanel.setBackground(new Color(45, 45, 45));
     	jButton.setBackground(new Color(30, 30, 30));
     	
     	pnlEast.revalidate();
