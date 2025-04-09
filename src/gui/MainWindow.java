@@ -55,7 +55,7 @@ public class MainWindow extends JFrame implements ActionListener{
 
         btnKhoPanel = createSidebarButton("Quản lý kho", "icons8-manage-50.png");
         btnDonHangPnl = createSidebarButton("Đơn hàng", "icons8-order-50.png");
-        btnTaiKhoanPnl = createSidebarButton("Tài khoản", "icons8-user-50.png");
+        btnTaiKhoanPnl = createSidebarButton("Quản lý tài khoản", "icons8-user-50.png");
         btnCaiDatPanel = createSidebarButton("Cài đặt", "icons8-settings-50.png");
         btnDangNhap = createSidebarButton("Đăng nhập", "icons8-login-50.png");
         btnDangXuat = createSidebarButton("Đăng xuất", "icons8-logout-50.png");

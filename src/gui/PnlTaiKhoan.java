@@ -15,7 +15,7 @@ public class PnlTaiKhoan extends JPanel implements ActionListener {
         setLayout(new BorderLayout());
         setBackground(new Color(30, 30, 30));
 
-        JLabel lblTitle = SwingHelper.createDarkModeJLabel("Panel tài khoản", 30);
+        JLabel lblTitle = SwingHelper.createDarkModeJLabel("Quản lý tài khoản", 30);
         Box boxTitle = new Box(BoxLayout.X_AXIS);
         boxTitle.add(lblTitle);
 
@@ -56,7 +56,8 @@ public class PnlTaiKhoan extends JPanel implements ActionListener {
         comboChucVu.addItem("Nhân viên chăm sóc khách hàng");
         comboChucVu.addItem("Nhân viên giao hàng");
         comboChucVu.addItem("Quản lý cửa hàng");
-        
+
+        //Dynamic resizing function for comboChucVu
         comboChucVu.setPreferredSize(txtTenDangNhap.getPreferredSize());
         txtTenDangNhap.addComponentListener(new java.awt.event.ComponentAdapter() {
             @Override
@@ -71,27 +72,40 @@ public class PnlTaiKhoan extends JPanel implements ActionListener {
         Box box3 = new Box(BoxLayout.X_AXIS);
         Box box4 = new Box(BoxLayout.X_AXIS);
 
+        box1.add(Box.createHorizontalStrut(50));
         box1.add(lblTenDangNhap);
         box1.add(txtTenDangNhap);
+        box1.add(Box.createHorizontalStrut(10));
         box1.add(lblMatKhau);
         box1.add(txtMatKhau);
+        box1.add(Box.createHorizontalStrut(50));
 
+        box2.add(Box.createHorizontalStrut(50));
         box2.add(lblMaNV);
         box2.add(txtMaNV);
+        box2.add(Box.createHorizontalStrut(10));
         box2.add(lblTenNV);
         box2.add(txtTenNV);
+        box2.add(Box.createHorizontalStrut(50));
 
+        box3.add(Box.createHorizontalStrut(50));
         box3.add(lblChucVu);
         box3.add(comboChucVu);
+        box3.add(Box.createHorizontalStrut(10));
         box3.add(lblLuong);
         box3.add(txtLuong);
+        box3.add(Box.createHorizontalStrut(50));
 
+        box4.add(Box.createHorizontalStrut(50));
         box4.add(lblSoDienThoai);
         box4.add(txtSoDienThoai);
+        box4.add(Box.createHorizontalStrut(10));
         box4.add(lblDiaChi);
         box4.add(txtDiaChi);
+        box4.add(Box.createHorizontalStrut(50));
 
         Box boxNorth = new Box(BoxLayout.Y_AXIS);
+        boxNorth.add(Box.createVerticalStrut(10));
         boxNorth.add(boxTitle);
         boxNorth.add(Box.createVerticalStrut(10));
         boxNorth.add(box1);
