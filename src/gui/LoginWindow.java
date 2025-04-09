@@ -11,6 +11,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.Serial;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -21,6 +22,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 public class LoginWindow extends JFrame implements ActionListener {
+    @Serial
     private static final long serialVersionUID = 1L;
     private JLabel lblUsername;
     private JLabel lblPassword;

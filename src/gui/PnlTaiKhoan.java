@@ -4,9 +4,10 @@ import utils.SwingHelper;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class PnlTaiKhoan extends JPanel {
-    private final JLabel lblTenDangNhap, lblMatKhau, lblMaNV, lblTenNV, lblChucVu, lblLuong, lblSoDienThoai, lblDiaChi;
+public class PnlTaiKhoan extends JPanel implements ActionListener {
     private final JTextField txtTenDangNhap, txtMatKhau, txtMaNV, txtTenNV, txtLuong, txtSoDienThoai, txtDiaChi;
     private final JComboBox<String> comboChucVu;
 
@@ -18,32 +19,32 @@ public class PnlTaiKhoan extends JPanel {
         Box boxTitle = new Box(BoxLayout.X_AXIS);
         boxTitle.add(lblTitle);
 
-        lblTenDangNhap = SwingHelper.createDarkModeJLabel("Tên đăng nhập: ");
-        lblMatKhau =  SwingHelper.createDarkModeJLabel("Mật khẩu: ");
-        lblMaNV =  SwingHelper.createDarkModeJLabel("Mã nhân viên: ");
-        lblTenNV =  SwingHelper.createDarkModeJLabel("Tên nhân viên: ");
+        JLabel lblTenDangNhap = SwingHelper.createDarkModeJLabel("Tên đăng nhập: ");
+        JLabel lblMatKhau = SwingHelper.createDarkModeJLabel("Mật khẩu: ");
+        JLabel lblMaNV = SwingHelper.createDarkModeJLabel("Mã nhân viên: ");
+        JLabel lblTenNV = SwingHelper.createDarkModeJLabel("Tên nhân viên: ");
 
-        lblChucVu =  SwingHelper.createDarkModeJLabel("Chức vụ: ");
-        lblLuong =  SwingHelper.createDarkModeJLabel("Lương: ");
-        lblSoDienThoai =  SwingHelper.createDarkModeJLabel("Số điện thoại: ");
-        lblDiaChi =  SwingHelper.createDarkModeJLabel("Địa chỉ");
+        JLabel lblChucVu = SwingHelper.createDarkModeJLabel("Chức vụ: ");
+        JLabel lblLuong = SwingHelper.createDarkModeJLabel("Lương: ");
+        JLabel lblSoDienThoai = SwingHelper.createDarkModeJLabel("Số điện thoại: ");
+        JLabel lblDiaChi = SwingHelper.createDarkModeJLabel("Địa chỉ");
 
-        lblTenDangNhap.setPreferredSize(lblSoDienThoai.getPreferredSize());
-        lblMatKhau.setPreferredSize(lblSoDienThoai.getPreferredSize());
-        lblMaNV.setPreferredSize(lblSoDienThoai.getPreferredSize());
-        lblTenNV.setPreferredSize(lblSoDienThoai.getPreferredSize());
+        lblTenDangNhap.setPreferredSize(lblTenDangNhap.getPreferredSize());
+        lblMatKhau.setPreferredSize(lblTenDangNhap.getPreferredSize());
+        lblMaNV.setPreferredSize(lblTenDangNhap.getPreferredSize());
+        lblTenNV.setPreferredSize(lblTenDangNhap.getPreferredSize());
 
-        lblChucVu.setPreferredSize(lblSoDienThoai.getPreferredSize());
-        lblLuong.setPreferredSize(lblSoDienThoai.getPreferredSize());
-        lblSoDienThoai.setPreferredSize(lblSoDienThoai.getPreferredSize());
-        lblDiaChi.setPreferredSize(lblSoDienThoai.getPreferredSize());
+        lblChucVu.setPreferredSize(lblTenDangNhap.getPreferredSize());
+        lblLuong.setPreferredSize(lblTenDangNhap.getPreferredSize());
+        lblSoDienThoai.setPreferredSize(lblTenDangNhap.getPreferredSize());
+        lblDiaChi.setPreferredSize(lblTenDangNhap.getPreferredSize());
 
         txtTenDangNhap = new JTextField();
         txtMatKhau = new JTextField();
         txtMaNV = new JTextField();
         txtTenNV = new JTextField();
 
-        comboChucVu = new JComboBox<String>();
+        comboChucVu = new JComboBox<>();
         txtLuong = new JTextField();
         txtSoDienThoai = new JTextField();
         txtDiaChi = new JTextField();
@@ -55,6 +56,15 @@ public class PnlTaiKhoan extends JPanel {
         comboChucVu.addItem("Nhân viên chăm sóc khách hàng");
         comboChucVu.addItem("Nhân viên giao hàng");
         comboChucVu.addItem("Quản lý cửa hàng");
+        
+        comboChucVu.setPreferredSize(txtTenDangNhap.getPreferredSize());
+        txtTenDangNhap.addComponentListener(new java.awt.event.ComponentAdapter() {
+            @Override
+            public void componentResized(java.awt.event.ComponentEvent e) {
+                comboChucVu.setPreferredSize(txtTenDangNhap.getSize());
+                comboChucVu.revalidate();
+            }
+        });
 
         Box box1 = new Box(BoxLayout.X_AXIS);
         Box box2 = new Box(BoxLayout.X_AXIS);
@@ -94,5 +104,10 @@ public class PnlTaiKhoan extends JPanel {
         boxNorth.add(Box.createVerticalStrut(5));
 
         add(boxNorth, BorderLayout.NORTH);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
     }
 }

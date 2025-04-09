@@ -3,7 +3,6 @@ package gui;
 import utils.SwingHelper;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.io.Serial;
 
 import javax.swing.BoxLayout;
