@@ -9,5 +9,4 @@ public class DanhSachTaiKhoan implements Serializable {
         danhSachTaiKhoan = new ArrayList<>();
     }
 
-
 }

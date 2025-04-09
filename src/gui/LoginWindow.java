@@ -1,5 +1,7 @@
 package gui;
 
+import utils.SwingHelper;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -32,9 +34,7 @@ public class LoginWindow extends JFrame implements ActionListener {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         getContentPane().setBackground(new Color(45, 45, 45));
 
-        JLabel lblLogin = new JLabel("Đăng Nhập");
-        lblLogin.setFont(new Font("Segoe UI", Font.BOLD, 30));
-        lblLogin.setForeground(Color.WHITE);
+        JLabel lblLogin = SwingHelper.createDarkModeJLabel("Đăng Nhập", 30);
         lblLogin.setHorizontalAlignment(JLabel.CENTER);
 
         JPanel formPanel = new JPanel(new GridBagLayout());
@@ -44,13 +44,8 @@ public class LoginWindow extends JFrame implements ActionListener {
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.anchor = GridBagConstraints.WEST;
         
-        lblUsername = new JLabel("Tên đăng nhập:");
-        lblUsername.setFont(new Font("Segoe UI", Font.BOLD, 16));
-        lblUsername.setForeground(Color.WHITE);
-        
-        lblPassword = new JLabel("Mật khẩu:");
-        lblPassword.setFont(new Font("Segoe UI", Font.BOLD, 16));
-        lblPassword.setForeground(Color.WHITE);
+        lblUsername = SwingHelper.createDarkModeJLabel("Tên đăng nhập:");
+        lblPassword = SwingHelper.createDarkModeJLabel("Mật khẩu:");
         
         txtUsername = new JTextField(15);
         txtUsername.setFont(new Font("Segoe UI", Font.PLAIN, 14));
@@ -77,10 +72,7 @@ public class LoginWindow extends JFrame implements ActionListener {
         gbc.gridwidth = 2;
         formPanel.add(txtPassword, gbc);
         
-        btnDangNhap = new JButton("Đăng Nhập");
-        btnDangNhap.setFont(new Font("Segoe UI", Font.BOLD, 16));
-        btnDangNhap.setBackground(new Color(30, 30, 30));
-        btnDangNhap.setForeground(Color.white);
+        btnDangNhap = SwingHelper.createDarkModeJButton("Đăng nhập");
         btnDangNhap.setPreferredSize(new Dimension(150, 30));
         
         JPanel buttonPanel = new JPanel();
