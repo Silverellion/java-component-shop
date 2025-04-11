@@ -31,8 +31,9 @@ public class LoginWindow extends JFrame implements ActionListener {
     private JButton btnDangNhap;
 
     public LoginWindow() {
-        setSize(400, 720);
         setTitle("Đăng nhập");
+        setSize(400, 720);
+        setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         getContentPane().setBackground(new Color(45, 45, 45));
 

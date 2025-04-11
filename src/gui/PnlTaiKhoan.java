@@ -225,6 +225,12 @@ public class PnlTaiKhoan extends JPanel implements ActionListener {
         JSplitPane pnlSouth = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, pnlSouthwest, pnlSoutheast);
         pnlSouth.setBackground(new Color(45,45,45));
         add(pnlSouth, BorderLayout.SOUTH);
+
+        btnThem.addActionListener(this);
+        btnXoa.addActionListener(this);
+        btnCapNhat.addActionListener(this);
+        btnXoaRong.addActionListener(this);
+        btnTim.addActionListener(this);
     }
 
     @Override
