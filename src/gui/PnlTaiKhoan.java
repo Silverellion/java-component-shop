@@ -1,6 +1,8 @@
 package gui;
 
 import models.DanhSachTaiKhoan;
+import models.NhanVien;
+import models.TaiKhoan;
 import utils.SwingHelper;
 
 import javax.swing.*;
@@ -319,6 +321,18 @@ public class PnlTaiKhoan extends JPanel implements ActionListener {
     private void add() {
         if(!validateData())
             return;
+
+        String ma = txtMaNV.getText();
+        String ten = txtTenNV.getText();
+        String chucVu = Objects.requireNonNull(comboChucVu.getSelectedItem()).toString();
+        String luongString = txtLuong.getText();
+        String sdt = txtSoDienThoai.getText();
+        String diaChi = txtDiaChi.getText();
+        String username = txtTenDangNhap.getText();
+        String password = txtMatKhau.getText();
+
+        int luong = Integer.parseInt(luongString);
+        TaiKhoan taiKhoan = new TaiKhoan(username, password, new NhanVien(ma, ten, chucVu, luong, sdt, diaChi));
     }
     private void remove() {
 

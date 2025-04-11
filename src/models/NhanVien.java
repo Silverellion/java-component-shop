@@ -7,14 +7,14 @@ public class NhanVien implements Serializable {
     private String maNhanVien, hoTen, chucVu, soDienThoai, diaChi;
     private double luong;
 
-    NhanVien(String maNhanVien, String hoTen, String chucVu, String soDienThoai,
-             String diaChi, double luong) {
+    public NhanVien(String maNhanVien, String hoTen, String chucVu, double luong, String soDienThoai,
+                    String diaChi) {
         setMaNhanVien(maNhanVien);
         setHoTen(hoTen);
         setChucVu(chucVu);
+        setLuong(luong);
         setSoDienThoai(soDienThoai);
         setDiaChi(diaChi);
-        setLuong(luong);
     }
 
     public String getMaNhanVien() {
@@ -41,6 +41,14 @@ public class NhanVien implements Serializable {
         this.chucVu = chucVu;
     }
 
+    public double getLuong() {
+        return luong;
+    }
+
+    public void setLuong(double luong) {
+        this.luong = luong;
+    }
+
     public String getSoDienThoai() {
         return soDienThoai;
     }
@@ -55,14 +63,6 @@ public class NhanVien implements Serializable {
 
     public void setDiaChi(String diaChi) {
         this.diaChi = diaChi;
-    }
-
-    public double getLuong() {
-        return luong;
-    }
-
-    public void setLuong(double luong) {
-        this.luong = luong;
     }
 
     @Override

@@ -5,14 +5,13 @@ import java.util.Objects;
 
 public class TaiKhoan implements Serializable {
     private String tenDangNhap;
+
     private String matKhau;
-    private String loaiTaiKhoan;
     private final NhanVien nhanVien;
 
-    TaiKhoan(String tenDangNhap, String matKhau, String loaiTaiKhoan, NhanVien nhanVien) {
+    public TaiKhoan(String tenDangNhap, String matKhau, NhanVien nhanVien) {
         setTenDangNhap(tenDangNhap);
         setMatKhau(matKhau);
-        setLoaiTaiKhoan(loaiTaiKhoan);
         this.nhanVien = nhanVien;
     }
 
@@ -30,14 +29,6 @@ public class TaiKhoan implements Serializable {
 
     public void setMatKhau(String matKhau) {
         this.matKhau = matKhau;
-    }
-
-    public String getLoaiTaiKhoan() {
-        return loaiTaiKhoan;
-    }
-
-    public void setLoaiTaiKhoan(String loaiTaiKhoan) {
-        this.loaiTaiKhoan = loaiTaiKhoan;
     }
 
     public String getMaNhanVien() {
@@ -64,15 +55,16 @@ public class TaiKhoan implements Serializable {
         return nhanVien.getLuong();
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         TaiKhoan taiKhoan = (TaiKhoan) o;
-        return Objects.equals(tenDangNhap, taiKhoan.tenDangNhap) && Objects.equals(matKhau, taiKhoan.matKhau) && Objects.equals(loaiTaiKhoan, taiKhoan.loaiTaiKhoan);
+        return Objects.equals(tenDangNhap, taiKhoan.tenDangNhap) && Objects.equals(matKhau, taiKhoan.matKhau) && Objects.equals(nhanVien, taiKhoan.nhanVien);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(tenDangNhap, matKhau, loaiTaiKhoan);
+        return Objects.hash(tenDangNhap, matKhau, nhanVien);
     }
 }
