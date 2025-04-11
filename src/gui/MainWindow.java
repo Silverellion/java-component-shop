@@ -37,6 +37,7 @@ public class MainWindow extends JFrame implements ActionListener{
     public MainWindow() {
         setTitle("Cửa hàng linh kiện");
         setSize(1280, 720);
+        setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
         

@@ -5,6 +5,7 @@ import utils.SwingHelper;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -146,15 +147,30 @@ public class PnlTaiKhoan extends JPanel implements ActionListener {
         boxNorth.add(boxTitle);
         boxNorth.add(Box.createVerticalStrut(10));
         boxNorth.add(boxThongTinWrapper);
-        boxNorth.add(Box.createVerticalStrut(20));
+        boxNorth.add(Box.createVerticalStrut(10));
         boxNorth.add(boxTaiKhoanWrapper);
-        boxNorth.add(Box.createVerticalStrut(5));
+        boxNorth.add(Box.createVerticalStrut(20));
 
         add(boxNorth, BorderLayout.NORTH);
 
         tblModelTaiKhoan = new DefaultTableModel();
-//        tblModelTaiKhoan.addRow(new Object[]{});
-         tblTaiKhoan = new JTable(tblModelTaiKhoan);
+        tblModelTaiKhoan.addColumn("Mã nhân viên");
+        tblModelTaiKhoan.addColumn("Tên nhân viên");
+        tblModelTaiKhoan.addColumn("Chức vụ");
+        tblModelTaiKhoan.addColumn("Lương");
+        tblModelTaiKhoan.addColumn("Số điện thoại");
+        tblModelTaiKhoan.addColumn("Địa chỉ");
+        tblModelTaiKhoan.addColumn("Tên đăng nhập");
+        tblModelTaiKhoan.addColumn("Mật khẩu");
+
+        tblTaiKhoan = new JTable(tblModelTaiKhoan);
+        JScrollPane scrTaiKhoan = new JScrollPane(tblTaiKhoan);
+
+        JPanel pnlTableTaiKhoan = new JPanel(new BorderLayout());
+        pnlTableTaiKhoan.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 20)); // Margin-X: 20px
+        pnlTableTaiKhoan.setBackground(new Color(45,45,45));
+        pnlTableTaiKhoan.add(scrTaiKhoan, BorderLayout.CENTER);
+        add(pnlTableTaiKhoan, BorderLayout.CENTER);
     }
 
     @Override
