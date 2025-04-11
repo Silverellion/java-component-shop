@@ -325,12 +325,13 @@ public class PnlTaiKhoan extends JPanel implements ActionListener {
         if(!sdt.matches("^(0|84)[0-9]{8,12}$")) {
             txtSoDienThoai.requestFocus();
             JOptionPane.showMessageDialog(this,
-                    "Số điện thoại phải bắt đầu bằng số 0 và có từ 9 đến 14 số");
+                    "Số điện thoại phải bắt đầu bằng 0 hoặc 84 và có từ 9 đến 14 số");
             return false;
         }
-        if(!username.matches("^[a-zA-Z0-9_]$")) {
+        if(!username.matches("^[a-zA-Z0-9_]{5,}$")) {
             txtTenDangNhap.requestFocus();
-            JOptionPane.showMessageDialog(this, "Tên đăng nhập chỉ có thể chứa chữ, số và _");
+            JOptionPane.showMessageDialog(this,
+                    "Tên đăng nhập chỉ có thể chứa chữ, số và _\nTên đăng nhập phải có tối thiểu 5 ký tự");
             return false;
         }
         if(!password.matches("^.{8,}$")) {
@@ -362,12 +363,12 @@ public class PnlTaiKhoan extends JPanel implements ActionListener {
         String sdt = txtSoDienThoai.getText();
         String diaChi = txtDiaChi.getText();
         String username = txtTenDangNhap.getText();
-        String password = txtMatKhau.getText();
+        String password = new String(txtMatKhau.getPassword());
 
         int luong = Integer.parseInt(luongString);
         TaiKhoan taiKhoan = new TaiKhoan(username, password, new NhanVien(ma, ten, chucVu, luong, sdt, diaChi));
         if(danhSachTaiKhoan.themTaiKhoan(taiKhoan)) {
-            tblModelTaiKhoan.addRow(new Object[]{username, password, ma, ten, chucVu, luong, sdt, diaChi});
+            tblModelTaiKhoan.addRow(new Object[]{ma, ten, chucVu, luong, sdt, diaChi, username, "********"});
         } else {
             JOptionPane.showMessageDialog(this, "Mã nhân viên hoặc tên đăng nhập đã tồn tại");
             return;
@@ -381,7 +382,16 @@ public class PnlTaiKhoan extends JPanel implements ActionListener {
 
     }
     private void clear() {
+        txtMaNV.setText("");
+        txtTenNV.setText("");
+        comboChucVu.setSelectedIndex(0);
+        txtLuong.setText("");
+        txtSoDienThoai.setText("");
+        txtDiaChi.setText("");
+        txtTenDangNhap.setText("");
+        txtMatKhau.setText("");
 
+        txtMaNV.requestFocus();
     }
     private void find() {
 
