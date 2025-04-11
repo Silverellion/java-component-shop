@@ -3,6 +3,9 @@ package gui;
 import utils.SwingHelper;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
@@ -15,6 +18,8 @@ public class PnlTaiKhoan extends JPanel implements ActionListener {
     private final JComboBox<String> comboChucVu;
     private final JTable tblTaiKhoan;
     private final DefaultTableModel tblModelTaiKhoan;
+    private final JButton btnThem, btnXoa, btnCapNhat, btnXuat, btnXoaRong, btnTim;
+    private final JTextField txtTim;
 
     public PnlTaiKhoan() {
         setLayout(new BorderLayout());
@@ -167,10 +172,59 @@ public class PnlTaiKhoan extends JPanel implements ActionListener {
         JScrollPane scrTaiKhoan = new JScrollPane(tblTaiKhoan);
 
         JPanel pnlTableTaiKhoan = new JPanel(new BorderLayout());
-        pnlTableTaiKhoan.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 20)); // Margin-X: 20px
-        pnlTableTaiKhoan.setBackground(new Color(45,45,45));
+        pnlTableTaiKhoan.setBorder(BorderFactory.createEmptyBorder(0, 20, 20, 20)); // Margin-X: 20px
+        pnlTableTaiKhoan.setBackground(new Color(30,30,30));
         pnlTableTaiKhoan.add(scrTaiKhoan, BorderLayout.CENTER);
         add(pnlTableTaiKhoan, BorderLayout.CENTER);
+
+        btnThem = SwingHelper.createDarkModeJButton("Thêm");
+        btnXoa = SwingHelper.createDarkModeJButton("Xóa");
+        btnCapNhat = SwingHelper.createDarkModeJButton("Cập nhật");
+        btnXuat = SwingHelper.createDarkModeJButton("Xuất Excel");
+        btnXoaRong = SwingHelper.createDarkModeJButton("Xóa rỗng");
+
+        JLabel lblTim = SwingHelper.createDarkModeJLabel("Nhập dữ liệu cần tìm: ");
+        txtTim = new JTextField(15);
+        btnTim = SwingHelper.createDarkModeJButton("Tìm");
+
+        JPanel pnlSouthwest = new JPanel();
+        JPanel pnlSoutheast = new JPanel();
+        pnlSouthwest.setBackground(new Color(30,30,30));
+        pnlSoutheast.setBackground(new Color(30,30,30));
+        pnlSoutheast.setMinimumSize(new Dimension(480, getHeight()));
+
+        pnlSouthwest.add(btnThem);
+        pnlSouthwest.add(btnXoa);
+        pnlSouthwest.add(btnCapNhat);
+        pnlSouthwest.add(btnXuat);
+        pnlSouthwest.add(btnXoaRong);
+
+        pnlSoutheast.add(lblTim);
+        pnlSoutheast.add(txtTim);
+        pnlSoutheast.add(btnTim);
+
+        TitledBorder pnlSouthWestTitledBorder = BorderFactory.createTitledBorder("Điều khiển");
+        pnlSouthWestTitledBorder.setTitleColor(Color.WHITE);
+        pnlSouthWestTitledBorder.setTitleFont(new Font("Segoe UI", Font.BOLD, 16));
+        Border pnlSouthWestBorder = BorderFactory.createCompoundBorder(
+                BorderFactory.createEmptyBorder(10, 20, 10, 20),
+                pnlSouthWestTitledBorder
+        );
+
+        TitledBorder pnlSouthEastTitledBorder = BorderFactory.createTitledBorder("Tìm kiếm");
+        pnlSouthEastTitledBorder.setTitleColor(Color.WHITE);
+        pnlSouthEastTitledBorder.setTitleFont(new Font("Segoe UI", Font.BOLD, 16));
+        Border pnlSouthEastBorder = BorderFactory.createCompoundBorder(
+                BorderFactory.createEmptyBorder(10, 20, 10, 20),
+                pnlSouthEastTitledBorder
+        );
+
+        pnlSouthwest.setBorder(pnlSouthWestBorder);
+        pnlSoutheast.setBorder(pnlSouthEastBorder);
+
+        JSplitPane pnlSouth = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, pnlSouthwest, pnlSoutheast);
+        pnlSouth.setBackground(new Color(45,45,45));
+        add(pnlSouth, BorderLayout.SOUTH);
     }
 
     @Override

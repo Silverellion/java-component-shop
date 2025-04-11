@@ -50,7 +50,7 @@ public class MainWindow extends JFrame implements ActionListener{
         pnlMain.setBackground(new Color(30, 30, 30));
 
         pnlSidebar = new JPanel();
-        pnlSidebar.setPreferredSize(new Dimension(250, getHeight()));
+        pnlSidebar.setPreferredSize(new Dimension(220, getHeight()));
         pnlSidebar.setBackground(new Color(45, 45, 45));
         pnlSidebar.setLayout(new BoxLayout(pnlSidebar, BoxLayout.Y_AXIS));
 
