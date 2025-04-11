@@ -8,7 +8,7 @@ public class DanhSachTaiKhoan implements Serializable {
     public DanhSachTaiKhoan() {
         danhSachTaiKhoan = new ArrayList<>();
     }
-    public boolean themTaiKhoan(TaiKhoan taiKhoan) {
+    public boolean them(TaiKhoan taiKhoan) {
         for(TaiKhoan curTaiKhoan : danhSachTaiKhoan) {
             if(curTaiKhoan.getMaNhanVien().equals(taiKhoan.getMaNhanVien())
             ||curTaiKhoan.getTenDangNhap().equals(taiKhoan.getTenDangNhap()))
@@ -17,9 +17,17 @@ public class DanhSachTaiKhoan implements Serializable {
         danhSachTaiKhoan.add(taiKhoan);
         return true;
     }
-    public boolean xoaTaiKhoan(int index) {
-        danhSachTaiKhoan.remove(index);
+    public boolean xoa(int index) {
         //database shit later on
+        danhSachTaiKhoan.remove(index);
         return true;
+    }
+    public boolean capNhat(int index, TaiKhoan taiKhoan) {
+        //database shit later on
+        danhSachTaiKhoan.set(index, taiKhoan);
+        return true;
+    }
+    public ArrayList<TaiKhoan> getDanhSach() {
+        return danhSachTaiKhoan;
     }
 }

@@ -8,12 +8,15 @@ import utils.SwingHelper;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class PnlTaiKhoan extends JPanel implements ActionListener {
@@ -22,7 +25,7 @@ public class PnlTaiKhoan extends JPanel implements ActionListener {
     private final JComboBox<String> comboChucVu;
     private final JTable tblTaiKhoan;
     private final DefaultTableModel tblModelTaiKhoan;
-    private final JButton btnThem, btnXoa, btnCapNhat, btnXuat, btnXoaRong, btnTim;
+    private final JButton btnThem, btnXoa, btnCapNhat, btnXuat, btnXoaRong;
     private final JTextField txtTim;
     private DanhSachTaiKhoan danhSachTaiKhoan;
 
@@ -219,14 +222,13 @@ public class PnlTaiKhoan extends JPanel implements ActionListener {
         btnXoaRong = SwingHelper.createDarkModeJButton("Xóa rỗng");
 
         JLabel lblTim = SwingHelper.createDarkModeJLabel("Nhập dữ liệu cần tìm: ");
-        txtTim = new JTextField(15);
-        btnTim = SwingHelper.createDarkModeJButton("Tìm");
+        txtTim = new JTextField(20);
 
         JPanel pnlSouthwest = new JPanel();
         JPanel pnlSoutheast = new JPanel();
         pnlSouthwest.setBackground(new Color(30,30,30));
         pnlSoutheast.setBackground(new Color(30,30,30));
-        pnlSoutheast.setMinimumSize(new Dimension(480, getHeight()));
+        pnlSoutheast.setMinimumSize(new Dimension(450, getHeight()));
 
         pnlSouthwest.add(btnThem);
         pnlSouthwest.add(btnXoa);
@@ -236,7 +238,6 @@ public class PnlTaiKhoan extends JPanel implements ActionListener {
 
         pnlSoutheast.add(lblTim);
         pnlSoutheast.add(txtTim);
-        pnlSoutheast.add(btnTim);
 
         TitledBorder pnlSouthWestTitledBorder = BorderFactory.createTitledBorder("Điều khiển");
         pnlSouthWestTitledBorder.setTitleColor(Color.WHITE);
@@ -265,7 +266,8 @@ public class PnlTaiKhoan extends JPanel implements ActionListener {
         btnXoa.addActionListener(this);
         btnCapNhat.addActionListener(this);
         btnXoaRong.addActionListener(this);
-        btnTim.addActionListener(this);
+        tableClickListener();
+        txtTim.getDocument().addDocumentListener(new FilterListener()); //Real time filtering
     }
 
     @Override
@@ -279,8 +281,91 @@ public class PnlTaiKhoan extends JPanel implements ActionListener {
             update();
         if(src == btnXoaRong)
             clear();
-        if(src == btnTim)
-            find();
+    }
+
+    private void tableClickListener() {
+        tblTaiKhoan.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int row = tblTaiKhoan.getSelectedRow();
+                if(row >= 0) {
+                    txtMaNV.setText(tblTaiKhoan.getValueAt(row, 0).toString());
+                    txtTenNV.setText(tblTaiKhoan.getValueAt(row, 1).toString());
+                    comboChucVu.setSelectedItem(tblTaiKhoan.getValueAt(row, 2).toString());
+                    txtLuong.setText(tblTaiKhoan.getValueAt(row, 3).toString());
+                    txtSoDienThoai.setText(tblTaiKhoan.getValueAt(row, 4).toString());
+                    txtDiaChi.setText(tblTaiKhoan.getValueAt(row, 5).toString());
+                    txtTenDangNhap.setText(tblTaiKhoan.getValueAt(row, 6).toString());
+                    txtMatKhau.setText("********");
+                }
+            }
+        });
+    }
+
+    private class FilterListener implements DocumentListener {
+        @Override
+        public void insertUpdate(DocumentEvent e) {
+            filterTable(txtTim.getText());
+        }
+        @Override
+        public void removeUpdate(DocumentEvent e) {
+            filterTable(txtTim.getText());
+        }
+        @Override
+        public void changedUpdate(DocumentEvent e) {
+            filterTable(txtTim.getText());
+        }
+    }
+
+    private void filterTable(String searchText) {
+        DefaultTableModel model = (DefaultTableModel) tblTaiKhoan.getModel();
+        // Remove all rows from the table
+        model.setRowCount(0);
+        if (searchText == null || searchText.trim().isEmpty()) {
+            for (TaiKhoan tk : danhSachTaiKhoan.getDanhSach()) {
+                model.addRow(new Object[]{
+                    tk.getMaNhanVien(),
+                    tk.getHoTen(),
+                    tk.getChucVu(),
+                    tk.getLuong(),
+                    tk.getSoDienThoai(),
+                    tk.getDiaChi(),
+                    tk.getTenDangNhap(),
+                    "********"
+                });
+            }
+            return;
+        }
+        String searchLower = searchText.toLowerCase();
+        for (TaiKhoan tk : danhSachTaiKhoan.getDanhSach()) {
+            if (containsSearchText(tk.getMaNhanVien(), searchLower) ||
+                    containsSearchText(tk.getHoTen(), searchLower) ||
+                    containsSearchText(tk.getChucVu(), searchLower) ||
+                    containsSearchText(String.valueOf(tk.getLuong()), searchLower) ||
+                    containsSearchText(tk.getSoDienThoai(), searchLower) ||
+                    containsSearchText(tk.getDiaChi(), searchLower) ||
+                    containsSearchText(tk.getTenDangNhap(), searchLower)) {
+                        model.addRow(new Object[]{
+                            tk.getMaNhanVien(),
+                            tk.getHoTen(),
+                            tk.getChucVu(),
+                            tk.getLuong(),
+                            tk.getSoDienThoai(),
+                            tk.getDiaChi(),
+                            tk.getTenDangNhap(),
+                            "********"
+                        });
+            }
+        }
+    }
+
+    private boolean containsSearchText(String text, String searchText) {
+        if(text == null || searchText == null)
+            return false;
+        if (text.toLowerCase().contains(searchText.toLowerCase())) {
+            return true;
+        }
+        return false;
     }
 
     private boolean validateData() {
@@ -295,7 +380,7 @@ public class PnlTaiKhoan extends JPanel implements ActionListener {
         String luongString = txtLuong.getText();
         String sdt = txtSoDienThoai.getText();
         String username = txtTenDangNhap.getText();
-        String password = txtMatKhau.getText();
+        String password = new String(txtMatKhau.getPassword());
 
         if(!ma.matches("^[A-Z][0-9]{3}$")) {
             txtMaNV.requestFocus();
@@ -355,7 +440,6 @@ public class PnlTaiKhoan extends JPanel implements ActionListener {
     private void add() {
         if(!validateData())
             return;
-
         String ma = txtMaNV.getText();
         String ten = txtTenNV.getText();
         String chucVu = Objects.requireNonNull(comboChucVu.getSelectedItem()).toString();
@@ -367,17 +451,22 @@ public class PnlTaiKhoan extends JPanel implements ActionListener {
 
         int luong = Integer.parseInt(luongString);
         TaiKhoan taiKhoan = new TaiKhoan(username, password, new NhanVien(ma, ten, chucVu, luong, sdt, diaChi));
-        if(danhSachTaiKhoan.themTaiKhoan(taiKhoan)) {
+        if(danhSachTaiKhoan.them(taiKhoan)) {
             tblModelTaiKhoan.addRow(new Object[]{ma, ten, chucVu, luong, sdt, diaChi, username, "********"});
         } else {
             JOptionPane.showMessageDialog(this, "Mã nhân viên hoặc tên đăng nhập đã tồn tại");
-            return;
         }
-
     }
     private void remove() {
+        int choice = JOptionPane.showConfirmDialog(
+                this,
+                "Bạn có chắc chắn muốn xóa tải khoản này không?",
+                "Xác nhận",
+                JOptionPane.YES_NO_OPTION);
+        if(choice == JOptionPane.NO_OPTION)
+            return;
         int row = tblTaiKhoan.getSelectedRow();
-        if(danhSachTaiKhoan.xoaTaiKhoan(row)) {
+        if(danhSachTaiKhoan.xoa(row)) {
             tblModelTaiKhoan.removeRow(row);
             JOptionPane.showMessageDialog(this, "Xoá tài khoản thành công");
         } else {
@@ -385,7 +474,26 @@ public class PnlTaiKhoan extends JPanel implements ActionListener {
         }
     }
     private void update() {
+        if(!validateData())
+            return;
+        String ma = txtMaNV.getText();
+        String ten = txtTenNV.getText();
+        String chucVu = Objects.requireNonNull(comboChucVu.getSelectedItem()).toString();
+        String luongString = txtLuong.getText();
+        String sdt = txtSoDienThoai.getText();
+        String diaChi = txtDiaChi.getText();
+        String username = txtTenDangNhap.getText();
+        String password = new String(txtMatKhau.getPassword());
 
+        int luong = Integer.parseInt(luongString);
+        TaiKhoan taiKhoan = new TaiKhoan(username, password, new NhanVien(ma, ten, chucVu, luong, sdt, diaChi));
+
+        int row = tblTaiKhoan.getSelectedRow();
+        if(danhSachTaiKhoan.capNhat(row, taiKhoan)) {
+            JOptionPane.showMessageDialog(this, "Cập nhật tài khoản thành công");
+        } else {
+            JOptionPane.showMessageDialog(this, "Cập nhật tài khoản thất bại");
+        }
     }
     private void clear() {
         txtMaNV.setText("");
@@ -399,7 +507,6 @@ public class PnlTaiKhoan extends JPanel implements ActionListener {
 
         txtMaNV.requestFocus();
     }
-    private void find() {
 
-    }
+
 }
