@@ -17,4 +17,9 @@ public class DanhSachTaiKhoan implements Serializable {
         danhSachTaiKhoan.add(taiKhoan);
         return true;
     }
+    public boolean xoaTaiKhoan(int index) {
+        danhSachTaiKhoan.remove(index);
+        //database shit later on
+        return true;
+    }
 }

@@ -376,7 +376,13 @@ public class PnlTaiKhoan extends JPanel implements ActionListener {
 
     }
     private void remove() {
-
+        int row = tblTaiKhoan.getSelectedRow();
+        if(danhSachTaiKhoan.xoaTaiKhoan(row)) {
+            tblModelTaiKhoan.removeRow(row);
+            JOptionPane.showMessageDialog(this, "Xoá tài khoản thành công");
+        } else {
+            JOptionPane.showMessageDialog(this, "Xoá tài khoản thất bại");
+        }
     }
     private void update() {
 
