@@ -12,10 +12,13 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.util.Objects;
 
 public class PnlTaiKhoan extends JPanel implements ActionListener {
-    private final JTextField txtMaNV, txtTenNV, txtLuong, txtSoDienThoai, txtDiaChi, txtTenDangNhap, txtMatKhau;
+    private final JTextField txtMaNV, txtTenNV, txtLuong, txtSoDienThoai, txtDiaChi, txtTenDangNhap;
+    private final JPasswordField txtMatKhau;
     private final JComboBox<String> comboChucVu;
     private final JTable tblTaiKhoan;
     private final DefaultTableModel tblModelTaiKhoan;
@@ -37,8 +40,7 @@ public class PnlTaiKhoan extends JPanel implements ActionListener {
         JLabel lblChucVu = SwingHelper.createDarkModeJLabel("Chức vụ: ");
         JLabel lblLuong = SwingHelper.createDarkModeJLabel("Lương: ");
         JLabel lblSoDienThoai = SwingHelper.createDarkModeJLabel("Số điện thoại: ");
-        JLabel lblDiaChi = SwingHelper.createDarkModeJLabel("Địa chỉ");
-
+        JLabel lblDiaChi = SwingHelper.createDarkModeJLabel("Địa chỉ: ");
         JLabel lblTenDangNhap = SwingHelper.createDarkModeJLabel("Tên đăng nhập: ");
         JLabel lblMatKhau = SwingHelper.createDarkModeJLabel("Mật khẩu: ");
 
@@ -48,8 +50,6 @@ public class PnlTaiKhoan extends JPanel implements ActionListener {
         lblLuong.setPreferredSize(lblTenDangNhap.getPreferredSize());
         lblSoDienThoai.setPreferredSize(lblTenDangNhap.getPreferredSize());
         lblDiaChi.setPreferredSize(lblTenDangNhap.getPreferredSize());
-
-        lblTenDangNhap.setPreferredSize(lblTenDangNhap.getPreferredSize());
         lblMatKhau.setPreferredSize(lblTenDangNhap.getPreferredSize());
 
         txtMaNV = new JTextField();
@@ -58,9 +58,17 @@ public class PnlTaiKhoan extends JPanel implements ActionListener {
         txtLuong = new JTextField();
         txtSoDienThoai = new JTextField();
         txtDiaChi = new JTextField();
-
         txtTenDangNhap = new JTextField();
-        txtMatKhau = new JTextField();
+        txtMatKhau = new JPasswordField();
+
+        Dimension textFieldSize = new Dimension(200, txtMaNV.getPreferredSize().height);
+        txtMaNV.setPreferredSize(textFieldSize);
+        txtTenNV.setPreferredSize(textFieldSize);
+        txtLuong.setPreferredSize(textFieldSize);
+        txtSoDienThoai.setPreferredSize(textFieldSize);
+        txtDiaChi.setPreferredSize(textFieldSize);
+        txtTenDangNhap.setPreferredSize(textFieldSize);
+        txtMatKhau.setPreferredSize(textFieldSize);
 
         comboChucVu.addItem("Nhân viên bán hàng");
         comboChucVu.addItem("Nhân viên quản lý kho");
@@ -69,96 +77,121 @@ public class PnlTaiKhoan extends JPanel implements ActionListener {
         comboChucVu.addItem("Nhân viên chăm sóc khách hàng");
         comboChucVu.addItem("Nhân viên giao hàng");
         comboChucVu.addItem("Quản lý cửa hàng");
+        comboChucVu.setPreferredSize(textFieldSize);
 
-        //Dynamic resizing function for comboChucVu
-        comboChucVu.setPreferredSize(txtTenDangNhap.getPreferredSize());
-        txtTenDangNhap.addComponentListener(new java.awt.event.ComponentAdapter() {
-            @Override
-            public void componentResized(java.awt.event.ComponentEvent e) {
-                comboChucVu.setPreferredSize(txtTenDangNhap.getSize());
-                comboChucVu.revalidate();
-            }
-        });
+        //LEFT PANEL
+        JPanel leftPanel = new JPanel(new GridLayout(3, 1, 0, 10));
+        leftPanel.setBorder(BorderFactory.createEmptyBorder(0, 0,10, 0));
+        leftPanel.setOpaque(false); // Transparent background
 
-        Box box1 = new Box(BoxLayout.X_AXIS);
-        Box box2 = new Box(BoxLayout.X_AXIS);
-        Box box3 = new Box(BoxLayout.X_AXIS);
-        Box box4 = new Box(BoxLayout.X_AXIS);
+        JPanel panelMaNV = new JPanel(new BorderLayout(5, 0));
+        panelMaNV.setOpaque(false);
+        panelMaNV.add(lblMaNV, BorderLayout.WEST);
+        panelMaNV.add(txtMaNV, BorderLayout.CENTER);
 
-        box1.add(Box.createHorizontalStrut(10));
-        box1.add(lblMaNV);
-        box1.add(txtMaNV);
-        box1.add(Box.createHorizontalStrut(10));
-        box1.add(lblTenNV);
-        box1.add(txtTenNV);
-        box1.add(Box.createHorizontalStrut(10));
+        JPanel panelChucVu = new JPanel(new BorderLayout(5, 0));
+        panelChucVu.setOpaque(false);
+        panelChucVu.add(lblChucVu, BorderLayout.WEST);
+        panelChucVu.add(comboChucVu, BorderLayout.CENTER);
 
-        box2.add(Box.createHorizontalStrut(10));
-        box2.add(lblChucVu);
-        box2.add(comboChucVu);
-        box2.add(Box.createHorizontalStrut(10));
-        box2.add(lblLuong);
-        box2.add(txtLuong);
-        box2.add(Box.createHorizontalStrut(10));
+        JPanel panelSoDienThoai = new JPanel(new BorderLayout(5, 0));
+        panelSoDienThoai.setOpaque(false);
+        panelSoDienThoai.add(lblSoDienThoai, BorderLayout.WEST);
+        panelSoDienThoai.add(txtSoDienThoai, BorderLayout.CENTER);
 
-        box3.add(Box.createHorizontalStrut(10));
-        box3.add(lblSoDienThoai);
-        box3.add(txtSoDienThoai);
-        box3.add(Box.createHorizontalStrut(10));
-        box3.add(lblDiaChi);
-        box3.add(txtDiaChi);
-        box3.add(Box.createHorizontalStrut(10));
+        leftPanel.add(panelMaNV);
+        leftPanel.add(panelChucVu);
+        leftPanel.add(panelSoDienThoai);
 
-        box4.add(Box.createHorizontalStrut(10));
-        box4.add(lblTenDangNhap);
-        box4.add(txtTenDangNhap);
-        box4.add(Box.createHorizontalStrut(10));
-        box4.add(lblMatKhau);
-        box4.add(txtMatKhau);
-        box4.add(Box.createHorizontalStrut(10));
+        //RIGHT PANEL
+        JPanel rightPanel = new JPanel(new GridLayout(3, 1, 0, 10));
+        rightPanel.setBorder(BorderFactory.createEmptyBorder(0, 0,10, 0));
+        rightPanel.setOpaque(false);
 
-        Box boxThongTin = new Box(BoxLayout.Y_AXIS);
-        boxThongTin.add(Box.createVerticalStrut(10));
-        boxThongTin.add(box1);
-        boxThongTin.add(Box.createVerticalStrut(10));
-        boxThongTin.add(box2);
-        boxThongTin.add(Box.createVerticalStrut(10));
-        boxThongTin.add(box3);
-        boxThongTin.add(Box.createVerticalStrut(10));
+        JPanel panelTenNV = new JPanel(new BorderLayout(5, 0));
+        panelTenNV.setOpaque(false);
+        panelTenNV.add(lblTenNV, BorderLayout.WEST);
+        panelTenNV.add(txtTenNV, BorderLayout.CENTER);
+
+        JPanel panelLuong = new JPanel(new BorderLayout(5, 0));
+        panelLuong.setOpaque(false);
+        panelLuong.add(lblLuong, BorderLayout.WEST);
+        panelLuong.add(txtLuong, BorderLayout.CENTER);
+
+        JPanel panelDiaChi = new JPanel(new BorderLayout(5, 0));
+        panelDiaChi.setOpaque(false);
+        panelDiaChi.add(lblDiaChi, BorderLayout.WEST);
+        panelDiaChi.add(txtDiaChi, BorderLayout.CENTER);
+
+        rightPanel.add(panelTenNV);
+        rightPanel.add(panelLuong);
+        rightPanel.add(panelDiaChi);
+
+        JPanel panelThongTin = new JPanel();
+        panelThongTin.setOpaque(false);
+        panelThongTin.setLayout(new BoxLayout(panelThongTin, BoxLayout.X_AXIS));
+        panelThongTin.add(Box.createHorizontalStrut(10));
+        panelThongTin.add(leftPanel);
+        panelThongTin.add(Box.createHorizontalStrut(20));
+        panelThongTin.add(rightPanel);
+        panelThongTin.add(Box.createHorizontalStrut(10));
+
         TitledBorder borderThongTin = BorderFactory.createTitledBorder("Thông tin nhân viên");
         borderThongTin.setTitleColor(Color.WHITE);
         borderThongTin.setTitleFont(new Font("Segoe UI", Font.BOLD, 16));
-        boxThongTin.setBorder(borderThongTin);
+        panelThongTin.setBorder(borderThongTin);
 
+        JPanel panelTaiKhoan = new JPanel();
+        panelTaiKhoan.setOpaque(false);
+        panelTaiKhoan.setLayout(new BoxLayout(panelTaiKhoan, BoxLayout.X_AXIS));
 
-        Box boxTaiKhoan = new Box(BoxLayout.Y_AXIS);
-        boxTaiKhoan.add(Box.createVerticalStrut(10));
-        boxTaiKhoan.add(box4);
-        boxTaiKhoan.add(Box.createVerticalStrut(10));
+        JPanel panelUsername = new JPanel(new BorderLayout(5, 0));
+        panelUsername.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
+        panelUsername.setOpaque(false);
+        panelUsername.add(lblTenDangNhap, BorderLayout.WEST);
+        panelUsername.add(txtTenDangNhap, BorderLayout.CENTER);
+
+        JPanel panelPassword = new JPanel(new BorderLayout(5, 0));
+        panelPassword.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
+        panelPassword.setOpaque(false);
+        panelPassword.add(lblMatKhau, BorderLayout.WEST);
+        panelPassword.add(txtMatKhau, BorderLayout.CENTER);
+
+        panelTaiKhoan.add(Box.createHorizontalStrut(10));
+        panelTaiKhoan.add(panelUsername);
+        panelTaiKhoan.add(Box.createHorizontalStrut(20));
+        panelTaiKhoan.add(panelPassword);
+        panelTaiKhoan.add(Box.createHorizontalStrut(10));
+
         TitledBorder borderTaiKhoan = BorderFactory.createTitledBorder("Tài khoản nhân viên");
         borderTaiKhoan.setTitleColor(Color.WHITE);
         borderTaiKhoan.setTitleFont(new Font("Segoe UI", Font.BOLD, 16));
-        boxTaiKhoan.setBorder(borderTaiKhoan);
+        panelTaiKhoan.setBorder(borderTaiKhoan);
 
-        Box boxThongTinWrapper = new Box(BoxLayout.X_AXIS);
-        boxThongTinWrapper.add(Box.createHorizontalStrut(20));
-        boxThongTinWrapper.add(boxThongTin);
-        boxThongTinWrapper.add(Box.createHorizontalStrut(20));
+        // WRAPPERS (For padding purposes)
+        JPanel panelThongTinWrapper = new JPanel(new BorderLayout());
+        panelThongTinWrapper.setOpaque(false);
+        panelThongTinWrapper.add(panelThongTin, BorderLayout.CENTER);
+        panelThongTinWrapper.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 20));
 
-        Box boxTaiKhoanWrapper = new Box(BoxLayout.X_AXIS);
-        boxTaiKhoanWrapper.add(Box.createHorizontalStrut(20));
-        boxTaiKhoanWrapper.add(boxTaiKhoan);
-        boxTaiKhoanWrapper.add(Box.createHorizontalStrut(20));
+        JPanel panelTaiKhoanWrapper = new JPanel(new BorderLayout());
+        panelTaiKhoanWrapper.setOpaque(false);
+        panelTaiKhoanWrapper.add(panelTaiKhoan, BorderLayout.CENTER);
+        panelTaiKhoanWrapper.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 20));
 
-        Box boxNorth = new Box(BoxLayout.Y_AXIS);
-        boxNorth.add(boxTitle);
-        boxNorth.add(Box.createVerticalStrut(10));
-        boxNorth.add(boxThongTinWrapper);
-        boxNorth.add(Box.createVerticalStrut(10));
-        boxNorth.add(boxTaiKhoanWrapper);
-        boxNorth.add(Box.createVerticalStrut(20));
+        JPanel panelNorth = new JPanel();
+        panelNorth.setOpaque(false);
+        panelNorth.setLayout(new BoxLayout(panelNorth, BoxLayout.Y_AXIS));
 
-        add(boxNorth, BorderLayout.NORTH);
+        boxTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
+        panelNorth.add(boxTitle);
+        panelNorth.add(Box.createVerticalStrut(10));
+        panelNorth.add(panelThongTinWrapper);
+        panelNorth.add(Box.createVerticalStrut(10));
+        panelNorth.add(panelTaiKhoanWrapper);
+        panelNorth.add(Box.createVerticalStrut(20));
+
+        add(panelNorth, BorderLayout.NORTH);
 
         tblModelTaiKhoan = new DefaultTableModel();
         tblModelTaiKhoan.addColumn("Mã nhân viên");
@@ -295,7 +328,7 @@ public class PnlTaiKhoan extends JPanel implements ActionListener {
                     "Số điện thoại phải bắt đầu bằng số 0 và có từ 9 đến 14 số");
             return false;
         }
-        if(!username.matches("^[a-zA-Z0-9_]{5,}$")) {
+        if(!username.matches("^[a-zA-Z0-9_]$")) {
             txtTenDangNhap.requestFocus();
             JOptionPane.showMessageDialog(this, "Tên đăng nhập chỉ có thể chứa chữ, số và _");
             return false;
@@ -333,6 +366,13 @@ public class PnlTaiKhoan extends JPanel implements ActionListener {
 
         int luong = Integer.parseInt(luongString);
         TaiKhoan taiKhoan = new TaiKhoan(username, password, new NhanVien(ma, ten, chucVu, luong, sdt, diaChi));
+        if(danhSachTaiKhoan.themTaiKhoan(taiKhoan)) {
+            tblModelTaiKhoan.addRow(new Object[]{username, password, ma, ten, chucVu, luong, sdt, diaChi});
+        } else {
+            JOptionPane.showMessageDialog(this, "Mã nhân viên hoặc tên đăng nhập đã tồn tại");
+            return;
+        }
+
     }
     private void remove() {
 

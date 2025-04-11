@@ -10,7 +10,8 @@ public class DanhSachTaiKhoan implements Serializable {
     }
     public boolean themTaiKhoan(TaiKhoan taiKhoan) {
         for(TaiKhoan curTaiKhoan : danhSachTaiKhoan) {
-            if(curTaiKhoan.getMaNhanVien().equals(taiKhoan.getMaNhanVien()))
+            if(curTaiKhoan.getMaNhanVien().equals(taiKhoan.getMaNhanVien())
+            ||curTaiKhoan.getTenDangNhap().equals(taiKhoan.getTenDangNhap()))
                 return false;
         }
         danhSachTaiKhoan.add(taiKhoan);
