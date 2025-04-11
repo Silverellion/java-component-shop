@@ -1,17 +1,16 @@
 package gui;
 
+import models.DanhSachTaiKhoan;
 import utils.SwingHelper;
 
 import javax.swing.*;
 import javax.swing.border.Border;
-import javax.swing.border.CompoundBorder;
-import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Objects;
 
 public class PnlTaiKhoan extends JPanel implements ActionListener {
     private final JTextField txtMaNV, txtTenNV, txtLuong, txtSoDienThoai, txtDiaChi, txtTenDangNhap, txtMatKhau;
@@ -20,8 +19,10 @@ public class PnlTaiKhoan extends JPanel implements ActionListener {
     private final DefaultTableModel tblModelTaiKhoan;
     private final JButton btnThem, btnXoa, btnCapNhat, btnXuat, btnXoaRong, btnTim;
     private final JTextField txtTim;
+    private DanhSachTaiKhoan danhSachTaiKhoan;
 
     public PnlTaiKhoan() {
+        danhSachTaiKhoan = new DanhSachTaiKhoan();
         setLayout(new BorderLayout());
         setBackground(new Color(30, 30, 30));
 
@@ -38,7 +39,6 @@ public class PnlTaiKhoan extends JPanel implements ActionListener {
 
         JLabel lblTenDangNhap = SwingHelper.createDarkModeJLabel("Tên đăng nhập: ");
         JLabel lblMatKhau = SwingHelper.createDarkModeJLabel("Mật khẩu: ");
-
 
         lblMaNV.setPreferredSize(lblTenDangNhap.getPreferredSize());
         lblTenNV.setPreferredSize(lblTenDangNhap.getPreferredSize());
@@ -235,6 +235,101 @@ public class PnlTaiKhoan extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        Object src = e.getSource();
+        if(src == btnThem)
+            add();
+        if(src == btnXoa)
+            remove();
+        if(src == btnCapNhat)
+            update();
+        if(src == btnXoaRong)
+            clear();
+        if(src == btnTim)
+            find();
+    }
+
+    private boolean validateData() {
+        if(isTextFieldBlank(txtMaNV, "Mã") || isTextFieldBlank(txtTenNV, "Tên") ||
+           isTextFieldBlank(txtLuong, "Lương") || isTextFieldBlank(txtSoDienThoai, "Số điễn thoại") ||
+           isTextFieldBlank(txtDiaChi, "Địa chỉ") || isTextFieldBlank(txtTenDangNhap, "Tên đăng nhập") ||
+           isTextFieldBlank(txtMatKhau, "Mật khẩu"))
+            return false;
+
+        String ma = txtMaNV.getText();
+        String ten = txtTenNV.getText();
+        String luongString = txtLuong.getText();
+        String sdt = txtSoDienThoai.getText();
+        String username = txtTenDangNhap.getText();
+        String password = txtMatKhau.getText();
+
+        if(!ma.matches("^[A-Z][0-9]{3}$")) {
+            txtMaNV.requestFocus();
+            JOptionPane.showMessageDialog(this,
+                    "Mã phải bắt đẩu bằng 1 chử cái viết hoa và gồm 3 ký tự số");
+            return false;
+        }
+        if(!ten.matches("^[A-Z][a-z]*( [A-Z][a-z]*)*$")) {
+            txtTenNV.requestFocus();
+            JOptionPane.showMessageDialog(this,
+                    "Tên không được chứa số hay ký tự đặc biệt.\nTên phải viết hoa chữ cái đầu và sau dấu cách");
+            return false;
+        }
+        int luong = 0;
+        try {
+            luong = Integer.parseInt(luongString);
+        } catch (NumberFormatException e) {
+            txtLuong.requestFocus();
+            JOptionPane.showMessageDialog(this, "Lương phải là một số nguyên");
+            return false;
+        }
+        if(luong <= 0) {
+            txtLuong.requestFocus();
+            JOptionPane.showMessageDialog(this, "Lương phải lớn hơn 0");
+            return false;
+        }
+        if(!sdt.matches("^(0|84)[0-9]{8,12}$")) {
+            txtSoDienThoai.requestFocus();
+            JOptionPane.showMessageDialog(this,
+                    "Số điện thoại phải bắt đầu bằng số 0 và có từ 9 đến 14 số");
+            return false;
+        }
+        if(!username.matches("^[a-zA-Z0-9_]{5,}$")) {
+            txtTenDangNhap.requestFocus();
+            JOptionPane.showMessageDialog(this, "Tên đăng nhập chỉ có thể chứa chữ, số và _");
+            return false;
+        }
+        if(!password.matches("^.{8,}$")) {
+            txtMatKhau.requestFocus();
+            JOptionPane.showMessageDialog(this, "Mật khẩu phải có ít nhất 8 ký tự");
+            return false;
+        }
+        return true;
+    }
+
+    private boolean isTextFieldBlank(JTextField input, String inputName) {
+        String string = input.getText();
+        if(string.isBlank()) {
+            input.requestFocus();
+            JOptionPane.showMessageDialog(this, inputName + " nhân viên không được để chống");
+            return true;
+        }
+        return false;
+    }
+
+    private void add() {
+        if(!validateData())
+            return;
+    }
+    private void remove() {
+
+    }
+    private void update() {
+
+    }
+    private void clear() {
+
+    }
+    private void find() {
 
     }
 }
