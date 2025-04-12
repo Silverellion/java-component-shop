@@ -1,4 +1,0 @@
-1. loaiTK needs to be removed
-2. accountStatus needs to be added like in trangThai: A(Active)/I(Inactive) <- we check for a single char for this in MSSQL
-3. in PnlCaiDat, changing the system theme/UI/Appearance (Dark/Light mode) seems to be out of scope for now,
-so, we will only focus on letting the employee changing the username/password/dia chi/SDT/Dia chi.
