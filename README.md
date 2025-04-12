@@ -32,6 +32,7 @@ project-component/
 UI Font: 'Segoe UI'<br>
 sidebar background color: rgb(45, 45, 45);<br>
 main background color: rgb (30, 30, 30);<br>
+jdbc:sqlserver://<HOST>:<PORT>;encrypt=true;trustServerCertificate=true;>
 
 Reminder:
 
