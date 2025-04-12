@@ -5,7 +5,6 @@ import java.util.Objects;
 
 public class TaiKhoan implements Serializable {
     private String tenDangNhap;
-
     private String matKhau;
     private final NhanVien nhanVien;
 
