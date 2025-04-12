@@ -2,6 +2,7 @@ package utils;
 
 import java.awt.GraphicsEnvironment;
 
+@SuppressWarnings("unused")
 public class FontHelper {
 	public static void printFonts() {
 		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
