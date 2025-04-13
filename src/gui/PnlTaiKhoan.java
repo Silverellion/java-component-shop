@@ -16,7 +16,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 import java.util.Objects;
 
 public class PnlTaiKhoan extends JPanel implements ActionListener {
@@ -27,7 +26,7 @@ public class PnlTaiKhoan extends JPanel implements ActionListener {
     private final DefaultTableModel tblModelTaiKhoan;
     private final JButton btnThem, btnXoa, btnCapNhat, btnXuat, btnXoaRong;
     private final JTextField txtTim;
-    private DanhSachTaiKhoan danhSachTaiKhoan;
+    private final DanhSachTaiKhoan danhSachTaiKhoan;
 
     public PnlTaiKhoan() {
         danhSachTaiKhoan = new DanhSachTaiKhoan();
@@ -76,8 +75,6 @@ public class PnlTaiKhoan extends JPanel implements ActionListener {
         comboChucVu.addItem("Nhân viên bán hàng");
         comboChucVu.addItem("Nhân viên quản lý kho");
         comboChucVu.addItem("Nhân viên kỹ thuật");
-        comboChucVu.addItem("Nhân viên marketing");
-        comboChucVu.addItem("Nhân viên chăm sóc khách hàng");
         comboChucVu.addItem("Nhân viên giao hàng");
         comboChucVu.addItem("Quản lý cửa hàng");
         comboChucVu.setPreferredSize(textFieldSize);
@@ -362,10 +359,7 @@ public class PnlTaiKhoan extends JPanel implements ActionListener {
     private boolean containsSearchText(String text, String searchText) {
         if(text == null || searchText == null)
             return false;
-        if (text.toLowerCase().contains(searchText.toLowerCase())) {
-            return true;
-        }
-        return false;
+        return text.toLowerCase().contains(searchText.toLowerCase());
     }
 
     private boolean validateData() {
@@ -382,10 +376,10 @@ public class PnlTaiKhoan extends JPanel implements ActionListener {
         String username = txtTenDangNhap.getText();
         String password = new String(txtMatKhau.getPassword());
 
-        if(!ma.matches("^[A-Z][0-9]{3}$")) {
+        if(!ma.matches("^[A-Z]{2}[0-9]{3}$")) {
             txtMaNV.requestFocus();
             JOptionPane.showMessageDialog(this,
-                    "Mã phải bắt đẩu bằng 1 chử cái viết hoa và gồm 3 ký tự số");
+                    "Mã phải bắt đẩu bằng 2 chử cái viết hoa và gồm 3 ký tự số");
             return false;
         }
         if(!ten.matches("^[A-Z][a-z]*( [A-Z][a-z]*)*$")) {
@@ -394,7 +388,7 @@ public class PnlTaiKhoan extends JPanel implements ActionListener {
                     "Tên không được chứa số hay ký tự đặc biệt.\nTên phải viết hoa chữ cái đầu và sau dấu cách");
             return false;
         }
-        int luong = 0;
+        int luong;
         try {
             luong = Integer.parseInt(luongString);
         } catch (NumberFormatException e) {

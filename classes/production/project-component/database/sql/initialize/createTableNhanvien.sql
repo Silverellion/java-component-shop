@@ -1,0 +1,11 @@
+IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'nhanVien')
+BEGIN
+    CREATE TABLE nhanVien (
+        maNhanVien NVARCHAR(5) PRIMARY KEY,
+        hoTen NVARCHAR(100),
+        chucVu NVARCHAR(100),
+        luong INT,
+        soDienThoai NVARCHAR(15),
+        diaChi NVARCHAR(200)
+    );
+END

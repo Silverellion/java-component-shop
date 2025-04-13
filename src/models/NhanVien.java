@@ -5,9 +5,9 @@ import java.util.Objects;
 
 public class NhanVien implements Serializable {
     private String maNhanVien, hoTen, chucVu, soDienThoai, diaChi;
-    private double luong;
+    private int luong;
 
-    public NhanVien(String maNhanVien, String hoTen, String chucVu, double luong, String soDienThoai,
+    public NhanVien(String maNhanVien, String hoTen, String chucVu, int luong, String soDienThoai,
                     String diaChi) {
         setMaNhanVien(maNhanVien);
         setHoTen(hoTen);
@@ -41,11 +41,11 @@ public class NhanVien implements Serializable {
         this.chucVu = chucVu;
     }
 
-    public double getLuong() {
+    public int getLuong() {
         return luong;
     }
 
-    public void setLuong(double luong) {
+    public void setLuong(int luong) {
         this.luong = luong;
     }
 
