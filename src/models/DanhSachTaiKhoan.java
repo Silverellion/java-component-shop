@@ -38,10 +38,11 @@ public class DanhSachTaiKhoan implements Serializable {
             stmt.setInt(6, taiKhoan.getLuong());
             stmt.setString(7, taiKhoan.getSoDienThoai());
             stmt.setString(8, taiKhoan.getDiaChi());
+            stmt.setString(9, "HoatDong");
 
-            stmt.setString(9, taiKhoan.getTenDangNhap());
-            stmt.setString(10, taiKhoan.getMatKhau());
-            stmt.setString(11, taiKhoan.getMaNhanVien());
+            stmt.setString(10, taiKhoan.getTenDangNhap());
+            stmt.setString(11, taiKhoan.getMatKhau());
+            stmt.setString(12, taiKhoan.getMaNhanVien());
             stmt.executeUpdate();
         } catch (IOException | SQLException e) {
             return false;

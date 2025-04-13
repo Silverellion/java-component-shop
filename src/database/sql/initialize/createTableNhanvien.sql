@@ -6,6 +6,7 @@ BEGIN
         chucVu NVARCHAR(100),
         luong INT,
         soDienThoai NVARCHAR(15),
-        diaChi NVARCHAR(200)
+        diaChi NVARCHAR(200),
+        trangThai NVARCHAR(20) CHECK (trangThai IN ('HoatDong', 'KhongConHoatDong'))
     );
 END
