@@ -1,47 +1,25 @@
 package database;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.*;
 
 public class JDBC {
     public static void connect(String url, String user, String password) {
         try (Connection conn = DriverManager.getConnection(url, user, password)) {
-            Statement statement = conn.createStatement();
-            statement.executeUpdate("IF DB_ID('dbTienLoi') IS NULL CREATE DATABASE dbTienLoi");
-            createTableNhanVien(conn);
-            createTableTaiKhoan(conn);
-        } catch (SQLException e) {
+            executeSQLFile(conn, "create_database.sql");
+            executeSQLFile(conn, "use_database.sql");
+            executeSQLFile(conn, "create_table_nhanvien.sql");
+            executeSQLFile(conn, "create_table_taikhoan.sql");
+        } catch (SQLException | IOException e) {
             throw new RuntimeException(e);
         }
     }
-    private static void createTableNhanVien(Connection conn) throws SQLException {
+    private static void executeSQLFile(Connection conn, String filename) throws IOException, SQLException {
+        String sql = Files.readString(Paths.get("src/database/sql/" + filename));
         Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'nhanVien'");
-        if (!rs.next()) {
-            stmt.executeUpdate("CREATE TABLE nhanVien " +
-                    "(" +
-                        "maNhanVien NVARCHAR(50) PRIMARY KEY," +
-                        "hoTen NVARCHAR(100)," +
-                        "chucVu NVARCHAR(100)," +
-                        "soDienThoai NVARCHAR(15)," +
-                        "diaChi NVARCHAR(200)" +
-                    ")");
-        }
-        rs.close();
-        stmt.close();
-    }
-    private static void createTableTaiKhoan(Connection conn) throws SQLException  {
-        Statement stmt = null;
-        stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'taiKhoan'");
-        if (!rs.next()) {
-            stmt.executeUpdate("CREATE TABLE taiKhoan " +
-                    "(" +
-                        "tenDangNhap NVARCHAR(50) PRIMARY KEY," +
-                        "matKhau NVARCHAR(100)," +
-                        "maNhanVien NVARCHAR(50) FOREIGN KEY REFERENCES nhanVien(maNhanVien)" +
-                    ")");
-        }
-        rs.close();
+        stmt.executeUpdate(sql);
         stmt.close();
     }
 }
