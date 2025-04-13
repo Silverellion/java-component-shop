@@ -3,7 +3,8 @@ folder structure:
 ```
 project-component/
 ├── lib/
-│   └── mssql-jdbc-12.10.0.jre11.jar
+│   ├── mssql-jdbc-12.10.0.jre11.jar
+│   └── mssql-jdbc_auth-12.10.0.x64.dll
 ├── src/
 │   ├── database/
 │   │   └── JDBC.java
@@ -32,7 +33,6 @@ project-component/
 UI Font: 'Segoe UI'<br>
 sidebar background color: rgb(45, 45, 45);<br>
 main background color: rgb (30, 30, 30);<br>
-jdbc:sqlserver://<HOST>:<PORT>;encrypt=true;trustServerCertificate=true;>
 
 Reminder:
 
@@ -40,3 +40,6 @@ Reminder:
 2. accountStatus needs to be added like in trangThai: A(Active)/I(Inactive) <- we check for a single char for this in MSSQL
 3. in PnlCaiDat, changing the system theme/UI/Appearance (Dark/Light mode) seems to be out of scope for now,
    so, we will only focus on letting the employee changing the username/password/dia chi/SDT/Dia chi.
+
+Instruction:
+- After cloning the project, remember to put  the mssql-jdbc_auth-12.10.0.x64.dll into C:\Users\<YourUser>\.jdks\openjdk-24\bin
