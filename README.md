@@ -48,7 +48,7 @@ Reminder:
 1. loaiTK needs to be removed
 2. accountStatus needs to be added like in trangThai: A(Active)/I(Inactive) <- we check for a single char for this in MSSQL
 3. in PnlCaiDat, changing the system theme/UI/Appearance (Dark/Light mode) seems to be out of scope for now,
-   so, we will only focus on letting the employee changing the username/password/dia chi/SDT/Dia chi.
+   so, we will only focus on letting the employee changing the username/password/SDT/Dia chi.
 
 Instruction:
 - After cloning the project, remember to put  the mssql-jdbc_auth-12.10.0.x64.dll into C:\Users\<YourUser>\.jdks\openjdk-24\bin
