@@ -1,18 +1,50 @@
 package models;
 
+import database.JDBC;
+
+import java.io.IOException;
 import java.io.Serializable;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class DanhSachTaiKhoan implements Serializable {
     private final ArrayList<TaiKhoan> danhSachTaiKhoan;
+    private final Connection conn;
+    private final String SQL_PATH = "src/database/sql/taiKhoan/";
     public DanhSachTaiKhoan() {
         danhSachTaiKhoan = new ArrayList<>();
+        conn = JDBC.getConnection();
     }
+
     public boolean them(TaiKhoan taiKhoan) {
         for(TaiKhoan curTaiKhoan : danhSachTaiKhoan) {
             if(curTaiKhoan.getMaNhanVien().equals(taiKhoan.getMaNhanVien())
             ||curTaiKhoan.getTenDangNhap().equals(taiKhoan.getTenDangNhap()))
                 return false;
+        }
+        try {
+            String sql = Files.readString(Paths.get(SQL_PATH + "insertTaiKhoan.sql"));
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, taiKhoan.getMaNhanVien());
+            stmt.setString(2, taiKhoan.getHoTen());
+
+            stmt.setString(3, taiKhoan.getMaNhanVien());
+            stmt.setString(4, taiKhoan.getHoTen());
+            stmt.setString(5, taiKhoan.getChucVu());
+            stmt.setInt(6, taiKhoan.getLuong());
+            stmt.setString(7, taiKhoan.getSoDienThoai());
+            stmt.setString(8, taiKhoan.getDiaChi());
+
+            stmt.setString(9, taiKhoan.getTenDangNhap());
+            stmt.setString(10, taiKhoan.getMatKhau());
+            stmt.setString(11, taiKhoan.getMaNhanVien());
+            stmt.executeUpdate();
+        } catch (IOException | SQLException e) {
+            return false;
         }
         danhSachTaiKhoan.add(taiKhoan);
         return true;

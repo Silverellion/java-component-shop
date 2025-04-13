@@ -50,7 +50,7 @@ public class TaiKhoan implements Serializable {
         return nhanVien.getDiaChi();
     }
 
-    public double getLuong() {
+    public int getLuong() {
         return nhanVien.getLuong();
     }
 

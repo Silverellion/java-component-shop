@@ -12,7 +12,7 @@ public class JDBC {
         executeSQLFile(connection, "createDatabase.sql");
         executeSQLFile(connection, "useDatabase.sql");
         executeSQLFile(connection, "createTableNhanvien.sql");
-        executeSQLFile(connection, "createTableTaikhoan.sql");
+        executeSQLFile(connection, "createTableTaiKhoan.sql");
     }
 
     public static Connection getConnection() {
