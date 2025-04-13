@@ -7,7 +7,16 @@ project-component/
 │   └── mssql-jdbc_auth-12.10.0.x64.dll
 ├── src/
 │   ├── database/
-│   │   └── JDBC.java
+│   │   ├── JDBC.java
+│   │   └── sql/ <- put your SQLs here!
+│   │       ├── initialize/ <- put your SQLs that create tables if it doesn't exit yet here!
+│   │       │   ├── createDatabase.sql
+│   │       │   ├── createTableNhanvien.sql
+│   │       │   ├── createTableTaiKhoan.sql
+│   │       │   └── useDatabase.sql
+│   │       ├── taiKhoan/
+│   │       │   └── insertTaiKhoan.sql
+│   │       ├── .../
 │   ├── gui/
 │   ├── main/
 │   │   └── App.java <- to run the program 
@@ -22,7 +31,7 @@ project-component/
 │   │       └── ...
 │   ├── utils/
 │   │   ├── FontHelper.java
-│   │   └── SwingHelper.java
+│   │   └── SwingHelper.java <- class to automatically call the theme of the app's JButtons and JLabels
 ├── .classpath
 ├── .gitignore
 ├── .project
