@@ -273,7 +273,8 @@ public class PnlTaiKhoan extends JPanel implements ActionListener {
         btnCapNhat.addActionListener(this);
         btnXoaRong.addActionListener(this);
         tableClickListener();
-        txtTim.getDocument().addDocumentListener(new FilterListener()); //Real time filtering
+        txtTim.getDocument().addDocumentListener(new FilterListener()); //Real time filtering function
+        load();
     }
 
     @Override
@@ -460,6 +461,24 @@ public class PnlTaiKhoan extends JPanel implements ActionListener {
             JOptionPane.showMessageDialog(this, "Mã nhân viên hoặc tên đăng nhập đã tồn tại");
         }
     }
+
+    private void load() {
+        for (TaiKhoan taiKhoan : danhSachTaiKhoan.getDanhSach()) {
+            if ("KhongConHoatDong".equalsIgnoreCase(taiKhoan.getTrangThai())) {
+                continue;
+            }
+            String ma = taiKhoan.getMaNhanVien();
+            String ten = taiKhoan.getHoTen();
+            String chucVu = taiKhoan.getChucVu();
+            int luong = taiKhoan.getLuong();
+            String sdt = taiKhoan.getSoDienThoai();
+            String diaChi = taiKhoan.getDiaChi();
+            String username = taiKhoan.getTenDangNhap();
+
+            tblModelTaiKhoan.addRow(new Object[]{ma, ten, chucVu, luong, sdt, diaChi, username, "********"});
+        }
+    }
+
     private void remove() {
         int choice = JOptionPane.showConfirmDialog(
                 this,

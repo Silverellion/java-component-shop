@@ -8,6 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -18,6 +19,31 @@ public class DanhSachTaiKhoan implements Serializable {
     public DanhSachTaiKhoan() {
         danhSachTaiKhoan = new ArrayList<>();
         conn = JDBC.getConnection();
+        load();
+    }
+
+    private void load() {
+        try {
+            String sql = Files.readString(Paths.get(SQL_PATH + "selectTaiKhoan.sql"));
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next()) {
+                TaiKhoan taiKhoan = new TaiKhoan(
+                        rs.getString("tenDangNhap"),
+                        rs.getString("matKhau"),
+                        new NhanVien(
+                                rs.getString("maNhanVien"),
+                                rs.getString("hoTen"),
+                                rs.getString("chucVu"),
+                                rs.getInt("luong"),
+                                rs.getString("soDienThoai"),
+                                rs.getString("diaChi"),
+                                rs.getString("trangThai")
+                        )
+                );
+                danhSachTaiKhoan.add(taiKhoan);
+            }
+        } catch (IOException | SQLException _) {}
     }
 
     public boolean them(TaiKhoan taiKhoan) {

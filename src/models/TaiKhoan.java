@@ -42,6 +42,10 @@ public class TaiKhoan implements Serializable {
         return nhanVien.getChucVu();
     }
 
+    public int getLuong() {
+        return nhanVien.getLuong();
+    }
+
     public String getSoDienThoai() {
         return nhanVien.getSoDienThoai();
     }
@@ -50,10 +54,9 @@ public class TaiKhoan implements Serializable {
         return nhanVien.getDiaChi();
     }
 
-    public int getLuong() {
-        return nhanVien.getLuong();
+    public String getTrangThai() {
+        return nhanVien.getTrangThai();
     }
-
 
     @Override
     public boolean equals(Object o) {

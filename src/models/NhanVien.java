@@ -23,6 +23,17 @@ public class NhanVien implements Serializable {
         setTrangThai("HoatDong");
     }
 
+    public NhanVien(String maNhanVien, String hoTen, String chucVu, int luong, String soDienThoai,
+                    String diaChi, String trangThai) {
+        setMaNhanVien(maNhanVien);
+        setHoTen(hoTen);
+        setChucVu(chucVu);
+        setLuong(luong);
+        setSoDienThoai(soDienThoai);
+        setDiaChi(diaChi);
+        setTrangThai(trangThai);
+    }
+
     public String getMaNhanVien() {
         return maNhanVien;
     }
