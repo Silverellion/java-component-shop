@@ -236,27 +236,36 @@ public class PnlTaiKhoan extends JPanel implements ActionListener {
         pnlSoutheast.add(lblTim);
         pnlSoutheast.add(txtTim);
 
-        TitledBorder pnlSouthWestTitledBorder = BorderFactory.createTitledBorder("Điều khiển");
+        TitledBorder pnlSouthWestTitledBorder = BorderFactory.createTitledBorder(
+                BorderFactory.createEmptyBorder(),
+                "Điều khiển"
+        );
         pnlSouthWestTitledBorder.setTitleColor(Color.WHITE);
         pnlSouthWestTitledBorder.setTitleFont(new Font("Segoe UI", Font.BOLD, 16));
         Border pnlSouthWestBorder = BorderFactory.createCompoundBorder(
-                BorderFactory.createEmptyBorder(10, 20, 10, 20),
-                pnlSouthWestTitledBorder
+                pnlSouthWestTitledBorder,
+                BorderFactory.createEmptyBorder(10, 20, 10, 20)
         );
 
-        TitledBorder pnlSouthEastTitledBorder = BorderFactory.createTitledBorder("Tìm kiếm");
+        TitledBorder pnlSouthEastTitledBorder = BorderFactory.createTitledBorder(
+                BorderFactory.createEmptyBorder(),
+                "Điều khiển"
+        );
         pnlSouthEastTitledBorder.setTitleColor(Color.WHITE);
         pnlSouthEastTitledBorder.setTitleFont(new Font("Segoe UI", Font.BOLD, 16));
         Border pnlSouthEastBorder = BorderFactory.createCompoundBorder(
-                BorderFactory.createEmptyBorder(10, 20, 10, 20),
-                pnlSouthEastTitledBorder
+                pnlSouthEastTitledBorder,
+                BorderFactory.createEmptyBorder(10, 20, 10, 20)
         );
 
         pnlSouthwest.setBorder(pnlSouthWestBorder);
         pnlSoutheast.setBorder(pnlSouthEastBorder);
 
-        JSplitPane pnlSouth = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, pnlSouthwest, pnlSoutheast);
-        pnlSouth.setBackground(new Color(45,45,45));
+        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, pnlSouthwest, pnlSoutheast);
+        JPanel pnlSouth = new JPanel(new BorderLayout());
+        pnlSouth.setBackground(new Color(30,30,30));
+        pnlSouth.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 20));
+        pnlSouth.add(splitPane);
         add(pnlSouth, BorderLayout.SOUTH);
 
         btnThem.addActionListener(this);
@@ -501,6 +510,5 @@ public class PnlTaiKhoan extends JPanel implements ActionListener {
 
         txtMaNV.requestFocus();
     }
-
 
 }
