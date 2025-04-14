@@ -47,7 +47,9 @@ Reminder:
 
 1. loaiTK needs to be removed
 2. accountStatus needs to be added like in trangThai: A(Active)/I(Inactive) <- we check for a single char for this in MSSQL
-3. in PnlCaiDat, changing the system theme/UI/Appearance (Dark/Light mode) seems to be out of scope for now,
+3. TrangThai will be added to NhanVien, and automatically passed 'HoatDong' whenever DanhSachTaiKhoan's add() is called.
+4. If TrangThai is 'KhongConHoatDong', it's still going to be added into the dynamic array for existence checking, but won't be displayed on the PnlTaiKhoan's DefaultTableModel
+5. in PnlCaiDat, changing the system theme/UI/Appearance (Dark/Light mode) seems to be out of scope for now,
    so, we will only focus on letting the employee changing the username/password/SDT/Dia chi.
 
 Instruction:

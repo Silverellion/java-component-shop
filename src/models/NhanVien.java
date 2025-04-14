@@ -4,8 +4,13 @@ import java.io.Serializable;
 import java.util.Objects;
 
 public class NhanVien implements Serializable {
-    private String maNhanVien, hoTen, chucVu, soDienThoai, diaChi;
+    private String maNhanVien;
+    private String hoTen;
+    private String chucVu;
     private int luong;
+    private String soDienThoai;
+    private String diaChi;
+    private String trangThai;
 
     public NhanVien(String maNhanVien, String hoTen, String chucVu, int luong, String soDienThoai,
                     String diaChi) {
@@ -15,6 +20,7 @@ public class NhanVien implements Serializable {
         setLuong(luong);
         setSoDienThoai(soDienThoai);
         setDiaChi(diaChi);
+        setTrangThai("HoatDong");
     }
 
     public String getMaNhanVien() {
@@ -65,15 +71,23 @@ public class NhanVien implements Serializable {
         this.diaChi = diaChi;
     }
 
+    public String getTrangThai() {
+        return trangThai;
+    }
+
+    public void setTrangThai(String trangThai) {
+        this.trangThai = trangThai;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         NhanVien nhanVien = (NhanVien) o;
-        return Double.compare(luong, nhanVien.luong) == 0 && Objects.equals(maNhanVien, nhanVien.maNhanVien) && Objects.equals(hoTen, nhanVien.hoTen) && Objects.equals(chucVu, nhanVien.chucVu) && Objects.equals(soDienThoai, nhanVien.soDienThoai) && Objects.equals(diaChi, nhanVien.diaChi);
+        return luong == nhanVien.luong && Objects.equals(maNhanVien, nhanVien.maNhanVien) && Objects.equals(hoTen, nhanVien.hoTen) && Objects.equals(chucVu, nhanVien.chucVu) && Objects.equals(soDienThoai, nhanVien.soDienThoai) && Objects.equals(diaChi, nhanVien.diaChi) && Objects.equals(trangThai, nhanVien.trangThai);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(maNhanVien, hoTen, chucVu, soDienThoai, diaChi, luong);
+        return Objects.hash(maNhanVien, hoTen, chucVu, luong, soDienThoai, diaChi, trangThai);
     }
 }
