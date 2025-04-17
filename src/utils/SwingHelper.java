@@ -26,15 +26,12 @@ public class SwingHelper {
             protected void paintComponent(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g.create();
                 g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                // Create shadow
-                g2.setColor(new Color(0, 0, 0, 80));
-                g2.fillRoundRect(8, 8, getWidth() - 4, getHeight() - 4, 10, 10);
 
-                //Set background
+                // Create background
                 g2.setColor(getBackground());
-                g2.fillRoundRect(4, 4, getWidth() - 4, getHeight() - 4, 10, 10);
-                g2.dispose();
+                g2.fillRoundRect(0, 0, getWidth(), getHeight(), 10, 10);
 
+                g2.dispose();
                 setContentAreaFilled(false);
                 super.paintComponent(g);
             }
@@ -62,7 +59,7 @@ public class SwingHelper {
             }
             @Override
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                button.setBackground(new Color(200, 40, 40));
+                button.setBackground(new Color(200, 60, 60));
                 button.repaint();
             }
         });
