@@ -64,28 +64,76 @@ public class PnlThemNhanVien extends JPanel {
         comboChucVu.addItem("Nhân viên giao hàng");
         comboChucVu.addItem("Quản lý cửa hàng");
 
-        JPanel pnlFields = new JPanel(new GridLayout(10, 10, 10, 10));
-        pnlFields.add(SwingHelper.createProjectJLabel("Thông tin nhân viên"));
-        pnlFields.add(lblMaNV);
-        pnlFields.add(txtMaNV);
-        pnlFields.add(lblTenNV);
-        pnlFields.add(txtTenNV);
+        JPanel pnlFields = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(5, 5, 5, 5);
+        gbc.weightx = 1.0;
 
-        pnlFields.add(lblSoDienThoai);
-        pnlFields.add(txtSoDienThoai);
-        pnlFields.add(lblDiaChi);
-        pnlFields.add(txtDiaChi);
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.gridwidth = 2;
+        JLabel lblThongTin = SwingHelper.createProjectJLabel("Thông tin nhân viên");
+        lblThongTin.setHorizontalAlignment(SwingConstants.CENTER);
+        pnlFields.add(lblThongTin, gbc);
 
-        pnlFields.add(lblChucVu);
-        pnlFields.add(comboChucVu);
-        pnlFields.add(lblLuong);
-        pnlFields.add(txtLuong);
+        gbc.gridy = 1;
+        gbc.gridwidth = 1;
+        gbc.gridx = 0;
+        pnlFields.add(lblMaNV, gbc);
+        gbc.gridx = 1;
+        pnlFields.add(txtMaNV, gbc);
 
-        pnlFields.add(SwingHelper.createProjectJLabel("Tài khoản nhân viên"));
-        pnlFields.add(lblTenDangNhap);
-        pnlFields.add(txtTenDangNhap);
-        pnlFields.add(lblMatKhau);
-        pnlFields.add(txtMatKhau);
+        gbc.gridy = 2;
+        gbc.gridx = 0;
+        pnlFields.add(lblTenNV, gbc);
+        gbc.gridx = 1;
+        pnlFields.add(txtTenNV, gbc);
+
+        gbc.gridy = 3;
+        gbc.gridx = 0;
+        pnlFields.add(lblSoDienThoai, gbc);
+        gbc.gridx = 1;
+        pnlFields.add(txtSoDienThoai, gbc);
+
+        gbc.gridy = 4;
+        gbc.gridx = 0;
+        pnlFields.add(lblDiaChi, gbc);
+        gbc.gridx = 1;
+        pnlFields.add(txtDiaChi, gbc);
+
+        gbc.gridy = 5;
+        gbc.gridx = 0;
+        pnlFields.add(lblChucVu, gbc);
+        gbc.gridx = 1;
+        pnlFields.add(comboChucVu, gbc);
+
+        gbc.gridy = 6;
+        gbc.gridx = 0;
+        pnlFields.add(lblLuong, gbc);
+        gbc.gridx = 1;
+        pnlFields.add(txtLuong, gbc);
+
+        gbc.gridy = 7;
+        gbc.gridx = 0;
+        gbc.gridwidth = 2;
+        JLabel lblTaiKhoan = SwingHelper.createProjectJLabel("Tài khoản nhân viên");
+        lblTaiKhoan.setHorizontalAlignment(SwingConstants.CENTER);
+        pnlFields.add(lblTaiKhoan, gbc);
+
+
+        gbc.gridy = 8;
+        gbc.gridwidth = 1;
+        gbc.gridx = 0;
+        pnlFields.add(lblTenDangNhap, gbc);
+        gbc.gridx = 1;
+        pnlFields.add(txtTenDangNhap, gbc);
+
+        gbc.gridy = 9;
+        gbc.gridx = 0;
+        pnlFields.add(lblMatKhau, gbc);
+        gbc.gridx = 1;
+        pnlFields.add(txtMatKhau, gbc);
 
         pnlForm.add(pnlFields);
         pnlForm.add(Box.createVerticalGlue());
