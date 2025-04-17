@@ -168,29 +168,29 @@ public class PnlCapNhatNhanVien extends JPanel implements ActionListener {
         panelTaiKhoan.setBorder(borderTaiKhoan);
 
         // WRAPPERS (For padding purposes)
-        JPanel panelThongTinWrapper = new JPanel(new BorderLayout());
-        panelThongTinWrapper.setOpaque(false);
-        panelThongTinWrapper.add(panelThongTin, BorderLayout.CENTER);
-        panelThongTinWrapper.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 20));
+        JPanel pnlThongTinWrapper = new JPanel(new BorderLayout());
+        pnlThongTinWrapper.setOpaque(false);
+        pnlThongTinWrapper.add(panelThongTin, BorderLayout.CENTER);
+        pnlThongTinWrapper.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 20));
 
-        JPanel panelTaiKhoanWrapper = new JPanel(new BorderLayout());
-        panelTaiKhoanWrapper.setOpaque(false);
-        panelTaiKhoanWrapper.add(panelTaiKhoan, BorderLayout.CENTER);
-        panelTaiKhoanWrapper.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 20));
+        JPanel pnlTaiKhoanWrapper = new JPanel(new BorderLayout());
+        pnlTaiKhoanWrapper.setOpaque(false);
+        pnlTaiKhoanWrapper.add(panelTaiKhoan, BorderLayout.CENTER);
+        pnlTaiKhoanWrapper.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 20));
 
-        JPanel panelNorth = new JPanel();
-        panelNorth.setOpaque(false);
-        panelNorth.setLayout(new BoxLayout(panelNorth, BoxLayout.Y_AXIS));
+        JPanel pnlNorth = new JPanel();
+        pnlNorth.setOpaque(false);
+        pnlNorth.setLayout(new BoxLayout(pnlNorth, BoxLayout.Y_AXIS));
 
         boxTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
-        panelNorth.add(boxTitle);
-        panelNorth.add(Box.createVerticalStrut(10));
-        panelNorth.add(panelThongTinWrapper);
-        panelNorth.add(Box.createVerticalStrut(10));
-        panelNorth.add(panelTaiKhoanWrapper);
-        panelNorth.add(Box.createVerticalStrut(20));
+        pnlNorth.add(boxTitle);
+        pnlNorth.add(Box.createVerticalStrut(10));
+        pnlNorth.add(pnlThongTinWrapper);
+        pnlNorth.add(Box.createVerticalStrut(10));
+        pnlNorth.add(pnlTaiKhoanWrapper);
+        pnlNorth.add(Box.createVerticalStrut(20));
 
-        add(panelNorth, BorderLayout.NORTH);
+        add(pnlNorth, BorderLayout.NORTH);
 
         tblModelTaiKhoan = new DefaultTableModel();
         tblModelTaiKhoan.addColumn("Mã nhân viên");
