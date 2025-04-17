@@ -8,9 +8,9 @@ import java.awt.event.MouseEvent;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DropdownHelper {
+public class SwingSidebarHelper {
     private static final Map<JButton, JPopupMenu> buttonMenuMap = new HashMap<>();
-    public static void register(JButton button, String itemName, JPanel panel, JPanel pnlMain, Runnable backgroundResetter) {
+    public static void registerDropdown(JButton button, String itemName, JPanel panel, JPanel pnlMain, Runnable backgroundResetter) {
         JPopupMenu menu = buttonMenuMap.computeIfAbsent(button, btn -> {
             JPopupMenu newMenu = new JPopupMenu();
             newMenu.setBorder(BorderFactory.createLineBorder(Color.GRAY));

@@ -20,7 +20,7 @@ import java.util.Objects;
 
 import static utils.SwingHelper.createProjectJTable;
 
-public class PnlQuanLyNhanVien extends JPanel implements ActionListener {
+public class PnlCapNhatNhanVien extends JPanel implements ActionListener {
     private final JTextField txtMaNV, txtTenNV, txtLuong, txtSoDienThoai, txtDiaChi, txtTenDangNhap;
     private final JPasswordField txtMatKhau;
     private final JComboBox<String> comboChucVu;
@@ -30,11 +30,11 @@ public class PnlQuanLyNhanVien extends JPanel implements ActionListener {
     private final JTextField txtTim;
     private final DanhSachTaiKhoan danhSachTaiKhoan;
 
-    public PnlQuanLyNhanVien() {
+    public PnlCapNhatNhanVien() {
         danhSachTaiKhoan = new DanhSachTaiKhoan();
         setLayout(new BorderLayout());
 
-        JLabel lblTitle = SwingHelper.createProjectJLabel("Quản lý nhân viên", 30);
+        JLabel lblTitle = SwingHelper.createProjectJLabel("Cập nhật nhân viên", 30);
         Box boxTitle = new Box(BoxLayout.X_AXIS);
         boxTitle.add(lblTitle);
 
