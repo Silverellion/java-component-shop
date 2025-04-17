@@ -379,13 +379,13 @@ public class PnlTaiKhoan extends JPanel implements ActionListener {
         String username = txtTenDangNhap.getText();
         String password = new String(txtMatKhau.getPassword());
 
-        if(!ma.matches("^[A-Z]{2}[0-9]{3}$")) {
+        if(!ma.matches("^[A-Z]{2}[0-9]{6}$")) {
             txtMaNV.requestFocus();
             JOptionPane.showMessageDialog(this,
-                    "Mã phải bắt đẩu bằng 2 chử cái viết hoa và gồm 3 ký tự số");
+                    "Mã phải bắt đẩu bằng 2 chử cái viết hoa và gồm 6 ký tự số");
             return false;
         }
-        if(!ten.matches("^[A-Z][a-z]*( [A-Z][a-z]*)*$")) {
+        if(!ten.matches("^\\p{Lu}\\p{Ll}*( \\p{Lu}\\p{Ll}*)*$")) {
             txtTenNV.requestFocus();
             JOptionPane.showMessageDialog(this,
                     "Tên không được chứa số hay ký tự đặc biệt.\nTên phải viết hoa chữ cái đầu và sau dấu cách");
