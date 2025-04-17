@@ -23,9 +23,9 @@ public class MainWindow extends JFrame implements ActionListener{
 	@Serial
     private static final long serialVersionUID = 1L;
     private JButton btnSelected = null;
-	private final JButton btnKhoPanel;
+	private final JButton btnQuanLyKhoPanel;
     private final JButton btnDonHangPnl;
-    private final JButton btnTaiKhoanPnl;
+    private final JButton btnQuanLyNhanVienPnl;
 	private final JButton btnCaiDatPanel;
 	private final JButton btnDangNhap;
 	private final JButton btnDangXuat;
@@ -34,7 +34,7 @@ public class MainWindow extends JFrame implements ActionListener{
 	private final JPanel pnlEast;
 	PnlQuanLyKho pnlQuanLyKho;
     PnlDonHang pnlDonHang;
-    PnlTaiKhoan pnlTaiKhoan;
+    PnlQuanLyNhanVien pnlQuanLyNhanVien;
 	PnlCaiDat pnlCaiDat;
 
     public MainWindow() {
@@ -46,7 +46,7 @@ public class MainWindow extends JFrame implements ActionListener{
         
         pnlQuanLyKho = new PnlQuanLyKho();
         pnlDonHang = new PnlDonHang();
-        pnlTaiKhoan = new PnlTaiKhoan();
+        pnlQuanLyNhanVien = new PnlQuanLyNhanVien();
         pnlCaiDat = new PnlCaiDat();
         
         JPanel pnlMain = new JPanel(new BorderLayout());
@@ -56,16 +56,16 @@ public class MainWindow extends JFrame implements ActionListener{
         pnlSidebar.setBackground(new Color(200, 60, 60));
         pnlSidebar.setLayout(new BoxLayout(pnlSidebar, BoxLayout.Y_AXIS));
 
-        btnKhoPanel = createSidebarButton("Quản lý kho", "icons8-manage-50.png");
+        btnQuanLyKhoPanel = createSidebarButton("Quản lý kho", "icons8-manage-50.png");
         btnDonHangPnl = createSidebarButton("Đơn hàng", "icons8-order-50.png");
-        btnTaiKhoanPnl = createSidebarButton("Quản lý nhân viên", "icons8-user-50.png");
+        btnQuanLyNhanVienPnl = createSidebarButton("Quản lý nhân viên", "icons8-user-50.png");
         btnCaiDatPanel = createSidebarButton("Cài đặt", "icons8-settings-50.png");
         btnDangNhap = createSidebarButton("Đăng nhập", "icons8-login-50.png");
         btnDangXuat = createSidebarButton("Đăng xuất", "icons8-logout-50.png");
 
-        pnlSidebar.add(btnKhoPanel);
+        pnlSidebar.add(btnQuanLyKhoPanel);
         pnlSidebar.add(btnDonHangPnl);
-        pnlSidebar.add(btnTaiKhoanPnl);
+        pnlSidebar.add(btnQuanLyNhanVienPnl);
         pnlSidebar.add(btnCaiDatPanel);
         pnlMain.add(pnlSidebar, BorderLayout.WEST);
         updateLoginStatus();
@@ -77,9 +77,9 @@ public class MainWindow extends JFrame implements ActionListener{
         add(pnlMain);
         setVisible(true);
         
-        btnKhoPanel.addActionListener(this);
+        btnQuanLyKhoPanel.addActionListener(this);
         btnDonHangPnl.addActionListener(this);
-        btnTaiKhoanPnl.addActionListener(this);
+        btnQuanLyNhanVienPnl.addActionListener(this);
         btnCaiDatPanel.addActionListener(this);
         btnDangNhap.addActionListener(this);
         btnDangXuat.addActionListener(this);
@@ -129,14 +129,14 @@ public class MainWindow extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		Object src = e.getSource();
 
-		if(src == btnKhoPanel) {
-			loadPnlEast(btnKhoPanel, pnlQuanLyKho);
+		if(src == btnQuanLyKhoPanel) {
+			loadPnlEast(btnQuanLyKhoPanel, pnlQuanLyKho);
 		}
         if(src == btnDonHangPnl) {
             loadPnlEast(btnDonHangPnl, pnlDonHang);
         }
-        if(src == btnTaiKhoanPnl) {
-            loadPnlEast(btnTaiKhoanPnl, pnlTaiKhoan);
+        if(src == btnQuanLyNhanVienPnl) {
+            loadPnlEast(btnQuanLyNhanVienPnl, pnlQuanLyNhanVien);
         }
 		if(src == btnCaiDatPanel) {
 			loadPnlEast(btnCaiDatPanel, pnlCaiDat);
@@ -174,9 +174,9 @@ public class MainWindow extends JFrame implements ActionListener{
     	pnlEast.removeAll();
     	pnlEast.add(jPanel);
 
-    	btnKhoPanel.setBackground(new Color(200, 60, 60));
+    	btnQuanLyKhoPanel.setBackground(new Color(200, 60, 60));
         btnDonHangPnl.setBackground(new Color(200, 60, 60));
-        btnTaiKhoanPnl.setBackground(new Color(200, 60, 60));
+        btnQuanLyNhanVienPnl.setBackground(new Color(200, 60, 60));
     	btnCaiDatPanel.setBackground(new Color(200, 60, 60));
 
         btnSelected = jButton;
