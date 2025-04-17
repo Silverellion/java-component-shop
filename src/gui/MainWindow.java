@@ -7,6 +7,8 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.Serial;
 import java.net.URL;
 
@@ -20,6 +22,7 @@ import javax.swing.JPanel;
 public class MainWindow extends JFrame implements ActionListener{
 	@Serial
     private static final long serialVersionUID = 1L;
+    private JButton btnSelected = null;
 	private final JButton btnKhoPanel;
     private final JButton btnDonHangPnl;
     private final JButton btnTaiKhoanPnl;
@@ -106,6 +109,20 @@ public class MainWindow extends JFrame implements ActionListener{
         jButton.setFocusPainted(false);
         jButton.setIconTextGap(10);
 
+        jButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                if (jButton != btnSelected)
+                    jButton.setBackground(new Color(200, 0, 0));
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                if (jButton != btnSelected)
+                    jButton.setBackground(new Color(200, 60, 60));
+            }
+        });
+
         return jButton;
     }
 
@@ -163,6 +180,7 @@ public class MainWindow extends JFrame implements ActionListener{
         btnTaiKhoanPnl.setBackground(new Color(200, 60, 60));
     	btnCaiDatPanel.setBackground(new Color(200, 60, 60));
 
+        btnSelected = jButton;
     	jButton.setBackground(new Color(200, 0, 0));
 
     	pnlEast.revalidate();
