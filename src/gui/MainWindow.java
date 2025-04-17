@@ -1,36 +1,33 @@
 package gui;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import utils.DropdownHelper;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
 import java.io.Serial;
 import java.net.URL;
 
-import javax.swing.*;
-
-public class MainWindow extends JFrame implements ActionListener{
-	@Serial
+public class MainWindow extends JFrame implements ActionListener {
+    @Serial
     private static final long serialVersionUID = 1L;
+
     private JButton btnSelected = null;
-	private final JButton btnQuanLyKhoPanel;
+    private final JButton btnQuanLyKhoPanel;
     private final JButton btnDonHangPnl;
     private final JButton btnQuanLyNhanVienPnl;
-	private final JButton btnCaiDatPanel;
-	private final JButton btnDangNhap;
-	private final JButton btnDangXuat;
+    private final JButton btnCaiDatPanel;
+    private final JButton btnDangNhap;
+    private final JButton btnDangXuat;
     private final JPanel pnlSidebar;
+    private final JPanel pnlEast;
     private boolean isLoggedIn = false;
-	private final JPanel pnlEast;
-	PnlQuanLyKho pnlQuanLyKho;
+
+    // Main content panels
+    PnlQuanLyKho pnlQuanLyKho;
     PnlDonHang pnlDonHang;
     PnlQuanLyNhanVien pnlQuanLyNhanVien;
-	PnlCaiDat pnlCaiDat;
+    PnlCaiDat pnlCaiDat;
 
     public MainWindow() {
         setTitle("Cửa hàng linh kiện");
@@ -38,12 +35,12 @@ public class MainWindow extends JFrame implements ActionListener{
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
-        
+
         pnlQuanLyKho = new PnlQuanLyKho();
         pnlDonHang = new PnlDonHang();
         pnlQuanLyNhanVien = new PnlQuanLyNhanVien();
         pnlCaiDat = new PnlCaiDat();
-        
+
         JPanel pnlMain = new JPanel(new BorderLayout());
 
         pnlSidebar = new JPanel();
@@ -58,44 +55,57 @@ public class MainWindow extends JFrame implements ActionListener{
         btnDangNhap = createSidebarButton("Đăng nhập", "icons8-login-50.png");
         btnDangXuat = createSidebarButton("Đăng xuất", "icons8-logout-50.png");
 
-
         pnlSidebar.add(btnQuanLyKhoPanel);
         pnlSidebar.add(btnDonHangPnl);
         pnlSidebar.add(btnQuanLyNhanVienPnl);
         pnlSidebar.add(btnCaiDatPanel);
         pnlMain.add(pnlSidebar, BorderLayout.WEST);
+
         updateLoginStatus();
-        
-        pnlEast = new JPanel();
-        pnlEast.setLayout(new BorderLayout());
+
+        pnlEast = new JPanel(new BorderLayout());
         pnlMain.add(pnlEast);
 
         add(pnlMain);
         setVisible(true);
-        
-        btnQuanLyKhoPanel.addActionListener(this);
-        btnDonHangPnl.addActionListener(this);
-        btnQuanLyNhanVienPnl.addActionListener(this);
+
+        // Action listeners for non-dropdown buttons
         btnCaiDatPanel.addActionListener(this);
         btnDangNhap.addActionListener(this);
         btnDangXuat.addActionListener(this);
+
+        DropdownHelper.register(btnQuanLyKhoPanel, "Nhập hàng", createPanel("Nhập hàng"), pnlEast, this::resetSidebarColors);
+        DropdownHelper.register(btnQuanLyKhoPanel, "Thống kê kho", createPanel("Thống kê kho"), pnlEast, this::resetSidebarColors);
+
+        DropdownHelper.register(btnDonHangPnl, "Tạo đơn hàng", createPanel("Tạo đơn hàng"), pnlEast, this::resetSidebarColors);
+        DropdownHelper.register(btnDonHangPnl, "Thống kê đơn hàng", createPanel("Thống kê đơn hàng"), pnlEast, this::resetSidebarColors);
+
+        DropdownHelper.register(btnQuanLyNhanVienPnl, "Thêm nhân viên", createPanel("Thêm nhân viên"), pnlEast, this::resetSidebarColors);
+        DropdownHelper.register(btnQuanLyNhanVienPnl, "Tra cứu nhân viên", createPanel("Tra cứu nhân viên"), pnlEast, this::resetSidebarColors);
+        DropdownHelper.register(btnQuanLyNhanVienPnl, "Thống kê nhân viên", createPanel("Thống kê nhân viên"), pnlEast, this::resetSidebarColors);
     }
-    
+
+    private JPanel createPanel(String title) {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BorderLayout());
+        panel.add(new JLabel(title, SwingConstants.CENTER), BorderLayout.CENTER);
+        return panel;
+    }
+
     private JButton createSidebarButton(String text, String iconPath) {
         String resourcePath = "/resources/icons/" + iconPath;
         ImageIcon icon = null;
         try {
             URL imgURL = getClass().getResource(resourcePath);
             if (imgURL != null) {
-                ImageIcon originalIcon = new ImageIcon(imgURL);
-                Image img = originalIcon.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+                Image img = new ImageIcon(imgURL).getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
                 icon = new ImageIcon(img);
             }
-        } catch (Exception _) {}
+        } catch (Exception ignored) {}
+
         JButton button = new JButton(text, icon);
         button.setHorizontalAlignment(JButton.LEFT);
         button.setHorizontalTextPosition(JButton.RIGHT);
-
         button.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 0));
         button.setAlignmentX(LEFT_ALIGNMENT);
         button.setMaximumSize(new Dimension(Integer.MAX_VALUE, 60));
@@ -118,63 +128,53 @@ public class MainWindow extends JFrame implements ActionListener{
                     button.setBackground(new Color(200, 60, 60));
             }
         });
+
         return button;
     }
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		Object src = e.getSource();
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        Object src = e.getSource();
 
-		if(src == btnQuanLyKhoPanel) {
-			loadPnlEast(btnQuanLyKhoPanel, pnlQuanLyKho);
-		}
-        if(src == btnDonHangPnl) {
-            loadPnlEast(btnDonHangPnl, pnlDonHang);
-        }
-        if(src == btnQuanLyNhanVienPnl) {
-            loadPnlEast(btnQuanLyNhanVienPnl, pnlQuanLyNhanVien);
-        }
-		if(src == btnCaiDatPanel) {
-			loadPnlEast(btnCaiDatPanel, pnlCaiDat);
-		}
-		if(src == btnDangNhap) {
+        if (src == btnCaiDatPanel) {
+            loadPnlEast(btnCaiDatPanel, pnlCaiDat);
+        } else if (src == btnDangNhap) {
             isLoggedIn = true;
             updateLoginStatus();
             this.dispose();
             new LoginWindow();
-		}
-		if(src == btnDangXuat) {
+        } else if (src == btnDangXuat) {
             isLoggedIn = false;
             updateLoginStatus();
             this.dispose();
-		}
-	}
+        }
+    }
 
     private void updateLoginStatus() {
         pnlSidebar.remove(btnDangNhap);
         pnlSidebar.remove(btnDangXuat);
-        if (isLoggedIn) {
-            pnlSidebar.add(btnDangXuat);
-        } else {
-            pnlSidebar.add(btnDangNhap);
-        }
+        pnlSidebar.add(isLoggedIn ? btnDangXuat : btnDangNhap);
         pnlSidebar.revalidate();
         pnlSidebar.repaint();
     }
 
     private void loadPnlEast(JButton jButton, JPanel jPanel) {
-    	pnlEast.removeAll();
-    	pnlEast.add(jPanel);
+        pnlEast.removeAll();
+        pnlEast.add(jPanel);
 
-    	btnQuanLyKhoPanel.setBackground(new Color(200, 60, 60));
-        btnDonHangPnl.setBackground(new Color(200, 60, 60));
-        btnQuanLyNhanVienPnl.setBackground(new Color(200, 60, 60));
-    	btnCaiDatPanel.setBackground(new Color(200, 60, 60));
+        resetSidebarColors();
 
         btnSelected = jButton;
-    	jButton.setBackground(new Color(200, 0, 0));
+        jButton.setBackground(new Color(200, 0, 0));
 
-    	pnlEast.revalidate();
-    	pnlEast.repaint();
+        pnlEast.revalidate();
+        pnlEast.repaint();
+    }
+
+    private void resetSidebarColors() {
+        btnQuanLyKhoPanel.setBackground(new Color(200, 60, 60));
+        btnDonHangPnl.setBackground(new Color(200, 60, 60));
+        btnQuanLyNhanVienPnl.setBackground(new Color(200, 60, 60));
+        btnCaiDatPanel.setBackground(new Color(200, 60, 60));
     }
 }

@@ -9,10 +9,9 @@ import java.util.Map;
 
 public class DropdownHelper {
     private static final Map<JButton, JPopupMenu> buttonMenuMap = new HashMap<>();
-    public static void register(JButton button, String itemName, JPanel panel, JPanel pnlEast, Runnable backgroundResetter) {
+    public static void register(JButton button, String itemName, JPanel panel, JPanel pnlMain, Runnable backgroundResetter) {
         JPopupMenu dropdownMenu = buttonMenuMap.computeIfAbsent(button, btn -> {
             JPopupMenu menu = new JPopupMenu();
-
             // Show menu on hover
             btn.addMouseListener(new MouseAdapter() {
                 Timer hoverTimer;
@@ -41,7 +40,6 @@ public class DropdownHelper {
                     }
                 }
             });
-
             return menu;
         });
 
@@ -53,10 +51,10 @@ public class DropdownHelper {
             backgroundResetter.run();
             button.setBackground(new Color(200, 0, 0));
 
-            pnlEast.removeAll();
-            pnlEast.add(panel);
-            pnlEast.revalidate();
-            pnlEast.repaint();
+            pnlMain.removeAll();
+            pnlMain.add(panel);
+            pnlMain.revalidate();
+            pnlMain.repaint();
         });
     }
 }
