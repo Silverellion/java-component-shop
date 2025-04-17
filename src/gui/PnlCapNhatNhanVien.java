@@ -82,7 +82,7 @@ public class PnlCapNhatNhanVien extends JPanel implements ActionListener {
 
         //LEFT PANEL
         JPanel leftPanel = new JPanel(new GridLayout(3, 1, 0, 10));
-        leftPanel.setBorder(BorderFactory.createEmptyBorder(0, 0,10, 0));
+        leftPanel.setBorder(BorderFactory.createEmptyBorder(10, 0,10, 0));
         leftPanel.setOpaque(false); // Transparent background
 
         JPanel panelMaNV = new JPanel(new BorderLayout(5, 0));
@@ -106,7 +106,7 @@ public class PnlCapNhatNhanVien extends JPanel implements ActionListener {
 
         //RIGHT PANEL
         JPanel rightPanel = new JPanel(new GridLayout(3, 1, 0, 10));
-        rightPanel.setBorder(BorderFactory.createEmptyBorder(0, 0,10, 0));
+        rightPanel.setBorder(BorderFactory.createEmptyBorder(10, 0,10, 0));
         rightPanel.setOpaque(false);
 
         JPanel panelTenNV = new JPanel(new BorderLayout(5, 0));
@@ -146,13 +146,13 @@ public class PnlCapNhatNhanVien extends JPanel implements ActionListener {
         panelTaiKhoan.setLayout(new BoxLayout(panelTaiKhoan, BoxLayout.X_AXIS));
 
         JPanel panelUsername = new JPanel(new BorderLayout(5, 0));
-        panelUsername.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
+        panelUsername.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
         panelUsername.setOpaque(false);
         panelUsername.add(lblTenDangNhap, BorderLayout.WEST);
         panelUsername.add(txtTenDangNhap, BorderLayout.CENTER);
 
         JPanel panelPassword = new JPanel(new BorderLayout(5, 0));
-        panelPassword.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
+        panelPassword.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
         panelPassword.setOpaque(false);
         panelPassword.add(lblMatKhau, BorderLayout.WEST);
         panelPassword.add(txtMatKhau, BorderLayout.CENTER);
