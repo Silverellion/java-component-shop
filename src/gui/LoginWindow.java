@@ -35,20 +35,18 @@ public class LoginWindow extends JFrame implements ActionListener {
         setSize(400, 720);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        getContentPane().setBackground(new Color(45, 45, 45));
 
-        JLabel lblLogin = SwingHelper.createDarkModeJLabel("Đăng Nhập", 30);
+        JLabel lblLogin = SwingHelper.createProjectJLabel("Đăng Nhập", 30);
         lblLogin.setHorizontalAlignment(JLabel.CENTER);
 
         JPanel formPanel = new JPanel(new GridBagLayout());
-        formPanel.setBackground(new Color(45, 45, 45));
-        
+
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.anchor = GridBagConstraints.WEST;
         
-        lblUsername = SwingHelper.createDarkModeJLabel("Tên đăng nhập:");
-        lblPassword = SwingHelper.createDarkModeJLabel("Mật khẩu:");
+        lblUsername = SwingHelper.createProjectJLabel("Tên đăng nhập:");
+        lblPassword = SwingHelper.createProjectJLabel("Mật khẩu:");
         
         txtUsername = new JTextField(15);
         txtUsername.setFont(new Font("Segoe UI", Font.PLAIN, 14));
@@ -75,19 +73,16 @@ public class LoginWindow extends JFrame implements ActionListener {
         gbc.gridwidth = 2;
         formPanel.add(txtPassword, gbc);
         
-        btnDangNhap = SwingHelper.createDarkModeJButton("Đăng nhập");
+        btnDangNhap = SwingHelper.createProjectJButton("Đăng nhập");
         btnDangNhap.setPreferredSize(new Dimension(150, 30));
         
         JPanel buttonPanel = new JPanel();
-        buttonPanel.setBackground(new Color(45, 45, 45));
         buttonPanel.add(btnDangNhap);
         
         JPanel headerPanel = new JPanel(new BorderLayout(0, 10));
-        headerPanel.setBackground(new Color(45, 45, 45));
         headerPanel.add(lblLogin, BorderLayout.CENTER);
         
         JPanel mainPanel = new JPanel(new BorderLayout(0, 20));
-        mainPanel.setBackground(new Color(45, 45, 45));
         mainPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         
         mainPanel.add(headerPanel, BorderLayout.NORTH);
@@ -108,5 +103,4 @@ public class LoginWindow extends JFrame implements ActionListener {
             new MainWindow();
         }
     }
-
 }

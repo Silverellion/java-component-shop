@@ -31,20 +31,19 @@ public class PnlTaiKhoan extends JPanel implements ActionListener {
     public PnlTaiKhoan() {
         danhSachTaiKhoan = new DanhSachTaiKhoan();
         setLayout(new BorderLayout());
-        setBackground(new Color(30, 30, 30));
 
-        JLabel lblTitle = SwingHelper.createDarkModeJLabel("Quản lý nhân viên", 30);
+        JLabel lblTitle = SwingHelper.createProjectJLabel("Quản lý nhân viên", 30);
         Box boxTitle = new Box(BoxLayout.X_AXIS);
         boxTitle.add(lblTitle);
 
-        JLabel lblMaNV = SwingHelper.createDarkModeJLabel("Mã nhân viên: ");
-        JLabel lblTenNV = SwingHelper.createDarkModeJLabel("Tên nhân viên: ");
-        JLabel lblChucVu = SwingHelper.createDarkModeJLabel("Chức vụ: ");
-        JLabel lblLuong = SwingHelper.createDarkModeJLabel("Lương: ");
-        JLabel lblSoDienThoai = SwingHelper.createDarkModeJLabel("Số điện thoại: ");
-        JLabel lblDiaChi = SwingHelper.createDarkModeJLabel("Địa chỉ: ");
-        JLabel lblTenDangNhap = SwingHelper.createDarkModeJLabel("Tên đăng nhập: ");
-        JLabel lblMatKhau = SwingHelper.createDarkModeJLabel("Mật khẩu: ");
+        JLabel lblMaNV = SwingHelper.createProjectJLabel("Mã nhân viên: ");
+        JLabel lblTenNV = SwingHelper.createProjectJLabel("Tên nhân viên: ");
+        JLabel lblChucVu = SwingHelper.createProjectJLabel("Chức vụ: ");
+        JLabel lblLuong = SwingHelper.createProjectJLabel("Lương: ");
+        JLabel lblSoDienThoai = SwingHelper.createProjectJLabel("Số điện thoại: ");
+        JLabel lblDiaChi = SwingHelper.createProjectJLabel("Địa chỉ: ");
+        JLabel lblTenDangNhap = SwingHelper.createProjectJLabel("Tên đăng nhập: ");
+        JLabel lblMatKhau = SwingHelper.createProjectJLabel("Mật khẩu: ");
 
         lblMaNV.setPreferredSize(lblTenDangNhap.getPreferredSize());
         lblTenNV.setPreferredSize(lblTenDangNhap.getPreferredSize());
@@ -208,23 +207,20 @@ public class PnlTaiKhoan extends JPanel implements ActionListener {
 
         JPanel pnlTableTaiKhoan = new JPanel(new BorderLayout());
         pnlTableTaiKhoan.setBorder(BorderFactory.createEmptyBorder(0, 20, 20, 20)); // Margin-X: 20px
-        pnlTableTaiKhoan.setBackground(new Color(30,30,30));
         pnlTableTaiKhoan.add(scrTaiKhoan, BorderLayout.CENTER);
         add(pnlTableTaiKhoan, BorderLayout.CENTER);
 
-        btnThem = SwingHelper.createDarkModeJButton("Thêm");
-        btnXoa = SwingHelper.createDarkModeJButton("Xóa");
-        btnCapNhat = SwingHelper.createDarkModeJButton("Cập nhật");
-        btnXuat = SwingHelper.createDarkModeJButton("Xuất Excel");
-        btnXoaRong = SwingHelper.createDarkModeJButton("Xóa rỗng");
+        btnThem = SwingHelper.createProjectJButton("Thêm");
+        btnXoa = SwingHelper.createProjectJButton("Xóa");
+        btnCapNhat = SwingHelper.createProjectJButton("Cập nhật");
+        btnXuat = SwingHelper.createProjectJButton("Xuất Excel");
+        btnXoaRong = SwingHelper.createProjectJButton("Xóa rỗng");
 
-        JLabel lblTim = SwingHelper.createDarkModeJLabel("Nhập dữ liệu cần tìm: ");
+        JLabel lblTim = SwingHelper.createProjectJLabel("Nhập dữ liệu cần tìm: ");
         txtTim = new JTextField(20);
 
         JPanel pnlSouthwest = new JPanel();
         JPanel pnlSoutheast = new JPanel();
-        pnlSouthwest.setBackground(new Color(30,30,30));
-        pnlSoutheast.setBackground(new Color(30,30,30));
         pnlSoutheast.setMinimumSize(new Dimension(450, getHeight()));
 
         pnlSouthwest.add(btnThem);
@@ -263,7 +259,6 @@ public class PnlTaiKhoan extends JPanel implements ActionListener {
 
         JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, pnlSouthwest, pnlSoutheast);
         JPanel pnlSouth = new JPanel(new BorderLayout());
-        pnlSouth.setBackground(new Color(30,30,30));
         pnlSouth.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 20));
         pnlSouth.add(splitPane);
         add(pnlSouth, BorderLayout.SOUTH);

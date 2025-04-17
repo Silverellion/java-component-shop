@@ -14,8 +14,7 @@ public class PnlCaiDat extends JPanel {
 	private static final long serialVersionUID = 1L;
 	public PnlCaiDat() {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		setBackground(new Color(30, 30, 30));
-		JLabel lblTitle = SwingHelper.createDarkModeJLabel("Panel cài đặt", 30);
+		JLabel lblTitle = SwingHelper.createProjectJLabel("Panel cài đặt", 30);
 		lblTitle.setAlignmentX(CENTER_ALIGNMENT);
 		add(lblTitle);
 	}

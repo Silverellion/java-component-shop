@@ -47,11 +47,10 @@ public class MainWindow extends JFrame implements ActionListener{
         pnlCaiDat = new PnlCaiDat();
         
         JPanel pnlMain = new JPanel(new BorderLayout());
-        pnlMain.setBackground(new Color(30, 30, 30));
 
         pnlSidebar = new JPanel();
         pnlSidebar.setPreferredSize(new Dimension(220, getHeight()));
-        pnlSidebar.setBackground(new Color(45, 45, 45));
+        pnlSidebar.setBackground(new Color(200, 40, 40));
         pnlSidebar.setLayout(new BoxLayout(pnlSidebar, BoxLayout.Y_AXIS));
 
         btnKhoPanel = createSidebarButton("Quản lý kho", "icons8-manage-50.png");
@@ -70,7 +69,6 @@ public class MainWindow extends JFrame implements ActionListener{
         
         pnlEast = new JPanel();
         pnlEast.setLayout(new BorderLayout());
-        pnlEast.setBackground(new Color(30, 30, 30));
         pnlMain.add(pnlEast);
 
         add(pnlMain);
@@ -102,7 +100,7 @@ public class MainWindow extends JFrame implements ActionListener{
         jButton.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 0));
         jButton.setAlignmentX(LEFT_ALIGNMENT);
         jButton.setMaximumSize(new Dimension(Integer.MAX_VALUE, 60));
-        jButton.setBackground(new Color(45, 45, 45));
+        jButton.setBackground(new Color(200, 60, 60));
         jButton.setForeground(Color.WHITE);
         jButton.setFont(new Font("Segoe UI", Font.BOLD, 16));
         jButton.setFocusPainted(false);
@@ -160,11 +158,11 @@ public class MainWindow extends JFrame implements ActionListener{
     	pnlEast.removeAll();
     	pnlEast.add(jPanel);
 
-    	btnKhoPanel.setBackground(new Color(45, 45, 45));
-        btnDonHangPnl.setBackground(new Color(45, 45, 45));
-        btnTaiKhoanPnl.setBackground(new Color(45, 45, 45));
-    	btnCaiDatPanel.setBackground(new Color(45, 45, 45));
-    	jButton.setBackground(new Color(30, 30, 30));
+    	btnKhoPanel.setBackground(new Color(200, 60, 60));
+        btnDonHangPnl.setBackground(new Color(200, 60, 60));
+        btnTaiKhoanPnl.setBackground(new Color(200, 60, 60));
+    	btnCaiDatPanel.setBackground(new Color(200, 60, 60));
+    	jButton.setBackground(new Color(200, 40, 40));
     	
     	pnlEast.revalidate();
     	pnlEast.repaint();
