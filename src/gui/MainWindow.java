@@ -161,12 +161,10 @@ public class MainWindow extends JFrame implements ActionListener {
     private void loadPnlEast(JButton jButton, JPanel jPanel) {
         pnlEast.removeAll();
         pnlEast.add(jPanel);
-
         resetSidebarColors();
 
         btnSelected = jButton;
         jButton.setBackground(new Color(200, 0, 0));
-
         pnlEast.revalidate();
         pnlEast.repaint();
     }
