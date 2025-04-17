@@ -153,8 +153,8 @@ public class PnlThemNhanVien extends JPanel {
         JPanel pnlButtons = new JPanel(new GridLayout(1, 2));
         pnlButtons.setBorder(new EmptyBorder(0, 0,50, 0));
         JPanel pnlLeftButtons = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        JButton btnLamMoi = new JButton("Làm mới");
-        JButton btnThem = new JButton("Thêm");
+        JButton btnLamMoi = SwingHelper.createProjectJButton("Làm mới", "icons8-reload-50.png");
+        JButton btnThem = SwingHelper.createProjectJButton("Thêm", "icons8-add-50.png");
 
         btnLamMoi.setPreferredSize(new Dimension(150, 40));
         btnThem.setPreferredSize(new Dimension(150, 40));
@@ -163,7 +163,7 @@ public class PnlThemNhanVien extends JPanel {
         pnlLeftButtons.add(btnThem);
 
         JPanel pnlRightButton = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        JButton btnChonAnh = new JButton("Chọn ảnh");
+        JButton btnChonAnh = SwingHelper.createProjectJButton("Chọn ảnh", "icons8-folder-50.png");
         btnChonAnh.setPreferredSize(new Dimension(150, 40));
         pnlRightButton.add(btnChonAnh);
 
