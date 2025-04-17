@@ -12,12 +12,7 @@ import java.awt.event.MouseEvent;
 import java.io.Serial;
 import java.net.URL;
 
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 public class MainWindow extends JFrame implements ActionListener{
 	@Serial
@@ -62,6 +57,7 @@ public class MainWindow extends JFrame implements ActionListener{
         btnCaiDatPanel = createSidebarButton("Cài đặt", "icons8-settings-50.png");
         btnDangNhap = createSidebarButton("Đăng nhập", "icons8-login-50.png");
         btnDangXuat = createSidebarButton("Đăng xuất", "icons8-logout-50.png");
+
 
         pnlSidebar.add(btnQuanLyKhoPanel);
         pnlSidebar.add(btnDonHangPnl);
@@ -152,10 +148,6 @@ public class MainWindow extends JFrame implements ActionListener{
             updateLoginStatus();
             this.dispose();
 		}
-	}
-
-	private void login() {
-
 	}
 
     private void updateLoginStatus() {
