@@ -23,6 +23,13 @@ public class MainWindow extends JFrame implements ActionListener {
     private final JPanel pnlEast;
     private boolean isLoggedIn = false;
 
+    PnlNhapHang pnlNhapHang;
+    PnlThongKeKho pnlThongKeKho;
+    PnlTaoDonHang pnlTaoDonHang;
+    PnlThongKeDonHang pnlThongKeDonHang;
+    PnlThemNhanVien pnlThemNhanVien;
+    PnlCapNhatNhanVien pnlCapNhatNhanVien;
+    PnlThongKeNhanVien pnlThongKeNhanVien;
     PnlCaiDat pnlCaiDat;
 
     public MainWindow() {
@@ -32,6 +39,13 @@ public class MainWindow extends JFrame implements ActionListener {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
+        pnlNhapHang = new PnlNhapHang();
+        pnlThongKeKho = new PnlThongKeKho();
+        pnlTaoDonHang = new PnlTaoDonHang();
+        pnlThongKeDonHang = new PnlThongKeDonHang();
+        pnlThemNhanVien = new PnlThemNhanVien();
+        pnlCapNhatNhanVien = new PnlCapNhatNhanVien();
+        pnlThongKeNhanVien = new PnlThongKeNhanVien();
         pnlCaiDat = new PnlCaiDat();
 
         JPanel pnlMain = new JPanel(new BorderLayout());
@@ -66,15 +80,15 @@ public class MainWindow extends JFrame implements ActionListener {
         btnDangNhap.addActionListener(this);
         btnDangXuat.addActionListener(this);
 
-        SwingSidebarHelper.registerDropdown(btnQuanLyKhoPanel, "Nhập hàng", createPanel("Nhập hàng"), pnlEast, this::resetSidebarColors);
-        SwingSidebarHelper.registerDropdown(btnQuanLyKhoPanel, "Thống kê kho", createPanel("Thống kê kho"), pnlEast, this::resetSidebarColors);
+        SwingSidebarHelper.registerDropdown(btnQuanLyKhoPanel, "Nhập hàng", pnlNhapHang, pnlEast, this::resetSidebarColors);
+        SwingSidebarHelper.registerDropdown(btnQuanLyKhoPanel, "Thống kê kho", pnlThongKeKho, pnlEast, this::resetSidebarColors);
 
-        SwingSidebarHelper.registerDropdown(btnDonHangPnl, "Tạo đơn hàng", createPanel("Tạo đơn hàng"), pnlEast, this::resetSidebarColors);
-        SwingSidebarHelper.registerDropdown(btnDonHangPnl, "Thống kê đơn hàng", createPanel("Thống kê đơn hàng"), pnlEast, this::resetSidebarColors);
+        SwingSidebarHelper.registerDropdown(btnDonHangPnl, "Tạo đơn hàng", pnlTaoDonHang, pnlEast, this::resetSidebarColors);
+        SwingSidebarHelper.registerDropdown(btnDonHangPnl, "Thống kê đơn hàng", pnlThongKeDonHang, pnlEast, this::resetSidebarColors);
 
-        SwingSidebarHelper.registerDropdown(btnQuanLyNhanVienPnl, "Thêm nhân viên", createPanel("Thêm nhân viên"), pnlEast, this::resetSidebarColors);
-        SwingSidebarHelper.registerDropdown(btnQuanLyNhanVienPnl, "Cập nhật nhân viên", createPanel("Cập nhật nhân viên"), pnlEast, this::resetSidebarColors);
-        SwingSidebarHelper.registerDropdown(btnQuanLyNhanVienPnl, "Thống kê nhân viên", createPanel("Thống kê nhân viên"), pnlEast, this::resetSidebarColors);
+        SwingSidebarHelper.registerDropdown(btnQuanLyNhanVienPnl, "Thêm nhân viên", pnlThemNhanVien, pnlEast, this::resetSidebarColors);
+        SwingSidebarHelper.registerDropdown(btnQuanLyNhanVienPnl, "Cập nhật nhân viên", pnlCapNhatNhanVien, pnlEast, this::resetSidebarColors);
+        SwingSidebarHelper.registerDropdown(btnQuanLyNhanVienPnl, "Thống kê nhân viên", pnlThongKeNhanVien, pnlEast, this::resetSidebarColors);
     }
 
     private JPanel createPanel(String title) {

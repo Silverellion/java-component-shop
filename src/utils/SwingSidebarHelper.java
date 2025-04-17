@@ -22,10 +22,7 @@ public class SwingSidebarHelper {
 
                 @Override
                 public void mouseEntered(MouseEvent e) {
-                    hoverTimer = new Timer(100, evt -> {
-                        Point location = btn.getLocationOnScreen();
-                        newMenu.show(btn, btn.getWidth() - 1, 0); // Remove gap
-                    });
+                    hoverTimer = new Timer(100, _ ->  newMenu.show(btn, btn.getWidth(), 0));
                     hoverTimer.setRepeats(false);
                     hoverTimer.start();
                 }
@@ -52,7 +49,7 @@ public class SwingSidebarHelper {
         JMenuItem menuItem = new JMenuItem(itemName);
         styleMenuItem(menuItem);
 
-        menuItem.addActionListener(e -> {
+        menuItem.addActionListener(_ -> {
             backgroundResetter.run();
             button.setBackground(new Color(200, 0, 0));
             pnlMain.removeAll();
