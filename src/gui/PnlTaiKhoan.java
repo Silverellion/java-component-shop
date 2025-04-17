@@ -11,12 +11,15 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Objects;
+
+import static utils.SwingHelper.createProjectJTable;
 
 public class PnlTaiKhoan extends JPanel implements ActionListener {
     private final JTextField txtMaNV, txtTenNV, txtLuong, txtSoDienThoai, txtDiaChi, txtTenDangNhap;
@@ -200,7 +203,7 @@ public class PnlTaiKhoan extends JPanel implements ActionListener {
         tblModelTaiKhoan.addColumn("Tên đăng nhập");
         tblModelTaiKhoan.addColumn("Mật khẩu");
 
-        tblTaiKhoan = new JTable(tblModelTaiKhoan);
+        tblTaiKhoan = createProjectJTable(tblModelTaiKhoan);
         JScrollPane scrTaiKhoan = new JScrollPane(tblTaiKhoan);
 
         JPanel pnlTableTaiKhoan = new JPanel(new BorderLayout());
@@ -255,7 +258,7 @@ public class PnlTaiKhoan extends JPanel implements ActionListener {
 
         JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, pnlSouthwest, pnlSoutheast);
         JPanel pnlSouth = new JPanel(new BorderLayout());
-        pnlSouth.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 20));
+        pnlSouth.setBorder(BorderFactory.createEmptyBorder(0, 20, 10, 20));
         pnlSouth.add(splitPane);
         add(pnlSouth, BorderLayout.SOUTH);
 

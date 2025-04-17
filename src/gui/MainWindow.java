@@ -122,7 +122,6 @@ public class MainWindow extends JFrame implements ActionListener{
                     jButton.setBackground(new Color(200, 60, 60));
             }
         });
-
         return jButton;
     }
 
