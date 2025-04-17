@@ -6,6 +6,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
 import java.awt.*;
+import java.net.URL;
 
 public class SwingHelper {
     public static JLabel createProjectJLabel(String name) {
@@ -42,6 +43,44 @@ public class SwingHelper {
             }
         };
 
+        return defaultButtonStyling(button);
+    }
+
+    public static JButton createProjectJButton(String name, String iconName) {
+        String resourcePath = "/resources/icons/" + iconName;
+        ImageIcon icon = null;
+        try {
+            URL imgURL = SwingHelper.class.getResource(resourcePath);
+            if (imgURL != null) {
+                Image img = new ImageIcon(imgURL).getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+                icon = new ImageIcon(img);
+            }
+        } catch (Exception _) {}
+        JButton button = new JButton(name, icon) {
+            @Override
+            protected void paintComponent(Graphics g) {
+                Graphics2D g2 = (Graphics2D) g.create();
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+                // Create background
+                g2.setColor(getBackground());
+                g2.fillRoundRect(0, 0, getWidth(), getHeight(), 10, 10);
+
+                g2.dispose();
+                setContentAreaFilled(false);
+                super.paintComponent(g);
+            }
+
+            @Override
+            protected void paintBorder(Graphics g) {
+                // No border
+            }
+        };
+
+        return defaultButtonStyling(button);
+    }
+
+    private static JButton defaultButtonStyling(JButton button) {
         button.setFont(new Font("Segoe UI", Font.BOLD, 16));
         button.setBackground(new Color(200, 60, 60));
         button.setForeground(Color.WHITE);

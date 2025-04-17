@@ -26,7 +26,7 @@ public class PnlCapNhatNhanVien extends JPanel implements ActionListener {
     private final JComboBox<String> comboChucVu;
     private final JTable tblTaiKhoan;
     private final DefaultTableModel tblModelTaiKhoan;
-    private final JButton btnThem, btnXoa, btnCapNhat, btnXuat, btnXoaRong;
+    private final JButton btnXoa, btnCapNhat, btnXuat, btnLamMoi;
     private final JTextField txtTim;
     private final DanhSachTaiKhoan danhSachTaiKhoan;
 
@@ -210,11 +210,10 @@ public class PnlCapNhatNhanVien extends JPanel implements ActionListener {
         pnlTableTaiKhoan.add(scrTaiKhoan, BorderLayout.CENTER);
         add(pnlTableTaiKhoan, BorderLayout.CENTER);
 
-        btnThem = SwingHelper.createProjectJButton("Thêm");
-        btnXoa = SwingHelper.createProjectJButton("Xóa");
-        btnCapNhat = SwingHelper.createProjectJButton("Cập nhật");
-        btnXuat = SwingHelper.createProjectJButton("Xuất Excel");
-        btnXoaRong = SwingHelper.createProjectJButton("Xóa rỗng");
+        btnXoa = SwingHelper.createProjectJButton("Xóa", "icons8-delete-50.png");
+        btnCapNhat = SwingHelper.createProjectJButton("Cập nhật", "icons8-up-50.png");
+        btnXuat = SwingHelper.createProjectJButton("Xuất Excel", "icons8-excel-50.png");
+        btnLamMoi = SwingHelper.createProjectJButton("Làm mới", "icons8-reload-50.png");
 
         JLabel lblTim = SwingHelper.createProjectJLabel("Nhập dữ liệu cần tìm: ");
         txtTim = new JTextField(20);
@@ -223,11 +222,10 @@ public class PnlCapNhatNhanVien extends JPanel implements ActionListener {
         JPanel pnlSoutheast = new JPanel();
         pnlSoutheast.setMinimumSize(new Dimension(450, getHeight()));
 
-        pnlSouthwest.add(btnThem);
         pnlSouthwest.add(btnXoa);
         pnlSouthwest.add(btnCapNhat);
         pnlSouthwest.add(btnXuat);
-        pnlSouthwest.add(btnXoaRong);
+        pnlSouthwest.add(btnLamMoi);
 
         pnlSoutheast.add(lblTim);
         pnlSoutheast.add(txtTim);
@@ -244,7 +242,7 @@ public class PnlCapNhatNhanVien extends JPanel implements ActionListener {
 
         TitledBorder pnlSouthEastTitledBorder = BorderFactory.createTitledBorder(
                 BorderFactory.createEmptyBorder(),
-                "Điều khiển"
+                "Tìm kiếm"
         );
         pnlSouthEastTitledBorder.setTitleFont(new Font("Segoe UI", Font.BOLD, 16));
         Border pnlSouthEastBorder = BorderFactory.createCompoundBorder(
@@ -261,10 +259,9 @@ public class PnlCapNhatNhanVien extends JPanel implements ActionListener {
         pnlSouth.add(splitPane);
         add(pnlSouth, BorderLayout.SOUTH);
 
-        btnThem.addActionListener(this);
         btnXoa.addActionListener(this);
         btnCapNhat.addActionListener(this);
-        btnXoaRong.addActionListener(this);
+        btnLamMoi.addActionListener(this);
         tableClickListener();
         txtTim.getDocument().addDocumentListener(new FilterListener()); //Real time filtering function
         load();
@@ -273,13 +270,11 @@ public class PnlCapNhatNhanVien extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         Object src = e.getSource();
-        if(src == btnThem)
-            add();
         if(src == btnXoa)
             remove();
         if(src == btnCapNhat)
             update();
-        if(src == btnXoaRong)
+        if(src == btnLamMoi)
             clear();
     }
 

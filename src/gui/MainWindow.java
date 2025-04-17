@@ -98,8 +98,8 @@ public class MainWindow extends JFrame implements ActionListener {
         return panel;
     }
 
-    private JButton createSidebarButton(String text, String iconPath) {
-        String resourcePath = "/resources/icons/" + iconPath;
+    private JButton createSidebarButton(String text, String iconName) {
+        String resourcePath = "/resources/icons/" + iconName;
         ImageIcon icon = null;
         try {
             URL imgURL = getClass().getResource(resourcePath);
@@ -107,7 +107,7 @@ public class MainWindow extends JFrame implements ActionListener {
                 Image img = new ImageIcon(imgURL).getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
                 icon = new ImageIcon(img);
             }
-        } catch (Exception ignored) {}
+        } catch (Exception _) {}
 
         JButton button = new JButton(text, icon);
         button.setHorizontalAlignment(JButton.LEFT);
