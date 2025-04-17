@@ -96,39 +96,39 @@ public class MainWindow extends JFrame implements ActionListener{
                 icon = new ImageIcon(img);
             }
         } catch (Exception _) {}
-        JButton jButton = new JButton(text, icon);
-        jButton.setHorizontalAlignment(JButton.LEFT);
-        jButton.setHorizontalTextPosition(JButton.RIGHT);
+        JButton button = new JButton(text, icon);
+        button.setHorizontalAlignment(JButton.LEFT);
+        button.setHorizontalTextPosition(JButton.RIGHT);
 
-        jButton.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 0));
-        jButton.setAlignmentX(LEFT_ALIGNMENT);
-        jButton.setMaximumSize(new Dimension(Integer.MAX_VALUE, 60));
-        jButton.setBackground(new Color(200, 60, 60));
-        jButton.setForeground(Color.WHITE);
-        jButton.setFont(new Font("Segoe UI", Font.BOLD, 16));
-        jButton.setFocusPainted(false);
-        jButton.setIconTextGap(10);
+        button.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 0));
+        button.setAlignmentX(LEFT_ALIGNMENT);
+        button.setMaximumSize(new Dimension(Integer.MAX_VALUE, 60));
+        button.setBackground(new Color(200, 60, 60));
+        button.setForeground(Color.WHITE);
+        button.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        button.setFocusPainted(false);
+        button.setIconTextGap(10);
 
-        jButton.addMouseListener(new MouseAdapter() {
+        button.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
-                if (jButton != btnSelected)
-                    jButton.setBackground(new Color(200, 0, 0));
+                if (button != btnSelected)
+                    button.setBackground(new Color(200, 0, 0));
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                if (jButton != btnSelected)
-                    jButton.setBackground(new Color(200, 60, 60));
+                if (button != btnSelected)
+                    button.setBackground(new Color(200, 60, 60));
             }
         });
-        return jButton;
+        return button;
     }
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object src = e.getSource();
-		
+
 		if(src == btnKhoPanel) {
 			loadPnlEast(btnKhoPanel, pnlQuanLyKho);
 		}
@@ -153,11 +153,11 @@ public class MainWindow extends JFrame implements ActionListener{
             this.dispose();
 		}
 	}
-	
+
 	private void login() {
-		
+
 	}
-	
+
     private void updateLoginStatus() {
         pnlSidebar.remove(btnDangNhap);
         pnlSidebar.remove(btnDangXuat);
@@ -169,7 +169,7 @@ public class MainWindow extends JFrame implements ActionListener{
         pnlSidebar.revalidate();
         pnlSidebar.repaint();
     }
-    
+
     private void loadPnlEast(JButton jButton, JPanel jPanel) {
     	pnlEast.removeAll();
     	pnlEast.add(jPanel);

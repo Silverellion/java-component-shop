@@ -21,10 +21,51 @@ public class SwingHelper {
     }
 
     public static JButton createProjectJButton(String name) {
-        JButton button = new JButton(name);
+        JButton button = new JButton(name) {
+            @Override
+            protected void paintComponent(Graphics g) {
+                Graphics2D g2 = (Graphics2D) g.create();
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                // Create shadow
+                g2.setColor(new Color(0, 0, 0, 80));
+                g2.fillRoundRect(8, 8, getWidth() - 4, getHeight() - 4, 10, 10);
+
+                //Set background
+                g2.setColor(getBackground());
+                g2.fillRoundRect(4, 4, getWidth() - 4, getHeight() - 4, 10, 10);
+                g2.dispose();
+
+                setContentAreaFilled(false);
+                super.paintComponent(g);
+            }
+
+            @Override
+            protected void paintBorder(Graphics g) {
+                // No border
+            }
+        };
+
         button.setFont(new Font("Segoe UI", Font.BOLD, 16));
-        button.setBackground(new Color(200, 40, 40));
+        button.setBackground(new Color(200, 60, 60));
         button.setForeground(Color.WHITE);
+        button.setFocusPainted(false);
+        button.setBorderPainted(false);
+        button.setContentAreaFilled(false);
+        button.setOpaque(false);
+        button.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+        button.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                button.setBackground(new Color(200, 0, 0));
+                button.repaint();
+            }
+            @Override
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                button.setBackground(new Color(200, 40, 40));
+                button.repaint();
+            }
+        });
         return button;
     }
 
