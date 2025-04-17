@@ -47,8 +47,8 @@ Reminder:
 3. `accountStatus` needs to be implememted om style of `trangThai: (HoatDong/KhongConHoatDong)` <- we check for this in MSSQL
 4. `TrangThai` will be added to NhanVien, and automatically pass 'HoatDong' whenever DanhSachTaiKhoan's them() is called.
 5. If `TrangThai = KhongConHoatDong`, it's still going to be added into the dynamic array for existence checking, but won't be displayed on the `PnlTaiKhoan`'s `DefaultTableModel`
-6. in `PnlCaiDat`, changing the system theme/UI/Appearance (Dark/Light mode) seems to be out of scope for now,
-   so, we will only focus on letting the employee changing the username/password/SDT/Dia chi.
+6. in `PnlCaiDat` we will focus on letting the employee change the username/password/SDT/Dia chi.
+7. We need to store the file path to the employee's profile picture and load it.
 
 Instruction:
 - After cloning the project, remember to put the `mssql-jdbc_auth-12.10.0.x64.dll` into `C:\Users\<YourUser>\.jdks\openjdk-24\bin`
