@@ -136,7 +136,6 @@ public class PnlTaiKhoan extends JPanel implements ActionListener {
         panelThongTin.add(Box.createHorizontalStrut(10));
 
         TitledBorder borderThongTin = BorderFactory.createTitledBorder("Thông tin nhân viên");
-        borderThongTin.setTitleColor(Color.WHITE);
         borderThongTin.setTitleFont(new Font("Segoe UI", Font.BOLD, 16));
         panelThongTin.setBorder(borderThongTin);
 
@@ -163,7 +162,6 @@ public class PnlTaiKhoan extends JPanel implements ActionListener {
         panelTaiKhoan.add(Box.createHorizontalStrut(10));
 
         TitledBorder borderTaiKhoan = BorderFactory.createTitledBorder("Tài khoản nhân viên");
-        borderTaiKhoan.setTitleColor(Color.WHITE);
         borderTaiKhoan.setTitleFont(new Font("Segoe UI", Font.BOLD, 16));
         panelTaiKhoan.setBorder(borderTaiKhoan);
 
@@ -236,7 +234,6 @@ public class PnlTaiKhoan extends JPanel implements ActionListener {
                 BorderFactory.createEmptyBorder(),
                 "Điều khiển"
         );
-        pnlSouthWestTitledBorder.setTitleColor(Color.WHITE);
         pnlSouthWestTitledBorder.setTitleFont(new Font("Segoe UI", Font.BOLD, 16));
         Border pnlSouthWestBorder = BorderFactory.createCompoundBorder(
                 pnlSouthWestTitledBorder,
@@ -247,7 +244,6 @@ public class PnlTaiKhoan extends JPanel implements ActionListener {
                 BorderFactory.createEmptyBorder(),
                 "Điều khiển"
         );
-        pnlSouthEastTitledBorder.setTitleColor(Color.WHITE);
         pnlSouthEastTitledBorder.setTitleFont(new Font("Segoe UI", Font.BOLD, 16));
         Border pnlSouthEastBorder = BorderFactory.createCompoundBorder(
                 pnlSouthEastTitledBorder,

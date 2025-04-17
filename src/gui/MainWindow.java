@@ -50,7 +50,7 @@ public class MainWindow extends JFrame implements ActionListener{
 
         pnlSidebar = new JPanel();
         pnlSidebar.setPreferredSize(new Dimension(220, getHeight()));
-        pnlSidebar.setBackground(new Color(200, 40, 40));
+        pnlSidebar.setBackground(new Color(200, 60, 60));
         pnlSidebar.setLayout(new BoxLayout(pnlSidebar, BoxLayout.Y_AXIS));
 
         btnKhoPanel = createSidebarButton("Quản lý kho", "icons8-manage-50.png");
@@ -162,8 +162,9 @@ public class MainWindow extends JFrame implements ActionListener{
         btnDonHangPnl.setBackground(new Color(200, 60, 60));
         btnTaiKhoanPnl.setBackground(new Color(200, 60, 60));
     	btnCaiDatPanel.setBackground(new Color(200, 60, 60));
-    	jButton.setBackground(new Color(200, 40, 40));
-    	
+
+    	jButton.setBackground(new Color(200, 0, 0));
+
     	pnlEast.revalidate();
     	pnlEast.repaint();
     }
