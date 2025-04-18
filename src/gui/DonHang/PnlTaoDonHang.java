@@ -1,17 +1,15 @@
-package gui;
+package gui.DonHang;
 
 import utils.SwingHelper;
+import javax.swing.*;
 import java.io.Serial;
-import javax.swing.BoxLayout;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 
-public class PnlThongKeKho extends JPanel{
+public class PnlTaoDonHang extends JPanel {
     @Serial
     private static final long serialVersionUID = 1L;
-    public PnlThongKeKho() {
+    public PnlTaoDonHang() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        JLabel lblTitle = SwingHelper.createProjectJLabel("Thống kê kho", 30);
+        JLabel lblTitle = SwingHelper.createProjectJLabel("Tạo đơn hàng", 30);
         lblTitle.setAlignmentX(CENTER_ALIGNMENT);
         add(lblTitle);
     }

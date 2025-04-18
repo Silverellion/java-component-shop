@@ -1,4 +1,4 @@
-package gui;
+package gui.Kho;
 
 import utils.SwingHelper;
 import java.io.Serial;

@@ -1,5 +1,12 @@
 package gui;
 
+import gui.DonHang.PnlTaoDonHang;
+import gui.DonHang.PnlThongKeDonHang;
+import gui.Kho.PnlNhapHang;
+import gui.Kho.PnlThongKeKho;
+import gui.NhanVien.PnlCapNhatNhanVien;
+import gui.NhanVien.PnlThemNhanVien;
+import gui.NhanVien.PnlThongKeNhanVien;
 import utils.SwingSidebarHelper;
 
 import javax.swing.*;

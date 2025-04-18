@@ -1,4 +1,4 @@
-package gui;
+package gui.NhanVien;
 
 import entity.DanhSachTaiKhoan;
 import entity.NhanVien;

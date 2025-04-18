@@ -1,4 +1,4 @@
-package gui;
+package gui.NhanVien;
 
 import utils.SwingHelper;
 
@@ -15,7 +15,7 @@ public class PnlThemNhanVien extends JPanel {
     private final JPasswordField txtMatKhau;
     private final JComboBox<String> comboChucVu;
 
-    PnlThemNhanVien() {
+    public PnlThemNhanVien() {
         setLayout(new BorderLayout());
 
         JLabel lblTitle = SwingHelper.createProjectJLabel("Thêm Nhân viên", 30);
