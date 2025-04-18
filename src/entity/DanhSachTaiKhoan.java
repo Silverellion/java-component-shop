@@ -29,9 +29,7 @@ public class DanhSachTaiKhoan implements Serializable {
                 return false;
         }
 
-        boolean inserted = dao.them(taiKhoan);
-        if (inserted) danhSachTaiKhoan.add(taiKhoan);
-        return inserted;
+        return dao.add(taiKhoan);
     }
 
     public boolean xoa(int index) {

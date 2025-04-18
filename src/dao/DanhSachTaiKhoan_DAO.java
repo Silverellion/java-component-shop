@@ -44,7 +44,7 @@ public class DanhSachTaiKhoan_DAO {
         return danhSach;
     }
 
-    public boolean them(TaiKhoan taiKhoan) {
+    public boolean add(TaiKhoan taiKhoan) {
         try {
             String sql = Files.readString(Paths.get(SQL_PATH + "insertTaiKhoan.sql"));
             PreparedStatement stmt = conn.prepareStatement(sql);
@@ -58,10 +58,11 @@ public class DanhSachTaiKhoan_DAO {
             stmt.setString(7, taiKhoan.getSoDienThoai());
             stmt.setString(8, taiKhoan.getDiaChi());
             stmt.setString(9, "HoatDong");
+            stmt.setString(10, taiKhoan.getPathHinhAnh());
 
-            stmt.setString(10, taiKhoan.getTenDangNhap());
-            stmt.setString(11, taiKhoan.getMatKhau());
-            stmt.setString(12, taiKhoan.getMaNhanVien());
+            stmt.setString(11, taiKhoan.getTenDangNhap());
+            stmt.setString(12, taiKhoan.getMatKhau());
+            stmt.setString(13, taiKhoan.getMaNhanVien());
             stmt.executeUpdate();
             return true;
         } catch (IOException | SQLException _) {
