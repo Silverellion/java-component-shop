@@ -20,7 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-public class LoginWindow_GUI extends JFrame implements ActionListener {
+public class WindowLogin_GUI extends JFrame implements ActionListener {
     @Serial
     private static final long serialVersionUID = 1L;
     private JLabel lblUsername;
@@ -29,7 +29,7 @@ public class LoginWindow_GUI extends JFrame implements ActionListener {
     private JTextField txtPassword;
     private JButton btnDangNhap;
 
-    public LoginWindow_GUI() {
+    public WindowLogin_GUI() {
         setTitle("Đăng nhập");
         setSize(400, 720);
         setLocationRelativeTo(null);
@@ -99,7 +99,7 @@ public class LoginWindow_GUI extends JFrame implements ActionListener {
         Object src = e.getSource();
         if(src == btnDangNhap) {
             this.dispose();
-            new MainWindow_GUI();
+            new WindowMain_GUI();
         }
     }
 }
