@@ -360,6 +360,16 @@ public class PnlCapNhatNhanVien extends JPanel implements ActionListener {
         return text.toLowerCase().contains(searchText.toLowerCase());
     }
 
+    private boolean isTextFieldBlank(JTextField input, String inputName) {
+        String string = input.getText();
+        if(string.isBlank()) {
+            input.requestFocus();
+            JOptionPane.showMessageDialog(this, inputName + " nhân viên không được để chống");
+            return true;
+        }
+        return false;
+    }
+
     private boolean validateData() {
         if(isTextFieldBlank(txtMaNV, "Mã") || isTextFieldBlank(txtTenNV, "Tên") ||
            isTextFieldBlank(txtLuong, "Lương") || isTextFieldBlank(txtSoDienThoai, "Số điễn thoại") ||
@@ -417,37 +427,6 @@ public class PnlCapNhatNhanVien extends JPanel implements ActionListener {
             return false;
         }
         return true;
-    }
-
-    private boolean isTextFieldBlank(JTextField input, String inputName) {
-        String string = input.getText();
-        if(string.isBlank()) {
-            input.requestFocus();
-            JOptionPane.showMessageDialog(this, inputName + " nhân viên không được để chống");
-            return true;
-        }
-        return false;
-    }
-
-    private void add() {
-        if(!validateData())
-            return;
-        String ma = txtMaNV.getText();
-        String ten = txtTenNV.getText();
-        String chucVu = Objects.requireNonNull(comboChucVu.getSelectedItem()).toString();
-        String luongString = txtLuong.getText();
-        String sdt = txtSoDienThoai.getText();
-        String diaChi = txtDiaChi.getText();
-        String username = txtTenDangNhap.getText();
-        String password = new String(txtMatKhau.getPassword());
-
-        int luong = Integer.parseInt(luongString);
-        TaiKhoan taiKhoan = new TaiKhoan(username, password, new NhanVien(ma, ten, chucVu, luong, sdt, diaChi));
-        if(danhSachTaiKhoan.them(taiKhoan)) {
-            tblModelTaiKhoan.addRow(new Object[]{ma, ten, chucVu, luong, sdt, diaChi, username, "********"});
-        } else {
-            JOptionPane.showMessageDialog(this, "Mã nhân viên hoặc tên đăng nhập đã tồn tại");
-        }
     }
 
     private void load() {
