@@ -3,6 +3,7 @@ package gui.NhanVien;
 import entity.DanhSachTaiKhoan;
 import entity.NhanVien;
 import entity.TaiKhoan;
+import utils.ImageHelper;
 import utils.SwingHelper;
 
 import javax.swing.*;
@@ -20,6 +21,8 @@ public class PnlThemNhanVien extends JPanel implements ActionListener {
     private final JTextField txtMaNV, txtTenNV, txtLuong, txtSoDienThoai, txtDiaChi, txtTenDangNhap;
     private final JPasswordField txtMatKhau;
     private final JComboBox<String> comboChucVu;
+    private final JLabel lblImage;
+    private String pathHinhAnhNhanVien = null;
     private final JButton btnLamMoi, btnThem, btnChonAnh;
     private final DanhSachTaiKhoan danhSachTaiKhoan;
 
@@ -149,21 +152,21 @@ public class PnlThemNhanVien extends JPanel implements ActionListener {
         pnlForm.add(Box.createVerticalGlue());
 
         JPanel pnlRight = new JPanel(new BorderLayout());
-        JLabel lblImage = new JLabel();
+        lblImage = new JLabel();
         lblImage.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         lblImage.setPreferredSize(new Dimension(350, 480));
 
         JPanel pnlImageHolder = new JPanel(new FlowLayout(FlowLayout.CENTER));
         pnlImageHolder.add(lblImage);
         pnlRight.add(pnlImageHolder, BorderLayout.CENTER);
-            pnlMain.add(pnlForm);
+        pnlMain.add(pnlForm);
         pnlMain.add(pnlRight);
 
         JPanel pnlButtons = new JPanel(new GridLayout(1, 2));
         pnlButtons.setBorder(new EmptyBorder(0, 0,50, 0));
         JPanel pnlLeftButtons = new JPanel(new FlowLayout(FlowLayout.CENTER));
         btnThem = SwingHelper.createProjectJButton("Thêm", "icons8-add-50.png");
-         btnLamMoi = SwingHelper.createProjectJButton("Làm mới", "icons8-reload-50.png");
+        btnLamMoi = SwingHelper.createProjectJButton("Làm mới", "icons8-reload-50.png");
 
         btnThem.setPreferredSize(new Dimension(150, 40));
         btnLamMoi.setPreferredSize(new Dimension(150, 40));
@@ -197,7 +200,7 @@ public class PnlThemNhanVien extends JPanel implements ActionListener {
             clear();
         }
         if(src == btnChonAnh) {
-
+            addImage();
         }
     }
 
@@ -267,6 +270,10 @@ public class PnlThemNhanVien extends JPanel implements ActionListener {
             JOptionPane.showMessageDialog(this, "Mật khẩu phải có ít nhất 8 ký tự");
             return false;
         }
+        if(pathHinhAnhNhanVien == null) {
+            JOptionPane.showMessageDialog(this, "Hình ảnh không được để trống");
+            return false;
+        }
         return true;
     }
 
@@ -283,7 +290,7 @@ public class PnlThemNhanVien extends JPanel implements ActionListener {
         String password = new String(txtMatKhau.getPassword());
 
         int luong = Integer.parseInt(luongString);
-        TaiKhoan taiKhoan = new TaiKhoan(username, password, new NhanVien(ma, ten, chucVu, luong, sdt, diaChi));
+        TaiKhoan taiKhoan = new TaiKhoan(username, password, new NhanVien(ma, ten, chucVu, luong, sdt, diaChi, pathHinhAnhNhanVien));
         if(danhSachTaiKhoan.them(taiKhoan)) {
             JOptionPane.showMessageDialog(this, "Thêm nhân viên thành công!");
             clear();
@@ -305,4 +312,9 @@ public class PnlThemNhanVien extends JPanel implements ActionListener {
         txtMaNV.requestFocus();
     }
 
+    private void addImage() {
+        pathHinhAnhNhanVien = ImageHelper.loadImageAndCache(lblImage);
+        if(pathHinhAnhNhanVien == null)
+            JOptionPane.showMessageDialog(this, "Chọn hình ảnh thất bại");
+    }
 }

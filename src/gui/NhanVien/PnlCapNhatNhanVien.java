@@ -474,8 +474,10 @@ public class PnlCapNhatNhanVien extends JPanel implements ActionListener {
         String username = txtTenDangNhap.getText();
         String password = new String(txtMatKhau.getPassword());
 
+        String pathHinhAnhNhanVien = danhSachTaiKhoan.tim(ma).getPathHinhAnhNhanVien();
+
         int luong = Integer.parseInt(luongString);
-        TaiKhoan taiKhoan = new TaiKhoan(username, password, new NhanVien(ma, ten, chucVu, luong, sdt, diaChi));
+        TaiKhoan taiKhoan = new TaiKhoan(username, password, new NhanVien(ma, ten, chucVu, luong, sdt, diaChi, pathHinhAnhNhanVien));
 
         int row = tblTaiKhoan.getSelectedRow();
         if(danhSachTaiKhoan.capNhat(row, taiKhoan)) {

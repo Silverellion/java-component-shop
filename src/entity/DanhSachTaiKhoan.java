@@ -14,6 +14,14 @@ public class DanhSachTaiKhoan implements Serializable {
         danhSachTaiKhoan = dao.load();
     }
 
+    public TaiKhoan tim(String maNV) {
+        for(TaiKhoan tk : danhSachTaiKhoan) {
+            if(tk.getMaNhanVien().equals(maNV))
+                return tk;
+        }
+        return null;
+    }
+
     public boolean them(TaiKhoan taiKhoan) {
         for (TaiKhoan curTaiKhoan : danhSachTaiKhoan) {
             if (curTaiKhoan.getMaNhanVien().equals(taiKhoan.getMaNhanVien()) ||

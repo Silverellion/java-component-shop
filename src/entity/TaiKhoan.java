@@ -54,6 +54,10 @@ public class TaiKhoan implements Serializable {
         return nhanVien.getDiaChi();
     }
 
+    public String getPathHinhAnhNhanVien() {
+        return nhanVien.getPathHinhAnhNhanVien();
+    }
+
     public String getTrangThai() {
         return nhanVien.getTrangThai();
     }
