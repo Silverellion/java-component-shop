@@ -44,8 +44,8 @@ public class ImageHelper {
                 lblImage.repaint();
 
                 return newFilePath;
-            } catch (IOException e) {
-                System.out.println(e);
+            } catch (IOException _) {
+                return null;
             }
         }
 

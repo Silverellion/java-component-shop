@@ -22,7 +22,7 @@ public class PnlThemNhanVien extends JPanel implements ActionListener {
     private final JPasswordField txtMatKhau;
     private final JComboBox<String> comboChucVu;
     private final JLabel lblImage;
-    private String pathHinhAnhNhanVien = null;
+    private String pathHinhAnh = null;
     private final JButton btnLamMoi, btnThem, btnChonAnh;
     private final DanhSachTaiKhoan danhSachTaiKhoan;
 
@@ -270,7 +270,7 @@ public class PnlThemNhanVien extends JPanel implements ActionListener {
             JOptionPane.showMessageDialog(this, "Mật khẩu phải có ít nhất 8 ký tự");
             return false;
         }
-        if(pathHinhAnhNhanVien == null) {
+        if(pathHinhAnh == null) {
             JOptionPane.showMessageDialog(this, "Hình ảnh không được để trống");
             return false;
         }
@@ -290,7 +290,7 @@ public class PnlThemNhanVien extends JPanel implements ActionListener {
         String password = new String(txtMatKhau.getPassword());
 
         int luong = Integer.parseInt(luongString);
-        TaiKhoan taiKhoan = new TaiKhoan(username, password, new NhanVien(ma, ten, chucVu, luong, sdt, diaChi, pathHinhAnhNhanVien));
+        TaiKhoan taiKhoan = new TaiKhoan(username, password, new NhanVien(ma, ten, chucVu, luong, sdt, diaChi, pathHinhAnh));
         if(danhSachTaiKhoan.them(taiKhoan)) {
             JOptionPane.showMessageDialog(this, "Thêm nhân viên thành công!");
             clear();
@@ -313,8 +313,8 @@ public class PnlThemNhanVien extends JPanel implements ActionListener {
     }
 
     private void addImage() {
-        pathHinhAnhNhanVien = ImageHelper.loadImageAndCache(lblImage);
-        if(pathHinhAnhNhanVien == null)
+        pathHinhAnh = ImageHelper.loadImageAndCache(lblImage);
+        if(pathHinhAnh == null)
             JOptionPane.showMessageDialog(this, "Chọn hình ảnh thất bại");
     }
 }
