@@ -284,8 +284,10 @@ public class PnlThemNhanVien extends JPanel implements ActionListener {
 
         int luong = Integer.parseInt(luongString);
         TaiKhoan taiKhoan = new TaiKhoan(username, password, new NhanVien(ma, ten, chucVu, luong, sdt, diaChi));
-        if(danhSachTaiKhoan.them(taiKhoan))
-            JOptionPane.showConfirmDialog(this, "Thêm nhân viên thành công!");
+        if(danhSachTaiKhoan.them(taiKhoan)) {
+            JOptionPane.showMessageDialog(this, "Thêm nhân viên thành công!");
+            clear();
+        }
         else
             JOptionPane.showMessageDialog(this, "Mã nhân viên hoặc tên đăng nhập đã tồn tại");
     }
