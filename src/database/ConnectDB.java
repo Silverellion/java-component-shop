@@ -5,7 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.*;
 
-public class JDBC {
+public class ConnectDB {
     private static Connection connection = null;
     public static void initialize(String url, String user, String password) throws IOException, SQLException {
         connection = DriverManager.getConnection(url, user, password);
@@ -27,7 +27,7 @@ public class JDBC {
     }
 
     private static void executeSQLFile(Connection conn, String filename) throws IOException, SQLException {
-        String sql = Files.readString(Paths.get("src/database/sql/initialize/" + filename));
+        String sql = Files.readString(Paths.get("src/sql/initialize/" + filename));
         Statement stmt = conn.createStatement();
         stmt.executeUpdate(sql);
         stmt.close();

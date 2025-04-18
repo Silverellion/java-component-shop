@@ -20,7 +20,7 @@ project-component/
 │   ├── gui/
 │   ├── main/
 │   │   └── App.java <- to run the program 
-│   ├── models/ <- add your logic classes here
+│   ├── entity/ <- add your logic classes here
 │   │   ├── DanhSachTaiKhoan.java
 │   │   ├── NhanVien.java
 │   │   └── TaiKhoan.java

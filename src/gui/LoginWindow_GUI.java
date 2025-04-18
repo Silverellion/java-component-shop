@@ -3,7 +3,6 @@ package gui;
 import utils.SwingHelper;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -21,7 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-public class LoginWindow extends JFrame implements ActionListener {
+public class LoginWindow_GUI extends JFrame implements ActionListener {
     @Serial
     private static final long serialVersionUID = 1L;
     private JLabel lblUsername;
@@ -30,7 +29,7 @@ public class LoginWindow extends JFrame implements ActionListener {
     private JTextField txtPassword;
     private JButton btnDangNhap;
 
-    public LoginWindow() {
+    public LoginWindow_GUI() {
         setTitle("Đăng nhập");
         setSize(400, 720);
         setLocationRelativeTo(null);
@@ -100,7 +99,7 @@ public class LoginWindow extends JFrame implements ActionListener {
         Object src = e.getSource();
         if(src == btnDangNhap) {
             this.dispose();
-            new MainWindow();
+            new MainWindow_GUI();
         }
     }
 }

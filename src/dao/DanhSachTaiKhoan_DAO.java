@@ -1,33 +1,30 @@
-package models;
+package dao;
 
-import database.JDBC;
+import database.ConnectDB;
+import entity.NhanVien;
+import entity.TaiKhoan;
 
 import java.io.IOException;
-import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 
-public class DanhSachTaiKhoan implements Serializable {
-    private final ArrayList<TaiKhoan> danhSachTaiKhoan;
+public class DanhSachTaiKhoan_DAO {
     private final Connection conn;
-    private final String SQL_PATH = "src/database/sql/taiKhoan/";
-    public DanhSachTaiKhoan() {
-        danhSachTaiKhoan = new ArrayList<>();
-        conn = JDBC.getConnection();
-        load();
+    private final String SQL_PATH = "src/sql/taiKhoan/";
+
+    public DanhSachTaiKhoan_DAO() {
+        conn = ConnectDB.getConnection();
     }
 
-    private void load() {
+    public ArrayList<TaiKhoan> load() {
+        ArrayList<TaiKhoan> danhSach = new ArrayList<>();
         try {
             String sql = Files.readString(Paths.get(SQL_PATH + "selectTaiKhoan.sql"));
             PreparedStatement stmt = conn.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
-            while(rs.next()) {
+            while (rs.next()) {
                 TaiKhoan taiKhoan = new TaiKhoan(
                         rs.getString("tenDangNhap"),
                         rs.getString("matKhau"),
@@ -41,17 +38,13 @@ public class DanhSachTaiKhoan implements Serializable {
                                 rs.getString("trangThai")
                         )
                 );
-                danhSachTaiKhoan.add(taiKhoan);
+                danhSach.add(taiKhoan);
             }
         } catch (IOException | SQLException _) {}
+        return danhSach;
     }
 
     public boolean them(TaiKhoan taiKhoan) {
-        for(TaiKhoan curTaiKhoan : danhSachTaiKhoan) {
-            if(curTaiKhoan.getMaNhanVien().equals(taiKhoan.getMaNhanVien())
-            ||curTaiKhoan.getTenDangNhap().equals(taiKhoan.getTenDangNhap()))
-                return false;
-        }
         try {
             String sql = Files.readString(Paths.get(SQL_PATH + "insertTaiKhoan.sql"));
             PreparedStatement stmt = conn.prepareStatement(sql);
@@ -70,23 +63,9 @@ public class DanhSachTaiKhoan implements Serializable {
             stmt.setString(11, taiKhoan.getMatKhau());
             stmt.setString(12, taiKhoan.getMaNhanVien());
             stmt.executeUpdate();
-        } catch (IOException | SQLException e) {
+            return true;
+        } catch (IOException | SQLException _) {
             return false;
         }
-        danhSachTaiKhoan.add(taiKhoan);
-        return true;
-    }
-    public boolean xoa(int index) {
-        //database shit later on
-        danhSachTaiKhoan.remove(index);
-        return true;
-    }
-    public boolean capNhat(int index, TaiKhoan taiKhoan) {
-        //database shit later on
-        danhSachTaiKhoan.set(index, taiKhoan);
-        return true;
-    }
-    public ArrayList<TaiKhoan> getDanhSach() {
-        return danhSachTaiKhoan;
     }
 }

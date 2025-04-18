@@ -8,7 +8,7 @@ import java.awt.event.*;
 import java.io.Serial;
 import java.net.URL;
 
-public class MainWindow extends JFrame implements ActionListener {
+public class MainWindow_GUI extends JFrame implements ActionListener {
     @Serial
     private static final long serialVersionUID = 1L;
 
@@ -32,7 +32,7 @@ public class MainWindow extends JFrame implements ActionListener {
     PnlThongKeNhanVien pnlThongKeNhanVien;
     PnlCaiDat pnlCaiDat;
 
-    public MainWindow() {
+    public MainWindow_GUI() {
         setTitle("Cửa hàng linh kiện");
         setSize(1280, 720);
         setLocationRelativeTo(null);
@@ -148,7 +148,7 @@ public class MainWindow extends JFrame implements ActionListener {
             isLoggedIn = true;
             updateLoginStatus();
             this.dispose();
-            new LoginWindow();
+            new LoginWindow_GUI();
         } else if (src == btnDangXuat) {
             isLoggedIn = false;
             updateLoginStatus();

@@ -1,8 +1,8 @@
 package gui;
 
-import models.DanhSachTaiKhoan;
-import models.NhanVien;
-import models.TaiKhoan;
+import entity.DanhSachTaiKhoan;
+import entity.NhanVien;
+import entity.TaiKhoan;
 import utils.SwingHelper;
 
 import javax.swing.*;
