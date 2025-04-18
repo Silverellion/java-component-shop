@@ -8,6 +8,7 @@ SELECT
     nv.luong,
     nv.soDienThoai,
     nv.diaChi,
-    nv.trangThai
+    nv.trangThai,
+    nv.pathHinhAnh
 FROM  taiKhoan tk, nhanVien nv
 WHERE  tk.maNhanVien = nv.maNhanVien;
