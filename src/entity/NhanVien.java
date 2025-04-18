@@ -10,21 +10,23 @@ public class NhanVien implements Serializable {
     private int luong;
     private String soDienThoai;
     private String diaChi;
+    private String pathHinhAnhNhanVien;
     private String trangThai;
 
     public NhanVien(String maNhanVien, String hoTen, String chucVu, int luong, String soDienThoai,
-                    String diaChi) {
+                    String diaChi, String pathHinhAnhNhanVien) {
         setMaNhanVien(maNhanVien);
         setHoTen(hoTen);
         setChucVu(chucVu);
         setLuong(luong);
         setSoDienThoai(soDienThoai);
         setDiaChi(diaChi);
+        setPathHinhAnhNhanVien(pathHinhAnhNhanVien);
         setTrangThai("HoatDong");
     }
 
     public NhanVien(String maNhanVien, String hoTen, String chucVu, int luong, String soDienThoai,
-                    String diaChi, String trangThai) {
+                    String diaChi, String pathHinhAnhNhanVien, String trangThai) {
         setMaNhanVien(maNhanVien);
         setHoTen(hoTen);
         setChucVu(chucVu);
@@ -32,6 +34,8 @@ public class NhanVien implements Serializable {
         setSoDienThoai(soDienThoai);
         setDiaChi(diaChi);
         setTrangThai(trangThai);
+        setPathHinhAnhNhanVien(pathHinhAnhNhanVien);
+        setPathHinhAnhNhanVien("null");
     }
 
     public String getMaNhanVien() {
@@ -82,6 +86,14 @@ public class NhanVien implements Serializable {
         this.diaChi = diaChi;
     }
 
+    public String getPathHinhAnhNhanVien() {
+        return pathHinhAnhNhanVien;
+    }
+
+    public void setPathHinhAnhNhanVien(String pathHinhAnhNhanVien) {
+        this.pathHinhAnhNhanVien = pathHinhAnhNhanVien;
+    }
+
     public String getTrangThai() {
         return trangThai;
     }
@@ -94,11 +106,11 @@ public class NhanVien implements Serializable {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         NhanVien nhanVien = (NhanVien) o;
-        return luong == nhanVien.luong && Objects.equals(maNhanVien, nhanVien.maNhanVien) && Objects.equals(hoTen, nhanVien.hoTen) && Objects.equals(chucVu, nhanVien.chucVu) && Objects.equals(soDienThoai, nhanVien.soDienThoai) && Objects.equals(diaChi, nhanVien.diaChi) && Objects.equals(trangThai, nhanVien.trangThai);
+        return luong == nhanVien.luong && Objects.equals(maNhanVien, nhanVien.maNhanVien) && Objects.equals(hoTen, nhanVien.hoTen) && Objects.equals(chucVu, nhanVien.chucVu) && Objects.equals(soDienThoai, nhanVien.soDienThoai) && Objects.equals(diaChi, nhanVien.diaChi) && Objects.equals(trangThai, nhanVien.trangThai) && Objects.equals(pathHinhAnhNhanVien, nhanVien.pathHinhAnhNhanVien);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(maNhanVien, hoTen, chucVu, luong, soDienThoai, diaChi, trangThai);
+        return Objects.hash(maNhanVien, hoTen, chucVu, luong, soDienThoai, diaChi, trangThai, pathHinhAnhNhanVien);
     }
 }

@@ -172,7 +172,7 @@ public class PnlThemNhanVien extends JPanel implements ActionListener {
         pnlLeftButtons.add(btnLamMoi);
 
         JPanel pnlRightButton = new JPanel(new FlowLayout(FlowLayout.CENTER));
-         btnChonAnh = SwingHelper.createProjectJButton("Chọn ảnh", "icons8-folder-50.png");
+        btnChonAnh = SwingHelper.createProjectJButton("Chọn ảnh", "icons8-folder-50.png");
         btnChonAnh.setPreferredSize(new Dimension(150, 40));
         pnlRightButton.add(btnChonAnh);
 
