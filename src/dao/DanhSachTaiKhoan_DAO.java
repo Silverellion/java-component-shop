@@ -35,6 +35,7 @@ public class DanhSachTaiKhoan_DAO {
                                 rs.getInt("luong"),
                                 rs.getString("soDienThoai"),
                                 rs.getString("diaChi"),
+                                rs.getString("pathHinhAnh"),
                                 rs.getString("trangThai")
                         )
                 );

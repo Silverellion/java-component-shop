@@ -7,6 +7,7 @@ BEGIN
         luong INT,
         soDienThoai NVARCHAR(15),
         diaChi NVARCHAR(200),
+        pathHinhAnh NVARCHAR(255),
         trangThai NVARCHAR(20) CHECK (trangThai IN ('HoatDong', 'KhongConHoatDong'))
     );
 END
