@@ -70,4 +70,42 @@ public class DanhSachTaiKhoan_DAO {
             return false;
         }
     }
+
+    public boolean delete(TaiKhoan taiKhoan) {
+        try {
+            String sql = Files.readString(Paths.get(SQL_PATH + "deleteTaiKhoan.sql"));
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, taiKhoan.getMaNhanVien());
+            stmt.setString(2, taiKhoan.getMaNhanVien());
+            return true;
+        } catch (IOException | SQLException e) {
+            return false;
+        }
+    }
+
+    public boolean update(TaiKhoan taiKhoan) {
+        try {
+            String sql = Files.readString(Paths.get(SQL_PATH + "updateTaiKhoan.sql"));
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, taiKhoan.getMaNhanVien());
+            stmt.setString(2, taiKhoan.getHoTen());
+            stmt.setString(3, taiKhoan.getChucVu());
+            stmt.setInt(4, taiKhoan.getLuong());
+            stmt.setString(5, taiKhoan.getSoDienThoai());
+            stmt.setString(6, taiKhoan.getDiaChi());
+            stmt.setString(7, taiKhoan.getTrangThai());
+            stmt.setString(8, taiKhoan.getPathHinhAnh());
+
+            stmt.setString(9, taiKhoan.getMaNhanVien());
+
+            stmt.setString(10, taiKhoan.getTenDangNhap());
+            stmt.setString(11, taiKhoan.getMatKhau());
+            stmt.setString(12, taiKhoan.getMaNhanVien());
+
+            stmt.setString(13, taiKhoan.getMaNhanVien());
+            return true;
+        } catch (IOException | SQLException e) {
+            return false;
+        }
+    }
 }

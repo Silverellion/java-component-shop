@@ -33,13 +33,17 @@ public class DanhSachTaiKhoan implements Serializable {
     }
 
     public boolean xoa(int index) {
-        //add DAO deletion logic later
+        if(!dao.delete(danhSachTaiKhoan.get(index))) {
+            return false;
+        }
         danhSachTaiKhoan.remove(index);
         return true;
     }
 
     public boolean capNhat(int index, TaiKhoan taiKhoan) {
-        //add DAO update logic later
+        if(!dao.update(taiKhoan)){
+            return false;
+        }
         danhSachTaiKhoan.set(index, taiKhoan);
         return true;
     }
