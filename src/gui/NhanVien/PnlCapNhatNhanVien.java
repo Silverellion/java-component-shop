@@ -30,7 +30,7 @@ public class PnlCapNhatNhanVien extends JPanel implements ActionListener {
     private final JLabel lblHinhAnh;
     private final JButton btnXoa, btnCapNhat, btnXuat, btnLamMoi;
     private final JTextField txtTim;
-    private final DanhSachTaiKhoan danhSachTaiKhoan;
+    private DanhSachTaiKhoan danhSachTaiKhoan;
 
     public PnlCapNhatNhanVien() {
         danhSachTaiKhoan = new DanhSachTaiKhoan();
@@ -274,6 +274,13 @@ public class PnlCapNhatNhanVien extends JPanel implements ActionListener {
         load();
     }
 
+    // Reinitialize danhSachTaiKhoan after adding it in PnlThemNhanVien
+    public void refreshData() {
+        danhSachTaiKhoan = new DanhSachTaiKhoan();
+        tblModelTaiKhoan.setRowCount(0);
+        load();
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         Object src = e.getSource();
@@ -302,6 +309,7 @@ public class PnlCapNhatNhanVien extends JPanel implements ActionListener {
                     txtMatKhau.setText("********");
 
                     String pathHinhAnh = danhSachTaiKhoan.tim(maNV).getPathHinhAnh();
+                    System.out.println(pathHinhAnh);
                     loadImage(lblHinhAnh, pathHinhAnh);
                 }
             }

@@ -1,5 +1,7 @@
 package utils;
 
+import gui.NhanVien.PnlCapNhatNhanVien;
+
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicMenuItemUI;
 import java.awt.*;
@@ -54,6 +56,12 @@ public class SwingSidebarHelper {
             button.setBackground(new Color(200, 0, 0));
             pnlMain.removeAll();
             pnlMain.add(panel);
+
+            // Refresh data if switching to X panel that needs to sync with any given dynamic array
+            if (panel instanceof PnlCapNhatNhanVien) {
+                ((PnlCapNhatNhanVien) panel).refreshData();
+            }
+
             pnlMain.revalidate();
             pnlMain.repaint();
             menu.setVisible(false);
