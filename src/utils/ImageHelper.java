@@ -56,7 +56,6 @@ public class ImageHelper {
         if (imagePath == null || imagePath.isEmpty())
             return;
         try {
-            System.out.println("Attempting to load image from: " + imagePath);
             BufferedImage image = ImageIO.read(new File(imagePath));
             Image scaledImage = image.getScaledInstance(
                     label.getPreferredSize().width,
