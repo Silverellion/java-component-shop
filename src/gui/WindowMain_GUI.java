@@ -192,6 +192,7 @@ public class WindowMain_GUI extends JFrame implements ActionListener {
     }
 
     private void resetSidebarColors() {
+        btnTrangChuPanel.setBackground(new Color(200, 60, 60));
         btnQuanLyKhoPanel.setBackground(new Color(200, 60, 60));
         btnDonHangPnl.setBackground(new Color(200, 60, 60));
         btnQuanLyNhanVienPnl.setBackground(new Color(200, 60, 60));

@@ -2,9 +2,7 @@ package gui.Kho;
 
 import utils.SwingHelper;
 import java.io.Serial;
-import javax.swing.BoxLayout;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 public class PnlNhapHang extends JPanel{
 	@Serial
@@ -14,5 +12,8 @@ public class PnlNhapHang extends JPanel{
 		JLabel lblTitle = SwingHelper.createProjectJLabel("Nhập hàng", 30);
 		lblTitle.setAlignmentX(CENTER_ALIGNMENT);
 		add(lblTitle);
+
+		JButton btnTest = SwingHelper.createProjectJButton("Test");
+		JLabel lblTest = SwingHelper.createProjectJLabel("Test");
 	}
 }

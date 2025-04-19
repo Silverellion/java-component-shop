@@ -32,7 +32,7 @@ public class PnlCapNhatNhanVien extends JPanel implements ActionListener {
     private final JTable tblTaiKhoan;
     private final DefaultTableModel tblModelTaiKhoan;
     private final JLabel lblHinhAnh;
-    private final JButton btnThem, btnXoa, btnCapNhat, btnXuat, btnLamMoi, btnChonAnh, btnXoaAnh;
+    private final JButton btnThem, btnXoa, btnCapNhat, btnXuat, btnLamMoi, btnChonAnh;
     private final JTextField txtTim;
     private String pathHinhAnh = null;
     private DanhSachTaiKhoan danhSachTaiKhoan;
@@ -214,12 +214,16 @@ public class PnlCapNhatNhanVien extends JPanel implements ActionListener {
 
         lblHinhAnh = new JLabel();
         lblHinhAnh.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        lblHinhAnh.setPreferredSize(new Dimension(390, 565));
+        lblHinhAnh.setPreferredSize(new Dimension(300, 500));
+        btnChonAnh = SwingHelper.createProjectJButton("Chọn ảnh", "icons8-folder-50.png");
+        JPanel pnlHinhAnh = new JPanel(new BorderLayout());
+        pnlHinhAnh.add(lblHinhAnh, BorderLayout.CENTER);
+        pnlHinhAnh.add(btnChonAnh, BorderLayout.SOUTH);
 
         JPanel pnlTableTaiKhoan = new JPanel(new BorderLayout());
         pnlTableTaiKhoan.setBorder(BorderFactory.createEmptyBorder(0, 20, 20, 20));
         pnlTableTaiKhoan.add(scrTaiKhoan, BorderLayout.CENTER);
-        pnlTableTaiKhoan.add(lblHinhAnh, BorderLayout.EAST);
+        pnlTableTaiKhoan.add(pnlHinhAnh, BorderLayout.EAST);
         add(pnlTableTaiKhoan, BorderLayout.CENTER);
 
         btnThem = SwingHelper.createProjectJButton("Thêm", "icons8-add-50.png");
@@ -227,8 +231,6 @@ public class PnlCapNhatNhanVien extends JPanel implements ActionListener {
         btnCapNhat = SwingHelper.createProjectJButton("Cập nhật", "icons8-up-50.png");
         btnXuat = SwingHelper.createProjectJButton("Xuất Excel", "icons8-excel-50.png");
         btnLamMoi = SwingHelper.createProjectJButton("Làm mới", "icons8-reload-50.png");
-        btnChonAnh = SwingHelper.createProjectJButton("Chọn ảnh", "icons8-folder-50.png");
-        btnXoaAnh = SwingHelper.createProjectJButton("Xóa ảnh", "icons8-x-50.png");
 
         JLabel lblTim = SwingHelper.createProjectJLabel("Nhập dữ liệu cần tìm: ");
         txtTim = new JTextField(20);
@@ -283,7 +285,6 @@ public class PnlCapNhatNhanVien extends JPanel implements ActionListener {
         txtTim.getDocument().addDocumentListener(new FilterListener()); //Real time filtering function
         btnXuat.addActionListener(this);
         btnChonAnh.addActionListener(this);
-        btnXoaAnh.addActionListener(this);
         load();
     }
 
@@ -309,8 +310,6 @@ public class PnlCapNhatNhanVien extends JPanel implements ActionListener {
             clear();
         if(src == btnChonAnh)
             addImage();
-        if(src == btnXoaAnh)
-            removeImage();
     }
 
     private void tableClickListener() {
