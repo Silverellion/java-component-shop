@@ -53,43 +53,22 @@ public class ImageHelper {
     }
 
     public static void loadImage(JLabel label, String imagePath) {
-        if (imagePath == null || imagePath.isEmpty()) {
-            label.setIcon(null);
-            label.setText("No image available");
+        if (imagePath == null || imagePath.isEmpty())
             return;
-        }
-
-        File imageFile = new File(imagePath);
-        if (!imageFile.exists() || !imageFile.isFile()) {
-            label.setIcon(null);
-            label.setText("Image file not found");
-            System.err.println("Image file does not exist: " + imagePath);
-            return;
-        }
-
         try {
-            System.out.println("Loading image from: " + imagePath);
-            BufferedImage image = ImageIO.read(imageFile);
-            if (image == null) {
-                label.setIcon(null);
-                label.setText("Invalid image format");
-                System.err.println("Could not read image as a valid image format: " + imagePath);
-                return;
-            }
-
+            System.out.println("Attempting to load image from: " + imagePath);
+            BufferedImage image = ImageIO.read(new File(imagePath));
             Image scaledImage = image.getScaledInstance(
                     label.getPreferredSize().width,
                     label.getPreferredSize().height,
                     Image.SCALE_SMOOTH
             );
             label.setIcon(new ImageIcon(scaledImage));
-            label.setText(null);
             label.revalidate();
             label.repaint();
         } catch (IOException e) {
-            label.setIcon(null);
-            label.setText("Error loading image");
             System.err.println("Error loading image: " + e.getMessage());
+            label.setIcon(null);
         }
     }
 }
