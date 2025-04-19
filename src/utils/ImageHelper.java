@@ -51,4 +51,23 @@ public class ImageHelper {
 
         return null;
     }
+
+    public static void loadImageToLabel(JLabel label, String imagePath) {
+        if (imagePath == null || imagePath.isEmpty())
+            return;
+        try {
+            BufferedImage image = ImageIO.read(new File(imagePath));
+            Image scaledImage = image.getScaledInstance(
+                    label.getPreferredSize().width,
+                    label.getPreferredSize().height,
+                    Image.SCALE_SMOOTH
+            );
+            label.setIcon(new ImageIcon(scaledImage));
+            label.revalidate();
+            label.repaint();
+        } catch (IOException e) {
+            label.setIcon(null); // Return null if there is no image
+            return;
+        }
+    }
 }

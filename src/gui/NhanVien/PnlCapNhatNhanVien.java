@@ -18,6 +18,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Objects;
 
+import static utils.ImageHelper.loadImageToLabel;
 import static utils.SwingHelper.createProjectJTable;
 
 public class PnlCapNhatNhanVien extends JPanel implements ActionListener {
@@ -26,6 +27,7 @@ public class PnlCapNhatNhanVien extends JPanel implements ActionListener {
     private final JComboBox<String> comboChucVu;
     private final JTable tblTaiKhoan;
     private final DefaultTableModel tblModelTaiKhoan;
+    private final JLabel lblHinhAnh;
     private final JButton btnXoa, btnCapNhat, btnXuat, btnLamMoi;
     private final JTextField txtTim;
     private final DanhSachTaiKhoan danhSachTaiKhoan;
@@ -205,9 +207,14 @@ public class PnlCapNhatNhanVien extends JPanel implements ActionListener {
         tblTaiKhoan = createProjectJTable(tblModelTaiKhoan);
         JScrollPane scrTaiKhoan = new JScrollPane(tblTaiKhoan);
 
+        lblHinhAnh = new JLabel();
+        lblHinhAnh.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        lblHinhAnh.setPreferredSize(new Dimension(175, 240));
+
         JPanel pnlTableTaiKhoan = new JPanel(new BorderLayout());
-        pnlTableTaiKhoan.setBorder(BorderFactory.createEmptyBorder(0, 20, 20, 20)); // Margin-X: 20px
+        pnlTableTaiKhoan.setBorder(BorderFactory.createEmptyBorder(0, 20, 20, 20));
         pnlTableTaiKhoan.add(scrTaiKhoan, BorderLayout.CENTER);
+        pnlTableTaiKhoan.add(lblHinhAnh, BorderLayout.EAST);
         add(pnlTableTaiKhoan, BorderLayout.CENTER);
 
         btnXoa = SwingHelper.createProjectJButton("Xóa", "icons8-delete-50.png");
@@ -284,7 +291,8 @@ public class PnlCapNhatNhanVien extends JPanel implements ActionListener {
             public void mouseClicked(MouseEvent e) {
                 int row = tblTaiKhoan.getSelectedRow();
                 if(row >= 0) {
-                    txtMaNV.setText(tblTaiKhoan.getValueAt(row, 0).toString());
+                    String maNV = tblTaiKhoan.getValueAt(row, 0).toString();
+                    txtMaNV.setText(maNV);
                     txtTenNV.setText(tblTaiKhoan.getValueAt(row, 1).toString());
                     comboChucVu.setSelectedItem(tblTaiKhoan.getValueAt(row, 2).toString());
                     txtLuong.setText(tblTaiKhoan.getValueAt(row, 3).toString());
@@ -292,6 +300,9 @@ public class PnlCapNhatNhanVien extends JPanel implements ActionListener {
                     txtDiaChi.setText(tblTaiKhoan.getValueAt(row, 5).toString());
                     txtTenDangNhap.setText(tblTaiKhoan.getValueAt(row, 6).toString());
                     txtMatKhau.setText("********");
+
+                    String pathHinhAnh = danhSachTaiKhoan.tim(maNV).getPathHinhAnh();
+                    loadImageToLabel(lblHinhAnh, pathHinhAnh);
                 }
             }
         });

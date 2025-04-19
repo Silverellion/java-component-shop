@@ -21,7 +21,7 @@ public class PnlThemNhanVien extends JPanel implements ActionListener {
     private final JTextField txtMaNV, txtTenNV, txtLuong, txtSoDienThoai, txtDiaChi, txtTenDangNhap;
     private final JPasswordField txtMatKhau;
     private final JComboBox<String> comboChucVu;
-    private final JLabel lblImage;
+    private final JLabel lblHinhAnh;
     private String pathHinhAnh = null;
     private final JButton btnLamMoi, btnThem, btnChonAnh;
     private final DanhSachTaiKhoan danhSachTaiKhoan;
@@ -152,12 +152,12 @@ public class PnlThemNhanVien extends JPanel implements ActionListener {
         pnlForm.add(Box.createVerticalGlue());
 
         JPanel pnlRight = new JPanel(new BorderLayout());
-        lblImage = new JLabel();
-        lblImage.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        lblImage.setPreferredSize(new Dimension(350, 480));
+        lblHinhAnh = new JLabel();
+        lblHinhAnh.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        lblHinhAnh.setPreferredSize(new Dimension(350, 480));
 
         JPanel pnlImageHolder = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        pnlImageHolder.add(lblImage);
+        pnlImageHolder.add(lblHinhAnh);
         pnlRight.add(pnlImageHolder, BorderLayout.CENTER);
         pnlMain.add(pnlForm);
         pnlMain.add(pnlRight);
@@ -313,7 +313,7 @@ public class PnlThemNhanVien extends JPanel implements ActionListener {
     }
 
     private void addImage() {
-        pathHinhAnh = ImageHelper.loadImageAndCache(lblImage);
+        pathHinhAnh = ImageHelper.loadImageAndCache(lblHinhAnh);
         if(pathHinhAnh == null)
             JOptionPane.showMessageDialog(this, "Chọn hình ảnh thất bại");
     }
