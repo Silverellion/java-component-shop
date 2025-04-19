@@ -23,7 +23,7 @@ public class PnlThemNhanVien extends JPanel implements ActionListener {
     private final JComboBox<String> comboChucVu;
     private final JLabel lblHinhAnh;
     private String pathHinhAnh = null;
-    private final JButton btnLamMoi, btnThem, btnChonAnh;
+    private final JButton btnLamMoi, btnThem, btnChonAnh, btnXoaAnh;
     private final DanhSachTaiKhoan danhSachTaiKhoan;
 
     public PnlThemNhanVien() {
@@ -154,7 +154,7 @@ public class PnlThemNhanVien extends JPanel implements ActionListener {
         JPanel pnlRight = new JPanel(new BorderLayout());
         lblHinhAnh = new JLabel();
         lblHinhAnh.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        lblHinhAnh.setPreferredSize(new Dimension(350, 480));
+        lblHinhAnh.setPreferredSize(new Dimension(390, 565));
 
         JPanel pnlImageHolder = new JPanel(new FlowLayout(FlowLayout.CENTER));
         pnlImageHolder.add(lblHinhAnh);
@@ -177,7 +177,10 @@ public class PnlThemNhanVien extends JPanel implements ActionListener {
         JPanel pnlRightButton = new JPanel(new FlowLayout(FlowLayout.CENTER));
         btnChonAnh = SwingHelper.createProjectJButton("Chọn ảnh", "icons8-folder-50.png");
         btnChonAnh.setPreferredSize(new Dimension(150, 40));
+        btnXoaAnh = SwingHelper.createProjectJButton("Xóa ảnh", "icons8-x-50.png");
+        btnXoaAnh.setPreferredSize(new Dimension(150, 40));
         pnlRightButton.add(btnChonAnh);
+        pnlRightButton.add(btnXoaAnh);
 
         pnlButtons.add(pnlLeftButtons);
         pnlButtons.add(pnlRightButton);
@@ -188,20 +191,20 @@ public class PnlThemNhanVien extends JPanel implements ActionListener {
         btnThem.addActionListener(this);
         btnLamMoi.addActionListener(this);
         btnChonAnh.addActionListener(this);
+        btnXoaAnh.addActionListener(this);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         Object src = e.getSource();
-        if(src == btnThem) {
+        if(src == btnThem)
             add();
-        }
-        if(src == btnLamMoi) {
+        if(src == btnLamMoi)
             clear();
-        }
-        if(src == btnChonAnh) {
+        if(src == btnChonAnh)
             addImage();
-        }
+        if(src == btnXoaAnh)
+            removeImage();
     }
 
     private boolean isTextFieldBlank(JTextField input, String inputName) {
@@ -294,6 +297,7 @@ public class PnlThemNhanVien extends JPanel implements ActionListener {
         if(danhSachTaiKhoan.them(taiKhoan)) {
             JOptionPane.showMessageDialog(this, "Thêm nhân viên thành công!");
             clear();
+            removeImage();
         }
         else
             JOptionPane.showMessageDialog(this, "Mã nhân viên hoặc tên đăng nhập đã tồn tại");
@@ -316,5 +320,11 @@ public class PnlThemNhanVien extends JPanel implements ActionListener {
         pathHinhAnh = ImageHelper.saveImage(lblHinhAnh);
         if(pathHinhAnh == null)
             JOptionPane.showMessageDialog(this, "Chọn hình ảnh thất bại");
+    }
+
+    private void removeImage() {
+        lblHinhAnh.setIcon(null);
+        lblHinhAnh.revalidate();
+        lblHinhAnh.repaint();
     }
 }
