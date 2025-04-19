@@ -16,10 +16,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -526,8 +524,12 @@ public class PnlCapNhatNhanVien extends JPanel implements ActionListener {
                     now.getDayOfMonth() + "_" + now.getHour() + now.getMinute() + ".csv";
             File csvFile = new File(cacheDir, fileName);
 
-            try (FileWriter writer = new FileWriter(csvFile);
+            try (OutputStreamWriter writer = new OutputStreamWriter(
+                    new FileOutputStream(csvFile), StandardCharsets.UTF_8);
                  BufferedWriter bufferedWriter = new BufferedWriter(writer)) {
+
+                // Add UTF-8 BOM so Excel recognizes the encoding correctly
+                bufferedWriter.write('\ufeff');
 
                 String header = "Mã NV,Tên NV,Chức vụ,Lương,Số điện thoại,Địa chỉ,Tên đăng nhập,Mật khẩu,Trạng thái";
                 bufferedWriter.write(header);
@@ -577,7 +579,7 @@ public class PnlCapNhatNhanVien extends JPanel implements ActionListener {
                 Desktop.getDesktop().open(file);
             } else {
                 JOptionPane.showMessageDialog(this,
-                        "Không thể mở file. File được lưu tại:\n" + file.getAbsolutePath());
+                        "Không thể mở file tự động. File được lưu tại:\n" + file.getAbsolutePath());
             }
         } catch (Exception e) {
             JOptionPane.showConfirmDialog(this, "Lỗi xuất file");
