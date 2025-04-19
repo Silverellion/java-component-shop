@@ -41,7 +41,7 @@ public class DanhSachTaiKhoan_DAO {
                 );
                 danhSach.add(taiKhoan);
             }
-        } catch (IOException | SQLException _) {}
+        } catch (IOException | SQLException e) {}
         return danhSach;
     }
 
@@ -66,7 +66,7 @@ public class DanhSachTaiKhoan_DAO {
             stmt.setString(13, taiKhoan.getMaNhanVien());
             stmt.executeUpdate();
             return true;
-        } catch (IOException | SQLException _) {
+        } catch (IOException | SQLException e) {
             return false;
         }
     }

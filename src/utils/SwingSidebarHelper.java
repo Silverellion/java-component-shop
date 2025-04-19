@@ -24,7 +24,7 @@ public class SwingSidebarHelper {
 
                 @Override
                 public void mouseEntered(MouseEvent e) {
-                    hoverTimer = new Timer(100, _ ->  newMenu.show(btn, btn.getWidth(), 0));
+                    hoverTimer = new Timer(100, u ->  newMenu.show(btn, btn.getWidth(), 0));
                     hoverTimer.setRepeats(false);
                     hoverTimer.start();
                 }
@@ -51,7 +51,7 @@ public class SwingSidebarHelper {
         JMenuItem menuItem = new JMenuItem(itemName);
         styleMenuItem(menuItem);
 
-        menuItem.addActionListener(_ -> {
+        menuItem.addActionListener(e -> {
             backgroundResetter.run();
             button.setBackground(new Color(200, 0, 0));
             pnlMain.removeAll();

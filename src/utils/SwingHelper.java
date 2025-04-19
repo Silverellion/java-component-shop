@@ -55,7 +55,7 @@ public class SwingHelper {
                 Image img = new ImageIcon(imgURL).getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
                 icon = new ImageIcon(img);
             }
-        } catch (Exception _) {}
+        } catch (Exception e) {}
         JButton button = new JButton(name, icon) {
             @Override
             protected void paintComponent(Graphics g) {
