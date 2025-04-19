@@ -528,37 +528,27 @@ public class PnlCapNhatNhanVien extends JPanel implements ActionListener {
 
             try (FileWriter writer = new FileWriter(csvFile);
                  BufferedWriter bufferedWriter = new BufferedWriter(writer)) {
-                String[] columns = {"Mã NV", "Tên NV", "Chức vụ", "Lương", "Số điện thoại",
-                        "Địa chỉ", "Tên đăng nhập", "Mật khẩu"};
 
-                StringBuilder headerLine = new StringBuilder();
-                for (int i = 0; i < columns.length; i++) {
-                    if (i > 0) {
-                        headerLine.append(",");
-                    }
-                    headerLine.append("\"").append(columns[i]).append("\"");
-                }
-                bufferedWriter.write(headerLine.toString());
+                String header = "Mã NV,Tên NV,Chức vụ,Lương,Số điện thoại,Địa chỉ,Tên đăng nhập,Mật khẩu,Trạng thái";
+                bufferedWriter.write(header);
                 bufferedWriter.newLine();
 
-                // Write data rows
                 for (TaiKhoan tk : danhSachTaiKhoan.getDanhSach()) {
                     if ("KhongConHoatDong".equalsIgnoreCase(tk.getTrangThai())) {
                         continue;
                     }
 
-                    StringBuilder dataLine = new StringBuilder();
-                    appendCsvField(dataLine, tk.getMaNhanVien(), 0);
-                    appendCsvField(dataLine, tk.getHoTen(), 1);
-                    appendCsvField(dataLine, tk.getChucVu(), 1);
-                    appendCsvField(dataLine, String.valueOf(tk.getLuong()), 1);
-                    appendCsvField(dataLine, tk.getSoDienThoai(), 1);
-                    appendCsvField(dataLine, tk.getDiaChi(), 1);
-                    appendCsvField(dataLine, tk.getTenDangNhap(), 1);
-                    appendCsvField(dataLine, "********", 1);
+                    String line = tk.getMaNhanVien() + "," +
+                            tk.getHoTen() + "," +
+                            tk.getChucVu() + "," +
+                            tk.getLuong() + "," +
+                            tk.getSoDienThoai() + "," +
+                            tk.getDiaChi() + "," +
+                            tk.getTenDangNhap() + "," +
+                            "********," +
+                            tk.getTrangThai();
 
-                    // Write the line to file
-                    bufferedWriter.write(dataLine.toString());
+                    bufferedWriter.write(line);
                     bufferedWriter.newLine();
                 }
 
@@ -573,26 +563,12 @@ public class PnlCapNhatNhanVien extends JPanel implements ActionListener {
                     openFile(csvFile);
                 }
 
-            } catch (IOException e) {
-                JOptionPane.showConfirmDialog(this,"Lỗi xuất file");
+            } catch (Exception e) {
+                JOptionPane.showConfirmDialog(this, "Lỗi xuất file");
             }
         } catch (Exception e) {
-            JOptionPane.showConfirmDialog(this,"Lỗi xuất file");
+            JOptionPane.showConfirmDialog(this, "Lỗi xuất file");
         }
-    }
-
-    private void appendCsvField(StringBuilder builder, String value, int position) {
-        if (position > 0) {
-            builder.append(",");
-        }
-
-        if (value == null) {
-            value = "";
-        }
-
-        // Escape quotes and special characters
-        value = value.replace("\"", "\"\"");
-        builder.append("\"").append(value).append("\"");
     }
 
     private void openFile(File file) {
@@ -600,12 +576,14 @@ public class PnlCapNhatNhanVien extends JPanel implements ActionListener {
             if (Desktop.isDesktopSupported()) {
                 Desktop.getDesktop().open(file);
             } else {
-                JOptionPane.showConfirmDialog(this,"Lỗi xuất file");
+                JOptionPane.showMessageDialog(this,
+                        "Không thể mở file. File được lưu tại:\n" + file.getAbsolutePath());
             }
-        } catch (IOException e) {
-            JOptionPane.showConfirmDialog(this,"Lỗi xuất file");
+        } catch (Exception e) {
+            JOptionPane.showConfirmDialog(this, "Lỗi xuất file");
         }
     }
+
     private void clear() {
         txtMaNV.setText("");
         txtTenNV.setText("");
