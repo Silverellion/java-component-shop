@@ -3,6 +3,7 @@ package gui.NhanVien;
 import entity.DanhSachTaiKhoan;
 import entity.NhanVien;
 import entity.TaiKhoan;
+import utils.ImageHelper;
 import utils.SwingHelper;
 
 import javax.swing.*;
@@ -33,6 +34,7 @@ public class PnlCapNhatNhanVien extends JPanel implements ActionListener {
     private final JLabel lblHinhAnh;
     private final JButton btnThem, btnXoa, btnCapNhat, btnXuat, btnLamMoi, btnChonAnh, btnXoaAnh;
     private final JTextField txtTim;
+    private String pathHinhAnh = null;
     private DanhSachTaiKhoan danhSachTaiKhoan;
 
     public PnlCapNhatNhanVien() {
@@ -212,7 +214,7 @@ public class PnlCapNhatNhanVien extends JPanel implements ActionListener {
 
         lblHinhAnh = new JLabel();
         lblHinhAnh.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        lblHinhAnh.setPreferredSize(new Dimension(175, 240));
+        lblHinhAnh.setPreferredSize(new Dimension(390, 565));
 
         JPanel pnlTableTaiKhoan = new JPanel(new BorderLayout());
         pnlTableTaiKhoan.setBorder(BorderFactory.createEmptyBorder(0, 20, 20, 20));
@@ -235,6 +237,7 @@ public class PnlCapNhatNhanVien extends JPanel implements ActionListener {
         JPanel pnlSoutheast = new JPanel();
         pnlSoutheast.setMinimumSize(new Dimension(450, getHeight()));
 
+        pnlSouthwest.add(btnThem);
         pnlSouthwest.add(btnXoa);
         pnlSouthwest.add(btnCapNhat);
         pnlSouthwest.add(btnXuat);
@@ -272,12 +275,15 @@ public class PnlCapNhatNhanVien extends JPanel implements ActionListener {
         pnlSouth.add(splitPane);
         add(pnlSouth, BorderLayout.SOUTH);
 
+        btnThem.addActionListener(this);
         btnXoa.addActionListener(this);
         btnCapNhat.addActionListener(this);
         btnLamMoi.addActionListener(this);
         tableClickListener();
         txtTim.getDocument().addDocumentListener(new FilterListener()); //Real time filtering function
         btnXuat.addActionListener(this);
+        btnChonAnh.addActionListener(this);
+        btnXoaAnh.addActionListener(this);
         load();
     }
 
@@ -291,6 +297,8 @@ public class PnlCapNhatNhanVien extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         Object src = e.getSource();
+        if(src == btnThem)
+            add();
         if(src == btnXoa)
             remove();
         if(src == btnCapNhat)
@@ -299,6 +307,10 @@ public class PnlCapNhatNhanVien extends JPanel implements ActionListener {
             xuat();
         if(src == btnLamMoi)
             clear();
+        if(src == btnChonAnh)
+            addImage();
+        if(src == btnXoaAnh)
+            removeImage();
     }
 
     private void tableClickListener() {
@@ -457,6 +469,29 @@ public class PnlCapNhatNhanVien extends JPanel implements ActionListener {
         return true;
     }
 
+    private void add() {
+        if(!validateData())
+            return;
+        String ma = txtMaNV.getText();
+        String ten = txtTenNV.getText();
+        String chucVu = Objects.requireNonNull(comboChucVu.getSelectedItem()).toString();
+        String luongString = txtLuong.getText();
+        String sdt = txtSoDienThoai.getText();
+        String diaChi = txtDiaChi.getText();
+        String username = txtTenDangNhap.getText();
+        String password = new String(txtMatKhau.getPassword());
+
+        int luong = Integer.parseInt(luongString);
+        TaiKhoan taiKhoan = new TaiKhoan(username, password, new NhanVien(ma, ten, chucVu, luong, sdt, diaChi, pathHinhAnh));
+        if(danhSachTaiKhoan.them(taiKhoan)) {
+            JOptionPane.showMessageDialog(this, "Thêm nhân viên thành công!");
+            clear();
+            removeImage();
+        }
+        else
+            JOptionPane.showMessageDialog(this, "Mã nhân viên hoặc tên đăng nhập đã tồn tại");
+    }
+
     private void load() {
         for (TaiKhoan taiKhoan : danhSachTaiKhoan.getDanhSach()) {
             if ("KhongConHoatDong".equalsIgnoreCase(taiKhoan.getTrangThai())) {
@@ -600,6 +635,18 @@ public class PnlCapNhatNhanVien extends JPanel implements ActionListener {
         txtMatKhau.setText("");
 
         txtMaNV.requestFocus();
+    }
+
+    private void addImage() {
+        pathHinhAnh = ImageHelper.saveImage(lblHinhAnh);
+        if(pathHinhAnh == null)
+            JOptionPane.showMessageDialog(this, "Chọn hình ảnh thất bại");
+    }
+
+    private void removeImage() {
+        lblHinhAnh.setIcon(null);
+        lblHinhAnh.revalidate();
+        lblHinhAnh.repaint();
     }
 
 }
