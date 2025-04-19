@@ -18,7 +18,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Objects;
 
-import static utils.ImageHelper.loadImageToLabel;
+import static utils.ImageHelper.loadImage;
 import static utils.SwingHelper.createProjectJTable;
 
 public class PnlCapNhatNhanVien extends JPanel implements ActionListener {
@@ -302,7 +302,7 @@ public class PnlCapNhatNhanVien extends JPanel implements ActionListener {
                     txtMatKhau.setText("********");
 
                     String pathHinhAnh = danhSachTaiKhoan.tim(maNV).getPathHinhAnh();
-                    loadImageToLabel(lblHinhAnh, pathHinhAnh);
+                    loadImage(lblHinhAnh, pathHinhAnh);
                 }
             }
         });

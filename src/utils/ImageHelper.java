@@ -10,7 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 
 public class ImageHelper {
-    public static String loadImageAndCache(JLabel lblImage) {
+    public static String saveImage(JLabel lblImage) {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Select an image");
         int result = fileChooser.showOpenDialog(null);
@@ -52,10 +52,11 @@ public class ImageHelper {
         return null;
     }
 
-    public static void loadImageToLabel(JLabel label, String imagePath) {
+    public static void loadImage(JLabel label, String imagePath) {
         if (imagePath == null || imagePath.isEmpty())
             return;
         try {
+            System.out.println("Attempting to load image from: " + imagePath);
             BufferedImage image = ImageIO.read(new File(imagePath));
             Image scaledImage = image.getScaledInstance(
                     label.getPreferredSize().width,
@@ -66,8 +67,8 @@ public class ImageHelper {
             label.revalidate();
             label.repaint();
         } catch (IOException e) {
-            label.setIcon(null); // Return null if there is no image
-            return;
+            System.err.println("Error loading image: " + e.getMessage());
+            label.setIcon(null);
         }
     }
 }

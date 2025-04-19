@@ -313,7 +313,7 @@ public class PnlThemNhanVien extends JPanel implements ActionListener {
     }
 
     private void addImage() {
-        pathHinhAnh = ImageHelper.loadImageAndCache(lblHinhAnh);
+        pathHinhAnh = ImageHelper.saveImage(lblHinhAnh);
         if(pathHinhAnh == null)
             JOptionPane.showMessageDialog(this, "Chọn hình ảnh thất bại");
     }
