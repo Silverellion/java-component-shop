@@ -41,7 +41,7 @@ public class WindowMain_GUI extends JFrame implements ActionListener {
 
     public WindowMain_GUI() {
         setTitle("Cửa hàng linh kiện");
-        setSize(1280, 720);
+        setSize(1600, 800);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
