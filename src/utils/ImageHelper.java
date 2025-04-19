@@ -10,6 +10,8 @@ import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 
 public class ImageHelper {
+    private static String currentImagePath;
+
     public static String saveImage(JLabel lblImage) {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Select an image");
@@ -18,7 +20,6 @@ public class ImageHelper {
         if (result == JFileChooser.APPROVE_OPTION) {
             File selectedFile = fileChooser.getSelectedFile();
 
-            // Create the cache directory if it doesn't exist
             File cacheDir = new File("C:\\componentShopCache");
             if (!cacheDir.exists()) {
                 cacheDir.mkdirs();
@@ -27,7 +28,6 @@ public class ImageHelper {
             File newFile = new File(newFilePath);
 
             try {
-                // Copy the image to the cache directory
                 Files.copy(selectedFile.toPath(), newFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
 
                 // Read and scale the image
@@ -39,9 +39,13 @@ public class ImageHelper {
                 );
 
                 // Set the image to the label
-                lblImage.setIcon(new ImageIcon(scaledImage));
+                ImageIcon icon = new ImageIcon(scaledImage);
+                icon.setDescription(newFilePath); // Set the description to store the path so we can load it later
+                lblImage.setIcon(icon);
                 lblImage.revalidate();
                 lblImage.repaint();
+
+                currentImagePath = newFilePath;
 
                 return newFilePath;
             } catch (IOException e) {
@@ -62,12 +66,30 @@ public class ImageHelper {
                     label.getPreferredSize().height,
                     Image.SCALE_SMOOTH
             );
-            label.setIcon(new ImageIcon(scaledImage));
+            ImageIcon icon = new ImageIcon(scaledImage);
+            icon.setDescription(imagePath); // Set the description to store the path so we can load it later
+            label.setIcon(icon);
             label.revalidate();
             label.repaint();
+
+            currentImagePath = imagePath;
         } catch (IOException e) {
             System.err.println("Error loading image: " + e.getMessage());
             label.setIcon(null);
+            currentImagePath = null;
         }
+    }
+
+    public static String getImagePath(JLabel label) {
+        if (label == null || label.getIcon() == null) {
+            return currentImagePath; // Return the last known path if available
+        }
+
+        if (label.getIcon() instanceof ImageIcon icon) {
+            String description = icon.getDescription();
+            return description != null ? description : currentImagePath;
+        }
+
+        return currentImagePath;
     }
 }

@@ -544,7 +544,10 @@ public class PnlCapNhatNhanVien extends JPanel implements ActionListener {
         String password = new String(txtMatKhau.getPassword());
         int luong = Integer.parseInt(luongString);
 
-        String pathHinhAnh = danhSachTaiKhoan.tim(ma).getPathHinhAnh();
+        String pathHinhAnh = ImageHelper.getImagePath(lblHinhAnh);
+        if (pathHinhAnh == null) {
+            pathHinhAnh = danhSachTaiKhoan.tim(ma).getPathHinhAnh();
+        }
 
         NhanVien nv = new NhanVien(ma, ten, chucVu, luong, sdt, diaChi, pathHinhAnh);
         TaiKhoan taiKhoan = new TaiKhoan(username, password, nv);
