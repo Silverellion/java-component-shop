@@ -329,7 +329,6 @@ public class PnlCapNhatNhanVien extends JPanel implements ActionListener {
                     txtMatKhau.setText("********");
 
                     String pathHinhAnh = danhSachTaiKhoan.tim(maNV).getPathHinhAnh();
-                    System.out.println(pathHinhAnh);
                     loadImage(lblHinhAnh, pathHinhAnh);
                 }
             }
@@ -486,6 +485,7 @@ public class PnlCapNhatNhanVien extends JPanel implements ActionListener {
             JOptionPane.showMessageDialog(this, "Thêm nhân viên thành công!");
             clear();
             removeImage();
+            refreshData();
         }
         else
             JOptionPane.showMessageDialog(this, "Mã nhân viên hoặc tên đăng nhập đã tồn tại");
@@ -520,14 +520,21 @@ public class PnlCapNhatNhanVien extends JPanel implements ActionListener {
         if(danhSachTaiKhoan.xoa(row)) {
             tblModelTaiKhoan.removeRow(row);
             JOptionPane.showMessageDialog(this, "Xoá tài khoản thành công");
+            refreshData();
         } else {
             JOptionPane.showMessageDialog(this, "Xoá tài khoản thất bại");
         }
     }
     private void update() {
-        if(!validateData())
+        if (!validateData())
             return;
-        String ma = txtMaNV.getText();
+        int row = tblTaiKhoan.getSelectedRow();
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn một nhân viên để cập nhật");
+            return;
+        }
+
+        String ma = tblTaiKhoan.getValueAt(row, 0).toString();
         String ten = txtTenNV.getText();
         String chucVu = Objects.requireNonNull(comboChucVu.getSelectedItem()).toString();
         String luongString = txtLuong.getText();
@@ -535,19 +542,31 @@ public class PnlCapNhatNhanVien extends JPanel implements ActionListener {
         String diaChi = txtDiaChi.getText();
         String username = txtTenDangNhap.getText();
         String password = new String(txtMatKhau.getPassword());
+        int luong = Integer.parseInt(luongString);
 
         String pathHinhAnh = danhSachTaiKhoan.tim(ma).getPathHinhAnh();
 
-        int luong = Integer.parseInt(luongString);
-        TaiKhoan taiKhoan = new TaiKhoan(username, password, new NhanVien(ma, ten, chucVu, luong, sdt, diaChi, pathHinhAnh));
+        NhanVien nv = new NhanVien(ma, ten, chucVu, luong, sdt, diaChi, pathHinhAnh);
+        TaiKhoan taiKhoan = new TaiKhoan(username, password, nv);
 
-        int row = tblTaiKhoan.getSelectedRow();
-        if(danhSachTaiKhoan.capNhat(row, taiKhoan)) {
+        if (danhSachTaiKhoan.capNhat(row, taiKhoan)) {
+            DefaultTableModel model = (DefaultTableModel) tblTaiKhoan.getModel();
+            model.setValueAt(ma, row, 0);
+            model.setValueAt(ten, row, 1);
+            model.setValueAt(chucVu, row, 2);
+            model.setValueAt(luong, row, 3);
+            model.setValueAt(sdt, row, 4);
+            model.setValueAt(diaChi, row, 5);
+            model.setValueAt(username, row, 6);
+            model.setValueAt("********", row, 7);
+
             JOptionPane.showMessageDialog(this, "Cập nhật tài khoản thành công");
+            refreshData();
         } else {
             JOptionPane.showMessageDialog(this, "Cập nhật tài khoản thất bại");
         }
     }
+
 
     private void xuat() {
         try {
