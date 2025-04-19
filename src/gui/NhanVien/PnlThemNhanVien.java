@@ -23,7 +23,7 @@ public class PnlThemNhanVien extends JPanel implements ActionListener {
     private final JComboBox<String> comboChucVu;
     private final JLabel lblHinhAnh;
     private String pathHinhAnh = null;
-    private final JButton btnLamMoi, btnThem, btnChonAnh, btnXoaAnh;
+    private final JButton btnThem, btnLamMoi, btnChonAnh, btnXoaAnh;
     private final DanhSachTaiKhoan danhSachTaiKhoan;
 
     public PnlThemNhanVien() {
@@ -168,17 +168,12 @@ public class PnlThemNhanVien extends JPanel implements ActionListener {
         btnThem = SwingHelper.createProjectJButton("Thêm", "icons8-add-50.png");
         btnLamMoi = SwingHelper.createProjectJButton("Làm mới", "icons8-reload-50.png");
 
-        btnThem.setPreferredSize(new Dimension(150, 40));
-        btnLamMoi.setPreferredSize(new Dimension(150, 40));
-
         pnlLeftButtons.add(btnThem);
         pnlLeftButtons.add(btnLamMoi);
 
         JPanel pnlRightButton = new JPanel(new FlowLayout(FlowLayout.CENTER));
         btnChonAnh = SwingHelper.createProjectJButton("Chọn ảnh", "icons8-folder-50.png");
-        btnChonAnh.setPreferredSize(new Dimension(150, 40));
         btnXoaAnh = SwingHelper.createProjectJButton("Xóa ảnh", "icons8-x-50.png");
-        btnXoaAnh.setPreferredSize(new Dimension(150, 40));
         pnlRightButton.add(btnChonAnh);
         pnlRightButton.add(btnXoaAnh);
 

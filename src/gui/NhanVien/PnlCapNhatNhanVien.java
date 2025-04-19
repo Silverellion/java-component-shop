@@ -31,7 +31,7 @@ public class PnlCapNhatNhanVien extends JPanel implements ActionListener {
     private final JTable tblTaiKhoan;
     private final DefaultTableModel tblModelTaiKhoan;
     private final JLabel lblHinhAnh;
-    private final JButton btnXoa, btnCapNhat, btnXuat, btnLamMoi;
+    private final JButton btnThem, btnXoa, btnCapNhat, btnXuat, btnLamMoi, btnChonAnh, btnXoaAnh;
     private final JTextField txtTim;
     private DanhSachTaiKhoan danhSachTaiKhoan;
 
@@ -220,10 +220,13 @@ public class PnlCapNhatNhanVien extends JPanel implements ActionListener {
         pnlTableTaiKhoan.add(lblHinhAnh, BorderLayout.EAST);
         add(pnlTableTaiKhoan, BorderLayout.CENTER);
 
+        btnThem = SwingHelper.createProjectJButton("Thêm", "icons8-add-50.png");
         btnXoa = SwingHelper.createProjectJButton("Xóa", "icons8-delete-50.png");
         btnCapNhat = SwingHelper.createProjectJButton("Cập nhật", "icons8-up-50.png");
         btnXuat = SwingHelper.createProjectJButton("Xuất Excel", "icons8-excel-50.png");
         btnLamMoi = SwingHelper.createProjectJButton("Làm mới", "icons8-reload-50.png");
+        btnChonAnh = SwingHelper.createProjectJButton("Chọn ảnh", "icons8-folder-50.png");
+        btnXoaAnh = SwingHelper.createProjectJButton("Xóa ảnh", "icons8-x-50.png");
 
         JLabel lblTim = SwingHelper.createProjectJLabel("Nhập dữ liệu cần tìm: ");
         txtTim = new JTextField(20);
