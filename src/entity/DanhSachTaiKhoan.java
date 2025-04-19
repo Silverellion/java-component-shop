@@ -25,10 +25,10 @@ public class DanhSachTaiKhoan implements Serializable {
     public boolean them(TaiKhoan taiKhoan) {
         for (TaiKhoan curTaiKhoan : danhSachTaiKhoan) {
             if (curTaiKhoan.getMaNhanVien().equals(taiKhoan.getMaNhanVien()) ||
-                    curTaiKhoan.getTenDangNhap().equals(taiKhoan.getTenDangNhap()))
+                    curTaiKhoan.getTenDangNhap().equals(taiKhoan.getTenDangNhap())) {
                 return false;
+            }
         }
-
         return dao.add(taiKhoan);
     }
 

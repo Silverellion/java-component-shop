@@ -35,7 +35,7 @@ public class NhanVien implements Serializable {
         setDiaChi(diaChi);
         setTrangThai(trangThai);
         setPathHinhAnh(pathHinhAnh);
-        setPathHinhAnh("null");
+        setTrangThai(trangThai);
     }
 
     public String getMaNhanVien() {
