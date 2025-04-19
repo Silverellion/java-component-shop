@@ -23,6 +23,7 @@ public class WindowMain_GUI extends JFrame implements ActionListener {
     private final JButton btnQuanLyKhoPanel;
     private final JButton btnDonHangPnl;
     private final JButton btnQuanLyNhanVienPnl;
+    private JButton btnTrangChuPanel;
     private final JButton btnCaiDatPanel;
     private final JButton btnDangNhap;
     private final JButton btnDangXuat;
@@ -37,6 +38,7 @@ public class WindowMain_GUI extends JFrame implements ActionListener {
     PnlThemNhanVien pnlThemNhanVien;
     PnlCapNhatNhanVien pnlCapNhatNhanVien;
     PnlThongKeNhanVien pnlThongKeNhanVien;
+    PnlTrangChu pnlTrangChu;
     PnlCaiDat pnlCaiDat;
 
     public WindowMain_GUI() {
@@ -46,6 +48,7 @@ public class WindowMain_GUI extends JFrame implements ActionListener {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
+        pnlTrangChu = new PnlTrangChu();
         pnlNhapHang = new PnlNhapHang();
         pnlThongKeKho = new PnlThongKeKho();
         pnlTaoDonHang = new PnlTaoDonHang();
@@ -62,6 +65,7 @@ public class WindowMain_GUI extends JFrame implements ActionListener {
         pnlSidebar.setBackground(new Color(200, 60, 60));
         pnlSidebar.setLayout(new BoxLayout(pnlSidebar, BoxLayout.Y_AXIS));
 
+        btnTrangChuPanel = createSidebarButton("Trang chủ", "icons8-home-50.png");
         btnQuanLyKhoPanel = createSidebarButton("Quản lý kho", "icons8-manage-50.png");
         btnDonHangPnl = createSidebarButton("Đơn hàng", "icons8-order-50.png");
         btnQuanLyNhanVienPnl = createSidebarButton("Quản lý nhân viên", "icons8-user-50.png");
@@ -69,6 +73,7 @@ public class WindowMain_GUI extends JFrame implements ActionListener {
         btnDangNhap = createSidebarButton("Đăng nhập", "icons8-login-50.png");
         btnDangXuat = createSidebarButton("Đăng xuất", "icons8-logout-50.png");
 
+        pnlSidebar.add(btnTrangChuPanel);
         pnlSidebar.add(btnQuanLyKhoPanel);
         pnlSidebar.add(btnDonHangPnl);
         pnlSidebar.add(btnQuanLyNhanVienPnl);
@@ -78,11 +83,13 @@ public class WindowMain_GUI extends JFrame implements ActionListener {
         updateLoginStatus();
 
         pnlEast = new JPanel(new BorderLayout());
+        pnlEast.add(pnlTrangChu); //pnlTrangChu starts by default
         pnlMain.add(pnlEast);
 
         add(pnlMain);
         setVisible(true);
 
+        btnTrangChuPanel.addActionListener(this);
         btnCaiDatPanel.addActionListener(this);
         btnDangNhap.addActionListener(this);
         btnDangXuat.addActionListener(this);
@@ -149,14 +156,16 @@ public class WindowMain_GUI extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         Object src = e.getSource();
 
+        if(src == btnTrangChuPanel)
+            loadPnlEast(btnTrangChuPanel, pnlTrangChu);
         if (src == btnCaiDatPanel) {
             loadPnlEast(btnCaiDatPanel, pnlCaiDat);
-        } else if (src == btnDangNhap) {
+        } if (src == btnDangNhap) {
             isLoggedIn = true;
             updateLoginStatus();
             this.dispose();
             new WindowLogin_GUI();
-        } else if (src == btnDangXuat) {
+        } if (src == btnDangXuat) {
             isLoggedIn = false;
             updateLoginStatus();
             this.dispose();
@@ -171,13 +180,13 @@ public class WindowMain_GUI extends JFrame implements ActionListener {
         pnlSidebar.repaint();
     }
 
-    private void loadPnlEast(JButton jButton, JPanel jPanel) {
+    private void loadPnlEast(JButton button, JPanel panel) {
         pnlEast.removeAll();
-        pnlEast.add(jPanel);
+        pnlEast.add(panel);
         resetSidebarColors();
 
-        btnSelected = jButton;
-        jButton.setBackground(new Color(200, 0, 0));
+        btnSelected = button;
+        button.setBackground(new Color(200, 0, 0));
         pnlEast.revalidate();
         pnlEast.repaint();
     }
