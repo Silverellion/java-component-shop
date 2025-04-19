@@ -121,7 +121,7 @@ public class WindowMain_GUI extends JFrame implements ActionListener {
                 Image img = new ImageIcon(imgURL).getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
                 icon = new ImageIcon(img);
             }
-        } catch (Exception _) {}
+        } catch (Exception e) {}
 
         JButton button = new JButton(text, icon);
         button.setHorizontalAlignment(JButton.LEFT);
