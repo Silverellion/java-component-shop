@@ -295,6 +295,23 @@ public class PnlCapNhatNhanVien extends JPanel implements ActionListener {
         load();
     }
 
+    private void load() {
+        for (TaiKhoan taiKhoan : danhSachTaiKhoan.getDanhSach()) {
+            if ("KhongConHoatDong".equalsIgnoreCase(taiKhoan.getTrangThai())) {
+                continue;
+            }
+            String ma = taiKhoan.getMaNhanVien();
+            String ten = taiKhoan.getHoTen();
+            String chucVu = taiKhoan.getChucVu();
+            int luong = taiKhoan.getLuong();
+            String sdt = taiKhoan.getSoDienThoai();
+            String diaChi = taiKhoan.getDiaChi();
+            String username = taiKhoan.getTenDangNhap();
+
+            tblModelTaiKhoan.addRow(new Object[]{ma, ten, chucVu, luong, sdt, diaChi, username, "********"});
+        }
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         Object src = e.getSource();
@@ -305,7 +322,7 @@ public class PnlCapNhatNhanVien extends JPanel implements ActionListener {
         if(src == btnCapNhat)
             update();
         if(src == btnXuat)
-            xuat();
+            export();
         if(src == btnLamMoi)
             clear();
         if(src == btnChonAnh)
@@ -491,23 +508,6 @@ public class PnlCapNhatNhanVien extends JPanel implements ActionListener {
             JOptionPane.showMessageDialog(this, "Mã nhân viên hoặc tên đăng nhập đã tồn tại");
     }
 
-    private void load() {
-        for (TaiKhoan taiKhoan : danhSachTaiKhoan.getDanhSach()) {
-            if ("KhongConHoatDong".equalsIgnoreCase(taiKhoan.getTrangThai())) {
-                continue;
-            }
-            String ma = taiKhoan.getMaNhanVien();
-            String ten = taiKhoan.getHoTen();
-            String chucVu = taiKhoan.getChucVu();
-            int luong = taiKhoan.getLuong();
-            String sdt = taiKhoan.getSoDienThoai();
-            String diaChi = taiKhoan.getDiaChi();
-            String username = taiKhoan.getTenDangNhap();
-
-            tblModelTaiKhoan.addRow(new Object[]{ma, ten, chucVu, luong, sdt, diaChi, username, "********"});
-        }
-    }
-
     private void remove() {
         int choice = JOptionPane.showConfirmDialog(
                 this,
@@ -568,7 +568,7 @@ public class PnlCapNhatNhanVien extends JPanel implements ActionListener {
     }
 
 
-    private void xuat() {
+    private void export() {
         try {
             File cacheDir = new File("C:\\componentShopCache");
             if (!cacheDir.exists()) {

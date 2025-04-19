@@ -77,6 +77,7 @@ public class DanhSachTaiKhoan_DAO {
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, taiKhoan.getMaNhanVien());
             stmt.setString(2, taiKhoan.getMaNhanVien());
+            stmt.executeUpdate();
             return true;
         } catch (IOException | SQLException e) {
             return false;
@@ -103,6 +104,7 @@ public class DanhSachTaiKhoan_DAO {
             stmt.setString(12, taiKhoan.getMaNhanVien());
 
             stmt.setString(13, taiKhoan.getMaNhanVien());
+            stmt.executeUpdate();
             return true;
         } catch (IOException | SQLException e) {
             return false;
