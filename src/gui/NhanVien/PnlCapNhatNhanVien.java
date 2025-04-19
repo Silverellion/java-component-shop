@@ -16,6 +16,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 import static utils.ImageHelper.loadImage;
@@ -271,6 +276,7 @@ public class PnlCapNhatNhanVien extends JPanel implements ActionListener {
         btnLamMoi.addActionListener(this);
         tableClickListener();
         txtTim.getDocument().addDocumentListener(new FilterListener()); //Real time filtering function
+        btnXuat.addActionListener(this);
         load();
     }
 
@@ -288,6 +294,8 @@ public class PnlCapNhatNhanVien extends JPanel implements ActionListener {
             remove();
         if(src == btnCapNhat)
             update();
+        if(src == btnXuat)
+            xuat();
         if(src == btnLamMoi)
             clear();
     }
@@ -503,6 +511,99 @@ public class PnlCapNhatNhanVien extends JPanel implements ActionListener {
             JOptionPane.showMessageDialog(this, "Cập nhật tài khoản thành công");
         } else {
             JOptionPane.showMessageDialog(this, "Cập nhật tài khoản thất bại");
+        }
+    }
+
+    private void xuat() {
+        try {
+            File cacheDir = new File("C:\\componentShopCache");
+            if (!cacheDir.exists()) {
+                cacheDir.mkdirs();
+            }
+
+            LocalDateTime now = LocalDateTime.now();
+            String fileName = "DanhSachNhanVien_" + now.getYear() + now.getMonthValue() +
+                    now.getDayOfMonth() + "_" + now.getHour() + now.getMinute() + ".csv";
+            File csvFile = new File(cacheDir, fileName);
+
+            try (FileWriter writer = new FileWriter(csvFile);
+                 BufferedWriter bufferedWriter = new BufferedWriter(writer)) {
+                String[] columns = {"Mã NV", "Tên NV", "Chức vụ", "Lương", "Số điện thoại",
+                        "Địa chỉ", "Tên đăng nhập", "Mật khẩu"};
+
+                StringBuilder headerLine = new StringBuilder();
+                for (int i = 0; i < columns.length; i++) {
+                    if (i > 0) {
+                        headerLine.append(",");
+                    }
+                    headerLine.append("\"").append(columns[i]).append("\"");
+                }
+                bufferedWriter.write(headerLine.toString());
+                bufferedWriter.newLine();
+
+                // Write data rows
+                for (TaiKhoan tk : danhSachTaiKhoan.getDanhSach()) {
+                    if ("KhongConHoatDong".equalsIgnoreCase(tk.getTrangThai())) {
+                        continue;
+                    }
+
+                    StringBuilder dataLine = new StringBuilder();
+                    appendCsvField(dataLine, tk.getMaNhanVien(), 0);
+                    appendCsvField(dataLine, tk.getHoTen(), 1);
+                    appendCsvField(dataLine, tk.getChucVu(), 1);
+                    appendCsvField(dataLine, String.valueOf(tk.getLuong()), 1);
+                    appendCsvField(dataLine, tk.getSoDienThoai(), 1);
+                    appendCsvField(dataLine, tk.getDiaChi(), 1);
+                    appendCsvField(dataLine, tk.getTenDangNhap(), 1);
+                    appendCsvField(dataLine, "********", 1);
+
+                    // Write the line to file
+                    bufferedWriter.write(dataLine.toString());
+                    bufferedWriter.newLine();
+                }
+
+                int option = JOptionPane.showConfirmDialog(
+                        this,
+                        "File đã xuất thành công tại:\n" + csvFile.getAbsolutePath() + "\nBạn có muốn mở file?",
+                        "Xuất file thành công",
+                        JOptionPane.YES_NO_OPTION
+                );
+
+                if (option == JOptionPane.YES_OPTION) {
+                    openFile(csvFile);
+                }
+
+            } catch (IOException e) {
+                JOptionPane.showConfirmDialog(this,"Lỗi xuất file");
+            }
+        } catch (Exception e) {
+            JOptionPane.showConfirmDialog(this,"Lỗi xuất file");
+        }
+    }
+
+    private void appendCsvField(StringBuilder builder, String value, int position) {
+        if (position > 0) {
+            builder.append(",");
+        }
+
+        if (value == null) {
+            value = "";
+        }
+
+        // Escape quotes and special characters
+        value = value.replace("\"", "\"\"");
+        builder.append("\"").append(value).append("\"");
+    }
+
+    private void openFile(File file) {
+        try {
+            if (Desktop.isDesktopSupported()) {
+                Desktop.getDesktop().open(file);
+            } else {
+                JOptionPane.showConfirmDialog(this,"Lỗi xuất file");
+            }
+        } catch (IOException e) {
+            JOptionPane.showConfirmDialog(this,"Lỗi xuất file");
         }
     }
     private void clear() {
