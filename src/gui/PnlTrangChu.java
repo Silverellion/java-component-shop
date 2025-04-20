@@ -18,10 +18,6 @@ public class PnlTrangChu extends JPanel {
     @Serial
     private static final long serialVersionUID = 1L;
     private final TaiKhoan taiKhoan;
-    public PnlTrangChu() {
-        this(null);
-    }
-
     public PnlTrangChu(TaiKhoan taiKhoan) {
         this.taiKhoan = taiKhoan;
 

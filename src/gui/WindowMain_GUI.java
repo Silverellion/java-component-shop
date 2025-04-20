@@ -27,11 +27,8 @@ public class WindowMain_GUI extends JFrame implements ActionListener {
     private final JButton btnQuanLyNhanVienPnl;
     private final JButton btnTrangChuPanel;
     private final JButton btnCaiDatPanel;
-    private final JButton btnDangNhap;
     private final JButton btnDangXuat;
-    private final JPanel pnlSidebar;
     private final JPanel pnlEast;
-    private boolean isLoggedIn = false;
 
     PnlNhapHang pnlNhapHang;
     PnlThongKeKho pnlThongKeKho;
@@ -43,10 +40,7 @@ public class WindowMain_GUI extends JFrame implements ActionListener {
     PnlCaiDat pnlCaiDat;
 
     private final Map<JButton, JPopupMenu> buttonMenuMap = new HashMap<>();
-    private TaiKhoan tkHienTai;
-
     public WindowMain_GUI(TaiKhoan tkHienTai) {
-        this.tkHienTai = tkHienTai;
 
         setTitle("Cửa hàng linh kiện");
         setSize(1600, 800);
@@ -64,8 +58,8 @@ public class WindowMain_GUI extends JFrame implements ActionListener {
         pnlCaiDat = new PnlCaiDat();
 
         JPanel pnlMain = new JPanel(new BorderLayout());
+        JPanel pnlSidebar = new JPanel();
 
-        pnlSidebar = new JPanel();
         pnlSidebar.setPreferredSize(new Dimension(220, getHeight()));
         pnlSidebar.setBackground(new Color(200, 60, 60));
         pnlSidebar.setLayout(new BoxLayout(pnlSidebar, BoxLayout.Y_AXIS));
@@ -75,7 +69,6 @@ public class WindowMain_GUI extends JFrame implements ActionListener {
         btnDonHangPnl = createSidebarButton("Đơn hàng", "receipt.png");
         btnQuanLyNhanVienPnl = createSidebarButton("Quản lý nhân viên", "multiple-users.png");
         btnCaiDatPanel = createSidebarButton("Cài đặt", "settings.png");
-        btnDangNhap = createSidebarButton("Đăng nhập", "login.png");
         btnDangXuat = createSidebarButton("Đăng xuất", "logout.png");
 
         pnlSidebar.add(btnTrangChuPanel);
@@ -83,9 +76,8 @@ public class WindowMain_GUI extends JFrame implements ActionListener {
         pnlSidebar.add(btnDonHangPnl);
         pnlSidebar.add(btnQuanLyNhanVienPnl);
         pnlSidebar.add(btnCaiDatPanel);
+        pnlSidebar.add(btnDangXuat);
         pnlMain.add(pnlSidebar, BorderLayout.WEST);
-
-        updateLoginStatus();
 
         pnlEast = new JPanel(new BorderLayout());
         pnlEast.add(pnlTrangChu); //pnlTrangChu starts by default
@@ -96,7 +88,6 @@ public class WindowMain_GUI extends JFrame implements ActionListener {
 
         btnTrangChuPanel.addActionListener(this);
         btnCaiDatPanel.addActionListener(this);
-        btnDangNhap.addActionListener(this);
         btnDangXuat.addActionListener(this);
 
         registerDropdown(btnQuanLyKhoPanel, "Nhập hàng", pnlNhapHang, pnlEast);
@@ -157,24 +148,10 @@ public class WindowMain_GUI extends JFrame implements ActionListener {
             loadPnlEast(btnTrangChuPanel, pnlTrangChu);
         if (src == btnCaiDatPanel) {
             loadPnlEast(btnCaiDatPanel, pnlCaiDat);
-        } if (src == btnDangNhap) {
-            isLoggedIn = true;
-            updateLoginStatus();
+        } if (src == btnDangXuat) {
             this.dispose();
             new WindowLogin_GUI();
-        } if (src == btnDangXuat) {
-            isLoggedIn = false;
-            updateLoginStatus();
-            this.dispose();
         }
-    }
-
-    private void updateLoginStatus() {
-        pnlSidebar.remove(btnDangNhap);
-        pnlSidebar.remove(btnDangXuat);
-        pnlSidebar.add(isLoggedIn ? btnDangXuat : btnDangNhap);
-        pnlSidebar.revalidate();
-        pnlSidebar.repaint();
     }
 
     private void loadPnlEast(JButton button, JPanel panel) {
