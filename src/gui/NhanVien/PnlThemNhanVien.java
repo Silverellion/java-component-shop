@@ -30,7 +30,7 @@ public class PnlThemNhanVien extends JPanel implements ActionListener {
         danhSachTaiKhoan = new DanhSachTaiKhoan();
         setLayout(new BorderLayout());
 
-        JLabel lblTitle = SwingHelper.createProjectJLabel("Thêm Nhân viên", 30);
+        JLabel lblTitle = SwingHelper.createProjectJLabel("Thêm nhân viên", 30);
         lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
         add(lblTitle, BorderLayout.NORTH);
 

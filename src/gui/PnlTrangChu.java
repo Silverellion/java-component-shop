@@ -16,5 +16,7 @@ public class PnlTrangChu extends JPanel {
         JLabel lblTitle = SwingHelper.createProjectJLabel("Panel trang chủ", 30);
         lblTitle.setAlignmentX(CENTER_ALIGNMENT);
         add(lblTitle);
+
+
     }
 }

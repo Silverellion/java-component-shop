@@ -6,7 +6,6 @@ import gui.Kho.PnlNhapHang;
 import gui.Kho.PnlThongKeKho;
 import gui.NhanVien.PnlCapNhatNhanVien;
 import gui.NhanVien.PnlThemNhanVien;
-import gui.NhanVien.PnlThongKeNhanVien;
 import utils.SwingSidebarHelper;
 
 import javax.swing.*;
@@ -37,7 +36,6 @@ public class WindowMain_GUI extends JFrame implements ActionListener {
     PnlThongKeDonHang pnlThongKeDonHang;
     PnlThemNhanVien pnlThemNhanVien;
     PnlCapNhatNhanVien pnlCapNhatNhanVien;
-    PnlThongKeNhanVien pnlThongKeNhanVien;
     PnlTrangChu pnlTrangChu;
     PnlCaiDat pnlCaiDat;
 
@@ -55,7 +53,6 @@ public class WindowMain_GUI extends JFrame implements ActionListener {
         pnlThongKeDonHang = new PnlThongKeDonHang();
         pnlThemNhanVien = new PnlThemNhanVien();
         pnlCapNhatNhanVien = new PnlCapNhatNhanVien();
-        pnlThongKeNhanVien = new PnlThongKeNhanVien();
         pnlCaiDat = new PnlCaiDat();
 
         JPanel pnlMain = new JPanel(new BorderLayout());
@@ -102,7 +99,6 @@ public class WindowMain_GUI extends JFrame implements ActionListener {
 
         SwingSidebarHelper.registerDropdown(btnQuanLyNhanVienPnl, "Thêm nhân viên", pnlThemNhanVien, pnlEast, this::resetSidebarColors);
         SwingSidebarHelper.registerDropdown(btnQuanLyNhanVienPnl, "Cập nhật nhân viên", pnlCapNhatNhanVien, pnlEast, this::resetSidebarColors);
-        SwingSidebarHelper.registerDropdown(btnQuanLyNhanVienPnl, "Thống kê nhân viên", pnlThongKeNhanVien, pnlEast, this::resetSidebarColors);
     }
 
     private JPanel createPanel(String title) {

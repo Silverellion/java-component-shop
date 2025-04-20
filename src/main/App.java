@@ -2,6 +2,7 @@ package main;
 
 import database.ConnectDB;
 import gui.WindowLogin_GUI;
+import gui.WindowMain_GUI;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -13,7 +14,8 @@ public class App {
 	public static void main(String[] args) {
 		try {
 			ConnectDB.initialize(url, user, password);
-			new WindowLogin_GUI();
+//			new WindowLogin_GUI();
+			new WindowMain_GUI();
 		} catch (SQLException | IOException e) {
 			throw new RuntimeException(e);
 		}
