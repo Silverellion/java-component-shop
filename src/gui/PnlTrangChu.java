@@ -43,9 +43,9 @@ public class PnlTrangChu extends JPanel {
             }
         });
 
-        JPanel middlePanel = new JPanel();
-        middlePanel.setBackground(Color.WHITE);
-        middlePanel.setLayout(new GridBagLayout());
+        JPanel pnlCenter = new JPanel();
+        pnlCenter.setBackground(Color.WHITE);
+        pnlCenter.setLayout(new GridBagLayout());
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(40, 40, 40, 40);
@@ -59,22 +59,16 @@ public class PnlTrangChu extends JPanel {
 
         gbc.gridx = 0;
         gbc.gridy = 0;
-        middlePanel.add(btnCard1, gbc);
+        pnlCenter.add(btnCard1, gbc);
 
         gbc.gridx = 1;
-        middlePanel.add(btnCard2, gbc);
+        pnlCenter.add(btnCard2, gbc);
 
         gbc.gridx = 2;
-        middlePanel.add(btnCard3, gbc);
-
-        JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        bottomPanel.setBackground(Color.WHITE);
-        JLabel bottomLabel = new JLabel("Example Text bottom right");
-        bottomPanel.add(bottomLabel);
+        pnlCenter.add(btnCard3, gbc);
 
         add(layeredPane, BorderLayout.NORTH);
-        add(middlePanel, BorderLayout.CENTER);
-        add(bottomPanel, BorderLayout.SOUTH);
+        add(pnlCenter, BorderLayout.CENTER);
     }
 
     private JButton createCardButton() {
