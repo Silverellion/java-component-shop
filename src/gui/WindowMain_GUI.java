@@ -70,13 +70,13 @@ public class WindowMain_GUI extends JFrame implements ActionListener {
         pnlSidebar.setBackground(new Color(200, 60, 60));
         pnlSidebar.setLayout(new BoxLayout(pnlSidebar, BoxLayout.Y_AXIS));
 
-        btnTrangChuPanel = createSidebarButton("Trang chủ", "icons8-home-50.png");
+        btnTrangChuPanel = createSidebarButton("Trang chủ", "home.png");
         btnQuanLyKhoPanel = createSidebarButton("Quản lý kho", "inventory.png");
         btnDonHangPnl = createSidebarButton("Đơn hàng", "receipt.png");
         btnQuanLyNhanVienPnl = createSidebarButton("Quản lý nhân viên", "multiple-users.png");
-        btnCaiDatPanel = createSidebarButton("Cài đặt", "icons8-settings-50.png");
-        btnDangNhap = createSidebarButton("Đăng nhập", "icons8-login-50.png");
-        btnDangXuat = createSidebarButton("Đăng xuất", "icons8-logout-50.png");
+        btnCaiDatPanel = createSidebarButton("Cài đặt", "settings.png");
+        btnDangNhap = createSidebarButton("Đăng nhập", "login.png");
+        btnDangXuat = createSidebarButton("Đăng xuất", "logout.png");
 
         pnlSidebar.add(btnTrangChuPanel);
         pnlSidebar.add(btnQuanLyKhoPanel);
