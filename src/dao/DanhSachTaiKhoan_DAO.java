@@ -111,7 +111,6 @@ public class DanhSachTaiKhoan_DAO {
         }
     }
 
-    // Update the login method to return a TaiKhoan object instead of boolean
     public TaiKhoan login(String username, String password) {
         try {
             String sql = Files.readString(Paths.get(SQL_PATH + "selectTaiKhoanLogin.sql"));
