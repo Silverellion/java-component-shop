@@ -110,4 +110,21 @@ public class DanhSachTaiKhoan_DAO {
             return false;
         }
     }
+
+    public boolean login(String username, String password) {
+        try {
+            String sql = Files.readString(Paths.get(SQL_PATH + "selectTaiKhoanLogin.sql"));
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, username);
+            stmt.setString(2, password);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return !rs.next(); // Exactly one user shows up
+            }
+
+            return false;
+        } catch (IOException | SQLException e) {
+            return false;
+        }
+    }
 }

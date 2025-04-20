@@ -1,5 +1,6 @@
 package gui;
 
+import entity.DanhSachTaiKhoan;
 import utils.SwingHelper;
 
 import java.awt.BorderLayout;
@@ -12,24 +13,18 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.Serial;
 
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
+import javax.swing.*;
 
 public class WindowLogin_GUI extends JFrame implements ActionListener {
     @Serial
     private static final long serialVersionUID = 1L;
-    private JLabel lblUsername;
-    private JLabel lblPassword;
-    private JTextField txtUsername;
-    private JTextField txtPassword;
-    private JButton btnDangNhap;
+    private final JTextField txtUsername;
+    private final JPasswordField txtPassword;
+    private final JButton btnDangNhap;
+    private final DanhSachTaiKhoan danhSachTaiKhoan;
 
     public WindowLogin_GUI() {
+        danhSachTaiKhoan = new DanhSachTaiKhoan();
         setTitle("Đăng nhập");
         setSize(400, 720);
         setLocationRelativeTo(null);
@@ -43,9 +38,9 @@ public class WindowLogin_GUI extends JFrame implements ActionListener {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.anchor = GridBagConstraints.WEST;
-        
-        lblUsername = SwingHelper.createProjectJLabel("Tên đăng nhập:");
-        lblPassword = SwingHelper.createProjectJLabel("Mật khẩu:");
+
+        JLabel lblUsername = SwingHelper.createProjectJLabel("Tên đăng nhập:");
+        JLabel lblPassword = SwingHelper.createProjectJLabel("Mật khẩu:");
         
         txtUsername = new JTextField(15);
         txtUsername.setFont(new Font("Segoe UI", Font.PLAIN, 14));
@@ -97,9 +92,24 @@ public class WindowLogin_GUI extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         Object src = e.getSource();
-        if(src == btnDangNhap) {
+        if(src == btnDangNhap)
+            login();
+    }
+
+    public void login() {
+        String username = txtUsername.getText();
+        String password = new String(txtPassword.getPassword());
+
+        if(username.isBlank() || password.isBlank()) {
+            JOptionPane.showMessageDialog(this, "Đăng nhập không thành công");
+            return;
+        }
+
+        if(danhSachTaiKhoan.login(username,password)) {
             this.dispose();
             new WindowMain_GUI();
+        } else {
+            JOptionPane.showMessageDialog(this, "Đăng nhập không thành công");
         }
     }
 }
