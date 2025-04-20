@@ -158,6 +158,7 @@ public class PnlTrangChu extends JPanel {
         return button;
     }
 
+    //READ HOW THIS FUNCTION WORKS AT PnlTrangChuREADME.md
     private JButton createProfilePictureButton() {
         JLabel tempLabel = new JLabel();
         tempLabel.setPreferredSize(new Dimension(130, 130));
