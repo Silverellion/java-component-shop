@@ -16,7 +16,7 @@ public class App {
 	public static void main(String[] args) {
 		try {
 			ConnectDB.initialize(url, user, password);
-//			new WindowLogin_GUI();
+			new WindowLogin_GUI();
 //			new WindowMain_GUI(new TaiKhoan("testAccount", "12345678",
 //					new NhanVien(
 //							"AD000001", "Test",
