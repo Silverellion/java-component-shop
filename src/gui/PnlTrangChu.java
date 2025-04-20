@@ -42,12 +42,10 @@ public class PnlTrangChu extends JPanel {
         whitePanel.setBackground(new Color(255,255,255));
         whitePanel.setBounds(0, 170, 10000, 300);
         layeredPane.add(whitePanel, JLayeredPane.DEFAULT_LAYER);
-
-        // Add the top panel to the layered pane
         topPanel.setBounds(0, 0, 10000, 170);
         layeredPane.add(topPanel, JLayeredPane.DEFAULT_LAYER);
 
-        JButton profileButton = createProfilePictureButton();
+        JLabel profileButton = createLblProfilePicture();
         profileButton.setPreferredSize(new Dimension(100,100));
 
         // Precise setBounds to make sure the profile picture is in the middle of header and main pane
@@ -154,64 +152,49 @@ public class PnlTrangChu extends JPanel {
         return button;
     }
 
-    //READ HOW THIS FUNCTION WORKS AT PnlTrangChuREADME.md
-    private JButton createProfilePictureButton() {
-        JLabel tempLabel = new JLabel();
-        tempLabel.setPreferredSize(new Dimension(130, 130));
-
-        final BufferedImage[] circularImage = {null};
-
-        if (taiKhoan != null && taiKhoan.getPathHinhAnh() != null) {
-            String imagePath = taiKhoan.getPathHinhAnh();
-
-            if (!imagePath.isEmpty()) {
-                utils.ImageHelper.loadImage(tempLabel, imagePath);
-
-                if (tempLabel.getIcon() != null) {
-                    ImageIcon originalIcon = (ImageIcon) tempLabel.getIcon();
-                    Image img = originalIcon.getImage();
-
-                    circularImage[0] = new BufferedImage(130, 130, BufferedImage.TYPE_INT_ARGB);
-                    Graphics2D g2 = circularImage[0].createGraphics();
-                    g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                    g2.setClip(new Ellipse2D.Double(0, 0, 130, 130));
-                    g2.drawImage(img, 0, 0, null);
-                    g2.dispose();
-                }
-            }
-        }
-
-        JButton button = new JButton() {
+    private JLabel createLblProfilePicture() {
+        JLabel label = new JLabel() {
             @Override
             protected void paintComponent(Graphics g) {
                 Graphics2D g2d = (Graphics2D) g.create();
                 g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
+                // White circle background
                 g2d.setColor(Color.WHITE);
                 g2d.fill(new Ellipse2D.Double(0, 0, getWidth() - 1, getHeight() - 1));
 
-                if (circularImage[0] != null) {
-                    g2d.drawImage(circularImage[0], 0, 0, null);
-                }
-
-                // Apply darkening overlay on hover
-                if (getModel().isRollover()) {
-                    g2d.setColor(new Color(0, 0, 0, 40));
-                    g2d.fill(new Ellipse2D.Double(0, 0, getWidth() - 1, getHeight() - 1));
-                }
-
                 g2d.dispose();
-            }
-
-            @Override
-            protected void paintBorder(Graphics g) {
-                // Don't draw the border
+                super.paintComponent(g);
             }
         };
 
-        button.setContentAreaFilled(false);
-        button.setBorderPainted(false);
-        button.setFocusPainted(false);
-        return button;
+        // Load profile image if available
+        if (taiKhoan != null && taiKhoan.getPathHinhAnh() != null) {
+            String imagePath = taiKhoan.getPathHinhAnh();
+
+            if (!imagePath.isEmpty()) {
+                JLabel lblTemp = new JLabel();
+                lblTemp.setPreferredSize(new Dimension(130, 130));
+                utils.ImageHelper.loadImage(lblTemp, imagePath);
+
+                ImageIcon originalIcon = (ImageIcon) lblTemp.getIcon();
+                Image img = originalIcon.getImage();
+
+                // Make the button circular
+                BufferedImage circularImage = new BufferedImage(130, 130, BufferedImage.TYPE_INT_ARGB);
+                Graphics2D g2 = circularImage.createGraphics();
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                g2.setClip(new Ellipse2D.Double(0, 0, 130, 130));
+                g2.drawImage(img, 0, 0, null);
+                g2.dispose();
+
+                label.setIcon(new ImageIcon(circularImage));
+            }
+        }
+
+        label.setOpaque(false);
+        label.setPreferredSize(new Dimension(130, 130));
+
+        return label;
     }
 }
