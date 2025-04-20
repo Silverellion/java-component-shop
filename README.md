@@ -33,20 +33,8 @@ public void login() {
 If you don't have an account in the database for logging in:
 -
 
-UNCOMMENT 
-```java
-new WindowMain_GUI(new TaiKhoan("testAccount", "12345678",
-    new NhanVien(
-        "AD000001", "Test",
-        "Test", 90000,
-        "012345678910", "asd",
-        "")));
-```
-THEN COMMENT
-```java
-    new WindowLogin_GUI();
-```
 
+INSIDE
 ```java
 public class App {
 	private static final String url = "jdbc:sqlserver://localhost:1433;encrypt=true;trustServerCertificate=true;integratedSecurity=true";
@@ -67,4 +55,17 @@ public class App {
 		}
 	}
 }
+```
+UNCOMMENT 
+```java
+new WindowMain_GUI(new TaiKhoan("testAccount", "12345678",
+    new NhanVien(
+        "AD000001", "Test",
+        "Test", 90000,
+        "012345678910", "asd",
+        "")));
+```
+THEN COMMENT
+```java
+    new WindowLogin_GUI();
 ```
