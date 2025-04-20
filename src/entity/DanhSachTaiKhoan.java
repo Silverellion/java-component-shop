@@ -48,7 +48,7 @@ public class DanhSachTaiKhoan implements Serializable {
         return true;
     }
 
-    public boolean login(String username, String password) {
+    public TaiKhoan login(String username, String password) {
         return dao.login(username, password);
     }
 

@@ -111,20 +111,34 @@ public class DanhSachTaiKhoan_DAO {
         }
     }
 
-    public boolean login(String username, String password) {
+    // Update the login method to return a TaiKhoan object instead of boolean
+    public TaiKhoan login(String username, String password) {
         try {
             String sql = Files.readString(Paths.get(SQL_PATH + "selectTaiKhoanLogin.sql"));
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, username);
             stmt.setString(2, password);
             ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                return !rs.next(); // Exactly one user shows up
-            }
 
-            return false;
+            if (rs.next()) {
+                return new TaiKhoan(
+                        rs.getString("tenDangNhap"),
+                        rs.getString("matKhau"),
+                        new NhanVien(
+                                rs.getString("maNhanVien"),
+                                rs.getString("hoTen"),
+                                rs.getString("chucVu"),
+                                rs.getInt("luong"),
+                                rs.getString("soDienThoai"),
+                                rs.getString("diaChi"),
+                                rs.getString("pathHinhAnh"),
+                                rs.getString("trangThai")
+                        )
+                );
+            }
+            return null;
         } catch (IOException | SQLException e) {
-            return false;
+            return null;
         }
     }
 }

@@ -1,5 +1,6 @@
 package gui;
 
+import entity.TaiKhoan;
 import gui.DonHang.PnlTaoDonHang;
 import gui.DonHang.PnlThongKeDonHang;
 import gui.Kho.PnlNhapHang;
@@ -42,15 +43,18 @@ public class WindowMain_GUI extends JFrame implements ActionListener {
     PnlCaiDat pnlCaiDat;
 
     private final Map<JButton, JPopupMenu> buttonMenuMap = new HashMap<>();
+    private TaiKhoan tkHienTai;
 
-    public WindowMain_GUI() {
+    public WindowMain_GUI(TaiKhoan tkHienTai) {
+        this.tkHienTai = tkHienTai;
+
         setTitle("Cửa hàng linh kiện");
         setSize(1600, 800);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
-        pnlTrangChu = new PnlTrangChu();
+        pnlTrangChu = new PnlTrangChu(tkHienTai);
         pnlNhapHang = new PnlNhapHang();
         pnlThongKeKho = new PnlThongKeKho();
         pnlTaoDonHang = new PnlTaoDonHang();
@@ -67,9 +71,9 @@ public class WindowMain_GUI extends JFrame implements ActionListener {
         pnlSidebar.setLayout(new BoxLayout(pnlSidebar, BoxLayout.Y_AXIS));
 
         btnTrangChuPanel = createSidebarButton("Trang chủ", "icons8-home-50.png");
-        btnQuanLyKhoPanel = createSidebarButton("Quản lý kho", "icons8-manage-50.png");
-        btnDonHangPnl = createSidebarButton("Đơn hàng", "icons8-order-50.png");
-        btnQuanLyNhanVienPnl = createSidebarButton("Quản lý nhân viên", "icons8-user-50.png");
+        btnQuanLyKhoPanel = createSidebarButton("Quản lý kho", "inventory.png");
+        btnDonHangPnl = createSidebarButton("Đơn hàng", "receipt.png");
+        btnQuanLyNhanVienPnl = createSidebarButton("Quản lý nhân viên", "multiple-users.png");
         btnCaiDatPanel = createSidebarButton("Cài đặt", "icons8-settings-50.png");
         btnDangNhap = createSidebarButton("Đăng nhập", "icons8-login-50.png");
         btnDangXuat = createSidebarButton("Đăng xuất", "icons8-logout-50.png");

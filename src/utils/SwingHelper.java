@@ -21,6 +21,13 @@ public class SwingHelper {
         return label;
     }
 
+    public static JLabel createProjectJLabel(String name, int fontSize, Color color) {
+        JLabel label = new JLabel(name);
+        label.setFont(new Font("Segoe UI", Font.BOLD, fontSize));
+        label.setForeground(color);
+        return label;
+    }
+
     public static JButton createProjectJButton(String name) {
         JButton button = new JButton(name) {
             @Override

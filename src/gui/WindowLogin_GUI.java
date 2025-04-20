@@ -1,6 +1,7 @@
 package gui;
 
 import entity.DanhSachTaiKhoan;
+import entity.TaiKhoan;
 import utils.SwingHelper;
 
 import java.awt.BorderLayout;
@@ -105,9 +106,10 @@ public class WindowLogin_GUI extends JFrame implements ActionListener {
             return;
         }
 
-        if(danhSachTaiKhoan.login(username,password)) {
+        TaiKhoan loggedInAccount = danhSachTaiKhoan.login(username, password);
+        if(loggedInAccount != null) {
             this.dispose();
-            new WindowMain_GUI();
+            new WindowMain_GUI(loggedInAccount);
         } else {
             JOptionPane.showMessageDialog(this, "Đăng nhập không thành công");
         }
