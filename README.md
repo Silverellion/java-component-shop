@@ -4,11 +4,10 @@ Reminder:
 -
 1. `loaiTK` needs to be removed, `pathHinhAnhNhanVien` needs to be added.
 2. At the constructor/initializer of any DAO class, `conn = JDBC.getConnection();` should be called.
-3. `accountStatus` needs to be implememted om style of `trangThai: (HoatDong/KhongConHoatDong)` <- we check for this in MSSQL
+3. `accountStatus` needs to be implememted in style of `trangThai: (HoatDong/KhongConHoatDong)` <- we check for this in MSSQL
 4. `TrangThai` will be added to NhanVien, and automatically pass 'HoatDong' whenever DanhSachTaiKhoan's them() is called.
 5. If `TrangThai = KhongConHoatDong`, it's still going to be added into the dynamic array for existence checking, but won't be displayed on the `PnlTaiKhoan`'s `DefaultTableModel`
-6. in `PnlCaiDat` we will focus on letting the employee change the username/password/SDT/Dia chi.
-7. We need to store the file path to the employee's profile picture and load it.
+6. We need to store the file path to the employee's profile picture and load it.
 
 Instruction:
 -
