@@ -1,6 +1,7 @@
 UI Font: 'Segoe UI'<br>
-Reminder:
 
+Reminder:
+-
 1. `loaiTK` needs to be removed, `pathHinhAnhNhanVien` needs to be added.
 2. At the constructor/initializer of any DAO class, `conn = JDBC.getConnection();` should be called.
 3. `accountStatus` needs to be implememted om style of `trangThai: (HoatDong/KhongConHoatDong)` <- we check for this in MSSQL
@@ -10,4 +11,21 @@ Reminder:
 7. We need to store the file path to the employee's profile picture and load it.
 
 Instruction:
+-
 - After cloning the project, remember to put the `mssql-jdbc_auth-12.10.0.x64.dll` into `C:\Users\<YourUser>\.jdks\openjdk-24\bin`
+
+How the program should works:
+-
+1. The program begins with the WindowLogin_GUI
+2. The user logins successfully
+3. WindowLogin then fetches `TaiKhoan` which contains `NhanVien` by calling danhSachTaiKhoan which calls DAO login: 
+```Java
+public void login() {
+    TaiKhoan loggedInAccount = danhSachTaiKhoan.login(username, password);
+    if(loggedInAccount != null) {
+        this.dispose();
+        new WindowMain_GUI(loggedInAccount);
+    }
+}
+```
+4. `WindowMain_GUI` is loaded in with loggedInAccount, which then is pased to `PnlTrangChu`.
