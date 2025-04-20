@@ -24,7 +24,7 @@ public class WindowMain_GUI extends JFrame implements ActionListener {
     private final JButton btnQuanLyKhoPanel;
     private final JButton btnDonHangPnl;
     private final JButton btnQuanLyNhanVienPnl;
-    private JButton btnTrangChuPanel;
+    private final JButton btnTrangChuPanel;
     private final JButton btnCaiDatPanel;
     private final JButton btnDangNhap;
     private final JButton btnDangXuat;
@@ -95,21 +95,14 @@ public class WindowMain_GUI extends JFrame implements ActionListener {
         btnDangNhap.addActionListener(this);
         btnDangXuat.addActionListener(this);
 
-        registerDropdown(btnQuanLyKhoPanel, "Nhập hàng", pnlNhapHang, pnlEast, this::resetSidebarColors);
-        registerDropdown(btnQuanLyKhoPanel, "Thống kê kho", pnlThongKeKho, pnlEast, this::resetSidebarColors);
+        registerDropdown(btnQuanLyKhoPanel, "Nhập hàng", pnlNhapHang, pnlEast);
+        registerDropdown(btnQuanLyKhoPanel, "Thống kê kho", pnlThongKeKho, pnlEast);
 
-        registerDropdown(btnDonHangPnl, "Tạo đơn hàng", pnlTaoDonHang, pnlEast, this::resetSidebarColors);
-        registerDropdown(btnDonHangPnl, "Thống kê đơn hàng", pnlThongKeDonHang, pnlEast, this::resetSidebarColors);
+        registerDropdown(btnDonHangPnl, "Tạo đơn hàng", pnlTaoDonHang, pnlEast);
+        registerDropdown(btnDonHangPnl, "Thống kê đơn hàng", pnlThongKeDonHang, pnlEast);
 
-        registerDropdown(btnQuanLyNhanVienPnl, "Thêm nhân viên", pnlThemNhanVien, pnlEast, this::resetSidebarColors);
-        registerDropdown(btnQuanLyNhanVienPnl, "Cập nhật nhân viên", pnlCapNhatNhanVien, pnlEast, this::resetSidebarColors);
-    }
-
-    private JPanel createPanel(String title) {
-        JPanel panel = new JPanel();
-        panel.setLayout(new BorderLayout());
-        panel.add(new JLabel(title, SwingConstants.CENTER), BorderLayout.CENTER);
-        return panel;
+        registerDropdown(btnQuanLyNhanVienPnl, "Thêm nhân viên", pnlThemNhanVien, pnlEast);
+        registerDropdown(btnQuanLyNhanVienPnl, "Cập nhật nhân viên", pnlCapNhatNhanVien, pnlEast);
     }
 
     private JButton createSidebarButton(String text, String iconName) {
@@ -199,7 +192,7 @@ public class WindowMain_GUI extends JFrame implements ActionListener {
         btnCaiDatPanel.setBackground(new Color(200, 60, 60));
     }
 
-    private void registerDropdown(JButton button, String itemName, JPanel panel, JPanel pnlMain, Runnable backgroundResetter) {
+    private void registerDropdown(JButton button, String itemName, JPanel panel, JPanel pnlMain) {
         JPopupMenu menu = buttonMenuMap.computeIfAbsent(button, btn -> {
             JPopupMenu newMenu = new JPopupMenu();
             newMenu.setBorder(BorderFactory.createLineBorder(Color.GRAY));
@@ -239,7 +232,7 @@ public class WindowMain_GUI extends JFrame implements ActionListener {
         styleMenuItem(menuItem);
 
         menuItem.addActionListener(e -> {
-            backgroundResetter.run();
+            resetSidebarColors();
             button.setBackground(new Color(200, 0, 0));
             pnlMain.removeAll();
             pnlMain.add(panel);
