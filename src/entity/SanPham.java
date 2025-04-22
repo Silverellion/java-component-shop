@@ -8,14 +8,27 @@ public class SanPham {
 	private String loaiSP;
 	private double giaBan;
 	private int soLuongTon;
-	public SanPham(String maSP, String tenSP, String loaiSP, double giaBan, int soLuongTon) {
+	private NhaCungCap ncc;
+	
+	public SanPham(String maSP, String tenSP, String loaiSP, double giaBan, int soLuongTon, NhaCungCap ncc) {
 		super();
 		this.maSP = maSP;
 		this.tenSP = tenSP;
 		this.loaiSP = loaiSP;
 		this.giaBan = giaBan;
 		this.soLuongTon = soLuongTon;
+		this.ncc = ncc;
 	}
+	
+	public NhaCungCap getNcc() {
+		return ncc;
+	}
+
+
+	public void setNcc(NhaCungCap ncc) {
+		this.ncc = ncc;
+	}
+
 	public String getMaSP() {
 		return maSP;
 	}
@@ -46,10 +59,12 @@ public class SanPham {
 	public void setSoLuongTon(int soLuongTon) {
 		this.soLuongTon = soLuongTon;
 	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(giaBan, loaiSP, maSP, soLuongTon, tenSP);
+		return Objects.hash(giaBan, loaiSP, maSP, ncc, soLuongTon, tenSP);
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -61,7 +76,10 @@ public class SanPham {
 		SanPham other = (SanPham) obj;
 		return Double.doubleToLongBits(giaBan) == Double.doubleToLongBits(other.giaBan)
 				&& Objects.equals(loaiSP, other.loaiSP) && Objects.equals(maSP, other.maSP)
-				&& soLuongTon == other.soLuongTon && Objects.equals(tenSP, other.tenSP);
+				&& Objects.equals(ncc, other.ncc) && soLuongTon == other.soLuongTon
+				&& Objects.equals(tenSP, other.tenSP);
 	}
+	
+	
 	
 }
