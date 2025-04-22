@@ -12,5 +12,9 @@ public class PnlTaoDonHang extends JPanel {
         JLabel lblTitle = SwingHelper.createProjectJLabel("Tạo đơn hàng", 30);
         lblTitle.setAlignmentX(CENTER_ALIGNMENT);
         add(lblTitle);
+        
+        JButton btn =SwingHelper.createProjectJButton("ưdasdas");
+        add(btn);
     }
 }
+	

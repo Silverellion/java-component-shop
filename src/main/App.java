@@ -5,6 +5,7 @@ import entity.NhanVien;
 import entity.TaiKhoan;
 import gui.WindowLogin_GUI;
 import gui.WindowMain_GUI;
+import utils.FontHelper;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -16,13 +17,13 @@ public class App {
 	public static void main(String[] args) {
 		try {
 			ConnectDB.initialize(url, user, password);
-			new WindowLogin_GUI(); //COMMENT THIS CODE THEN UNCOMMENT THE CODEBLOCK BELOW IF YOU DIDN'T CREATE AN ACCOUNT
-//			new WindowMain_GUI(new TaiKhoan("testAccount", "12345678",
-//					new NhanVien(
-//							"AD000001", "Test",
-//							"Test", 90000,
-//							"012345678910", "asd",
-//							"")));
+			//new WindowLogin_GUI(); //COMMENT THIS CODE THEN UNCOMMENT THE CODEBLOCK BELOW IF YOU DIDN'T CREATE AN ACCOUNT
+			new WindowMain_GUI(new TaiKhoan("testAccount", "12345678",
+					new NhanVien(
+							"AD000001", "Test",
+							"Test", 90000,
+							"012345678910", "asd",
+							"")));
 		} catch (SQLException | IOException e) {
 			throw new RuntimeException(e);
 		}
