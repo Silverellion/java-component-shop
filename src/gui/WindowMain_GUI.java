@@ -14,6 +14,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.Serial;
 import java.net.URL;
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -39,7 +40,7 @@ public class WindowMain_GUI extends JFrame implements ActionListener {
 
     private final Map<JButton, JPopupMenu> buttonMenuMap = new HashMap<>();
 
-    public WindowMain_GUI(TaiKhoan tkHienTai) {
+    public WindowMain_GUI(TaiKhoan tkHienTai) throws ParseException {
         setTitle("Cửa hàng linh kiện");
         setSize(1600, 800);
         setLocationRelativeTo(null);
@@ -63,7 +64,7 @@ public class WindowMain_GUI extends JFrame implements ActionListener {
 
         btnTrangChuPanel = createSidebarButton("Trang chủ", "home.png");
         btnQuanLyKhoPanel = createSidebarButton("Quản lý kho", "inventory.png");
-        btnDonHangPnl = createSidebarButton("Đơn hàng", "receipt.png");
+        btnDonHangPnl = createSidebarButton("Hóa đơn", "receipt.png");
         btnQuanLyNhanVienPnl = createSidebarButton("Quản lý nhân viên", "multiple-users.png");
         btnDangXuat = createSidebarButton("Đăng xuất", "logout.png");
 
@@ -87,8 +88,8 @@ public class WindowMain_GUI extends JFrame implements ActionListener {
         registerDropdown(btnQuanLyKhoPanel, "Nhập hàng", pnlNhapHang, pnlEast);
         registerDropdown(btnQuanLyKhoPanel, "Thống kê kho", pnlThongKeKho, pnlEast);
 
-        registerDropdown(btnDonHangPnl, "Tạo đơn hàng", pnlTaoDonHang, pnlEast);
-        registerDropdown(btnDonHangPnl, "Thống kê đơn hàng", pnlThongKeDonHang, pnlEast);
+        registerDropdown(btnDonHangPnl, "Tạo hóa đơn", pnlTaoDonHang, pnlEast);
+        registerDropdown(btnDonHangPnl, "Thống kê hóa đơn", pnlThongKeDonHang, pnlEast);
 
         registerDropdown(btnQuanLyNhanVienPnl, "Thêm nhân viên", pnlThemNhanVien, pnlEast);
         registerDropdown(btnQuanLyNhanVienPnl, "Cập nhật nhân viên", pnlCapNhatNhanVien, pnlEast);

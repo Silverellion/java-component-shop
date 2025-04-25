@@ -10,6 +10,7 @@ import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 import java.io.Serial;
+import java.text.ParseException;
 import java.util.Objects;
 
 import javax.swing.*;
@@ -18,7 +19,7 @@ public class PnlTrangChu extends JPanel {
     @Serial
     private static final long serialVersionUID = 1L;
     private final TaiKhoan taiKhoan;
-    public PnlTrangChu(TaiKhoan taiKhoan) {
+    public PnlTrangChu(TaiKhoan taiKhoan) throws ParseException {
         this.taiKhoan = taiKhoan;
 
         setLayout(new BorderLayout());
@@ -75,7 +76,7 @@ public class PnlTrangChu extends JPanel {
         PnlCapNhatNhanVien pnlCapNhatNhanVien = new PnlCapNhatNhanVien();
 
         JButton btnCard1 = createCardButton("inventory.png", "Quản lý kho", pnlNhapHang);
-        JButton btnCard2 = createCardButton("receipt.png", "Đơn hàng", pnlTaoDonHang);
+        JButton btnCard2 = createCardButton("receipt.png", "Hóa đơn", pnlTaoDonHang);
         JButton btnCard3 = createCardButton("multiple-users.png",  "Quản lý nhân viên", pnlCapNhatNhanVien);
 
         gbc.gridx = 0;
