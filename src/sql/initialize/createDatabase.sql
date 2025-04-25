@@ -1,1 +1,0 @@
-IF DB_ID('dbTienLoi') IS NULL CREATE DATABASE dbTienLoi;

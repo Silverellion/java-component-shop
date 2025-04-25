@@ -15,7 +15,7 @@ public class DanhSachTaiKhoan_DAO {
     private final String SQL_PATH = "src/sql/taiKhoan/";
 
     public DanhSachTaiKhoan_DAO() {
-        conn = ConnectDB.getConnection();
+        conn = ConnectDB.getConn();
     }
 
     public ArrayList<TaiKhoan> load() {
