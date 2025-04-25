@@ -77,6 +77,10 @@ public class NhaCungCap {
 				&& Objects.equals(tenNCC, other.tenNCC);
 	}
 	
-	
+	@Override
+	public String toString() {
+	    return this.getTenNCC(); // hoặc "maNCC - tenNCC"
+	}
+
 	
 }
