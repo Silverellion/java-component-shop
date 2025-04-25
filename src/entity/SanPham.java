@@ -20,6 +20,11 @@ public class SanPham {
 		this.ncc = ncc;
 	}
 	
+	public SanPham(String maSP) {
+		// TODO Auto-generated constructor stub
+		this(maSP,"","",0.0,0,null);
+	}
+	
 	public NhaCungCap getNcc() {
 		return ncc;
 	}
@@ -79,7 +84,6 @@ public class SanPham {
 				&& Objects.equals(ncc, other.ncc) && soLuongTon == other.soLuongTon
 				&& Objects.equals(tenSP, other.tenSP);
 	}
-	
 	
 	
 }
