@@ -13,7 +13,7 @@ public class TaoDonHang_Dao {
     private Connection connection;
 
     public TaoDonHang_Dao() {
-        this.connection = ConnectDB.getConnection();
+        this.connection = ConnectDB.getConn();
     }
 
     public List<SanPham> getSanPhamList() {
