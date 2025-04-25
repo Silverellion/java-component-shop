@@ -13,6 +13,7 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.Serial;
+import java.text.ParseException;
 
 import javax.swing.*;
 
@@ -94,10 +95,15 @@ public class WindowLogin_GUI extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         Object src = e.getSource();
         if(src == btnDangNhap)
-            login();
+			try {
+				login();
+			} catch (ParseException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
     }
 
-    public void login() {
+    public void login() throws ParseException {
         String username = txtUsername.getText();
         String password = new String(txtPassword.getPassword());
 
