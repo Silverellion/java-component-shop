@@ -83,39 +83,6 @@ BEGIN
     );
 END
 
-IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'PhieuNhapHang')
-BEGIN
-    CREATE TABLE PhieuNhapHang (
-        maPhieu NVARCHAR(20) PRIMARY KEY,
-        ngayNhap DATE,
-        maNCC NVARCHAR(20),
-        maNhanVien NVARCHAR(8),
-        FOREIGN KEY (maNCC) REFERENCES NhaCungCap(maNCC),
-        FOREIGN KEY (maNhanVien) REFERENCES NhanVien(maNhanVien)
-    );
-END
-
-IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'ChiTietPhieuNhap')
-BEGIN
-    CREATE TABLE ChiTietPhieuNhap (
-        maPhieu NVARCHAR(20),
-        maSP NVARCHAR(20),
-        soLuong INT,
-        donGiaNhap FLOAT,
-        PRIMARY KEY (maPhieu, maSP),
-        FOREIGN KEY (maPhieu) REFERENCES PhieuNhapHang(maPhieu),
-        FOREIGN KEY (maSP) REFERENCES SanPham(maSP)
-    );
-END
-
-IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'QuanLyKho')
-BEGIN
-    CREATE TABLE QuanLyKho (
-        maSP NVARCHAR(20) PRIMARY KEY,
-        FOREIGN KEY (maSP) REFERENCES SanPham(maSP)
-    );
-END
-
 IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'NhanVien')
 BEGIN
     CREATE TABLE NhanVien (
