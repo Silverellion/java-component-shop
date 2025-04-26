@@ -24,8 +24,7 @@ public class TaoDonHang_Dao {
             while (rs.next()) {
                 String maSP = rs.getString("maSP");
                 String tenSP = rs.getString("tenSP");
-                String loaiSP = rs.getString("loaiSP");
-                
+                String loaiSP = rs.getString("loaiSP");          
                 double giaBan = rs.getDouble("giaBan");
                 int soLuongTon = rs.getInt("soLuongTon");
                 String maNCC = rs.getString("maNCC");
@@ -123,6 +122,68 @@ public class TaoDonHang_Dao {
         return sanPham;
     }
 
+// tạo hóa đơn
+    public boolean insertKhachHang(String maKH, String tenKH, String diaChi, String soDienThoai, String email) {
+        String sql = "INSERT INTO KhachHang (maKH, tenKH, diaChi, soDienThoai, email) VALUES (?, ?, ?, ?,?)";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, maKH);
+            stmt.setString(2, tenKH);
+            stmt.setString(3, diaChi);
+            stmt.setString(4, soDienThoai);
+            stmt.setString(5, email);
+            int rowsAffected = stmt.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 
+    public boolean insertHoaDon(String maHD, Date ngayLapHD, double thanhTien, String maKH, String maNhanVien) {
+        String sql = "INSERT INTO HoaDon (maHD, ngayLapHD, thanhTien, maKH, maNhanVien) VALUES (?, ?, ?, ?, ?)";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, maHD);
+            stmt.setDate(2, ngayLapHD);
+            stmt.setDouble(3, thanhTien);
+            stmt.setString(4, maKH);
+            stmt.setString(5, maNhanVien);
+
+            int rowsInserted = stmt.executeUpdate();
+            return rowsInserted > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    public boolean insertChiTietHoaDon(String maHD, String maSP, int soLuong, double donGia) {
+        String sql = "INSERT INTO ChiTietHoaDon (maHD, maSP, soLuong, donGia) VALUES (?, ?, ?, ?)";
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, maHD);
+            stmt.setString(2, maSP);
+            stmt.setInt(3, soLuong);
+            stmt.setDouble(4, donGia);
+
+            int rowsInserted = stmt.executeUpdate();
+            return rowsInserted > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public String getMaNhanVienByTen(String tenNhanVien) {
+        String sql = "SELECT maNhanVien FROM NhanVien WHERE hoTen = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, tenNhanVien);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getString("maNhanVien");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null; // Không tìm thấy
+    }
 
 }

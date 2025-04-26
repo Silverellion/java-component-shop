@@ -2,6 +2,7 @@ package gui.DonHang;
 
 import utils.SwingHelper;
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
 
@@ -9,6 +10,8 @@ import dao.TaoDonHang_Dao;
 import entity.SanPham;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -17,6 +20,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.Serial;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -48,6 +52,16 @@ public class PnlTaoDonHang extends JPanel implements ActionListener, MouseListen
 	private JTextField txtTimKiem;
 	private JLabel lblDiaChi_HD;
 	private JSpinner spinner;
+	private JTextField txtSoLuong;
+	private JLabel lblMaNV_HD;
+	private JLabel lblMaSP_HD;
+	private JLabel lblDonGia_HD;
+	private JLabel lblSoLuong_HD;
+	private JLabel lblThanhTien_HD;
+	private JLabel lblTenNV_HD;
+	private JButton btnLuuHD;
+	private JLabel lblMaKH_HD;
+	private JTextField txtEmail;
 	
 	
     public PnlTaoDonHang() {
@@ -58,175 +72,235 @@ public class PnlTaoDonHang extends JPanel implements ActionListener, MouseListen
         pnNorth.setLayout(new BoxLayout(pnNorth, BoxLayout.Y_AXIS));
         JLabel lblTitle = SwingHelper.createProjectJLabel("Tạo Hóa Đơn", 30);
        
-     // thong tin khach hang
-        JPanel pnKH  = new JPanel();
+     // Phần thông tin khách hàng
+        JPanel pnKH = new JPanel();
         pnKH.setLayout(new BoxLayout(pnKH, BoxLayout.Y_AXIS));
         pnKH.setBorder(BorderFactory.createTitledBorder("Thông tin khách hàng"));
-        
-        JPanel p1 = new JPanel();
-        p1.setLayout(new BoxLayout(p1, BoxLayout.X_AXIS));
-        JPanel p2 = new JPanel();
-        p2.setLayout(new BoxLayout(p2, BoxLayout.X_AXIS));
+
+        JPanel pnMaTenKH = new JPanel(); 
+        pnMaTenKH.setLayout(new BoxLayout(pnMaTenKH, BoxLayout.X_AXIS));
+        JPanel pnSDTDiaChi = new JPanel(); 
+        pnSDTDiaChi.setLayout(new BoxLayout(pnSDTDiaChi, BoxLayout.X_AXIS));
+        JPanel pnEmail = new JPanel(); 
+        pnEmail.setLayout(new BoxLayout(pnEmail, BoxLayout.X_AXIS));
+
         JLabel lblMaKH = SwingHelper.createProjectJLabel("Mã khách hàng:");
         txtMaKH = new JTextField();
         JLabel lblTenKH = SwingHelper.createProjectJLabel("Tên khách hàng:");
         txtTenKH = new JTextField();
-        
-        p1.add(Box.createHorizontalStrut(10));
-        p1.add(lblMaKH);
-        p1.add(txtMaKH);
-        p1.add(Box.createHorizontalStrut(10));
-        p1.add(lblTenKH);
-        p1.add(txtTenKH);
-        p1.add(Box.createHorizontalStrut(10));
-            
         JLabel lblSDT = SwingHelper.createProjectJLabel("Số điện thoại:");
         txtSDT = new JTextField();
         JLabel lblDiaChi = SwingHelper.createProjectJLabel("Địa chỉ:");
         txtDiaChi = new JTextField();
-        
-        p2.add(Box.createHorizontalStrut(10));
-        p2.add(lblSDT);
-        p2.add(txtSDT);
-        p2.add(Box.createHorizontalStrut(10));
-        p2.add(lblDiaChi);
-        p2.add(txtDiaChi);
-        p2.add(Box.createHorizontalStrut(10));
-        
-        
+        JLabel lblEmail = SwingHelper.createProjectJLabel("Email:");
+        txtEmail = new JTextField(); 
+
+        // Đồng bộ kích thước nhãn
+        Dimension labelSize = lblTenKH.getPreferredSize();
+        lblMaKH.setPreferredSize(labelSize);
+        lblSDT.setPreferredSize(labelSize);
+        lblDiaChi.setPreferredSize(labelSize);
+        lblEmail.setPreferredSize(labelSize); 
+
+
+        Dimension inputSize = new Dimension(150, 20);
+
+        // Thêm vào pnMaTenKH
+        pnMaTenKH.add(Box.createHorizontalStrut(10));
+        pnMaTenKH.add(lblMaKH);
+        pnMaTenKH.add(txtMaKH);
+        pnMaTenKH.add(Box.createHorizontalStrut(20));
+        pnMaTenKH.add(lblTenKH);
+        pnMaTenKH.add(txtTenKH);
+        pnMaTenKH.add(Box.createHorizontalStrut(10));
+
+        // Thêm vào pnSDTDiaChi
+        pnSDTDiaChi.add(Box.createHorizontalStrut(10));
+        pnSDTDiaChi.add(lblSDT);
+        pnSDTDiaChi.add(txtSDT);
+        pnSDTDiaChi.add(Box.createHorizontalStrut(20));
+        pnSDTDiaChi.add(lblDiaChi);
+        pnSDTDiaChi.add(txtDiaChi);
+        pnSDTDiaChi.add(Box.createHorizontalStrut(10));
+
+        // Thêm vào pnEmail
+        pnEmail.add(Box.createHorizontalStrut(10));
+        pnEmail.add(lblEmail);
+        pnEmail.add(txtEmail);
+        pnEmail.add(Box.createHorizontalStrut(665));
+
+        // Thêm vào pnKH
         pnKH.add(Box.createVerticalStrut(10));
-        pnKH.add(p1);
+        pnKH.add(pnMaTenKH);
         pnKH.add(Box.createVerticalStrut(10));
-        pnKH.add(p2);
+        pnKH.add(pnSDTDiaChi);
         pnKH.add(Box.createVerticalStrut(10));
-        
+        pnKH.add(pnEmail);
+        pnKH.add(Box.createVerticalStrut(10));
+
+        // Phần thông tin đơn hàng
         JPanel pnDH = new JPanel();
         pnDH.setBorder(BorderFactory.createTitledBorder("Thông tin đơn hàng"));
         pnDH.setLayout(new BoxLayout(pnDH, BoxLayout.Y_AXIS));
-        JPanel p3 = new JPanel();
-        p3.setLayout(new BoxLayout(p3, BoxLayout.X_AXIS));
-        JPanel p4 = new JPanel();
-        p4.setLayout(new BoxLayout(p4, BoxLayout.X_AXIS));
+
+        // Tạo các panel con
+        JPanel pnMaDHNhanVien = new JPanel(); // Thay p3
+        pnMaDHNhanVien.setLayout(new BoxLayout(pnMaDHNhanVien, BoxLayout.X_AXIS));
+        JPanel pnNgaySanPham = new JPanel(); // Thay p4
+        pnNgaySanPham.setLayout(new BoxLayout(pnNgaySanPham, BoxLayout.X_AXIS));
+        JPanel pnSoLuong = new JPanel(); // Thay p5
+        pnSoLuong.setLayout(new BoxLayout(pnSoLuong, BoxLayout.X_AXIS));
+
+        // Tạo nhãn và trường nhập liệu
         JLabel lblMaDH = SwingHelper.createProjectJLabel("Mã hóa đơn:");
         txtMaDH = new JTextField();
-        
         JLabel lblNgayTao = SwingHelper.createProjectJLabel("Ngày lập:");
-
-	     // Tạo SpinnerDateModel và JSpinner để chọn ngày
         spinner = new JSpinner(new SpinnerDateModel());
         JSpinner.DateEditor editor = new JSpinner.DateEditor(spinner, "dd/MM/yyyy");
         spinner.setEditor(editor);
-        spinner.setPreferredSize(new Dimension(200, 20));
-
-        // Thay đổi kích thước chữ của JSpinner
-        Font font = new Font("Arial", Font.BOLD, 12); // Kích thước font là 16
-        editor.getTextField().setFont(font);
-
-        
         JLabel lblNhanVien = SwingHelper.createProjectJLabel("Tên nhân viên:");
         cboxNhanVien = new JComboBox();
-        
         JLabel lblSanPham = SwingHelper.createProjectJLabel("Tên sản phẩm:");
         cboxSanPham = new JComboBox();
-        
-        
-        p3.add(Box.createHorizontalStrut(10));
-        p3.add(lblMaDH);
-        p3.add(txtMaDH);
-        p3.add(Box.createHorizontalStrut(15));
-        p3.add(lblNgayTao);
-        p3.add(spinner);
-        p3.add(Box.createHorizontalStrut(320));
-        
-        p4.add(Box.createHorizontalStrut(10));
-        p4.add(lblNhanVien);
-        p4.add(cboxNhanVien);
-        p4.add(Box.createHorizontalStrut(120));
-        p4.add(lblSanPham);
-        p4.add(cboxSanPham);
-        p4.add(Box.createHorizontalStrut(10));
-        
+        JLabel lblSoLuong = SwingHelper.createProjectJLabel("Số lượng:");
+        txtSoLuong = new JTextField();
+
+        // Cài đặt font và kích thước
+        Font font = new Font("Arial", Font.BOLD, 12);
+        editor.getTextField().setFont(font);
+
+        // Đồng bộ kích thước nhãn
+        lblMaDH.setPreferredSize(labelSize);
+        lblNgayTao.setPreferredSize(labelSize);
+        lblNhanVien.setPreferredSize(labelSize);
+        lblSanPham.setPreferredSize(labelSize);
+        lblSoLuong.setPreferredSize(labelSize);
+
+        // Đồng bộ kích thước trường nhập liệu
+        txtMaDH.setPreferredSize(inputSize);
+        spinner.setPreferredSize(inputSize);
+        cboxNhanVien.setPreferredSize(inputSize);
+        cboxSanPham.setPreferredSize(inputSize);
+        txtSoLuong.setPreferredSize(inputSize);
+
+        // Thêm vào panel pnMaDHNhanVien: Mã hóa đơn và Tên nhân viên
+        pnMaDHNhanVien.add(Box.createHorizontalStrut(10));
+        pnMaDHNhanVien.add(lblMaDH);
+        pnMaDHNhanVien.add(txtMaDH);
+        pnMaDHNhanVien.add(Box.createHorizontalStrut(20));
+        pnMaDHNhanVien.add(lblNhanVien);
+        pnMaDHNhanVien.add(cboxNhanVien);
+        pnMaDHNhanVien.add(Box.createHorizontalStrut(370));
+
+        // Thêm vào panel pnNgaySanPham: Ngày lập và Tên sản phẩm
+        pnNgaySanPham.add(Box.createHorizontalStrut(10));
+        pnNgaySanPham.add(lblNgayTao);
+        pnNgaySanPham.add(spinner);
+        pnNgaySanPham.add(Box.createHorizontalStrut(20));
+        pnNgaySanPham.add(lblSanPham);
+        pnNgaySanPham.add(cboxSanPham);
+        pnNgaySanPham.add(Box.createHorizontalStrut(10));
+
+        // Thêm vào panel pnSoLuong: Số lượng
+        pnSoLuong.add(Box.createHorizontalStrut(10));
+        pnSoLuong.add(lblSoLuong);
+        pnSoLuong.add(txtSoLuong);
+        pnSoLuong.add(Box.createHorizontalStrut(665)); 
+
+        // Thêm các panel con vào pnDH
         pnDH.add(Box.createVerticalStrut(10));
-        pnDH.add(p3);
+        pnDH.add(pnMaDHNhanVien);
         pnDH.add(Box.createVerticalStrut(10));
-        pnDH.add(p4);
+        pnDH.add(pnNgaySanPham);
         pnDH.add(Box.createVerticalStrut(10));
-        
+        pnDH.add(pnSoLuong);
+        pnDH.add(Box.createVerticalStrut(10));
+
         pnNorth.add(lblTitle);
         pnNorth.add(pnKH);
         pnNorth.add(pnDH);
-        
-        lblMaKH.setPreferredSize(lblTenKH.getPreferredSize());
-        lblSDT.setPreferredSize(lblTenKH.getPreferredSize());
-        lblDiaChi.setPreferredSize(lblTenKH.getPreferredSize());
-        lblMaDH.setPreferredSize(lblTenKH.getPreferredSize());
-        lblNgayTao.setPreferredSize(lblTenKH.getPreferredSize());
-        lblNhanVien.setPreferredSize(lblTenKH.getPreferredSize());
-        lblSanPham.setPreferredSize(lblTenKH.getPreferredSize());
         
         // phan center
         JPanel pCenter = new JPanel();
         pCenter.setLayout(new BorderLayout()); 
         pCenter.setBorder(BorderFactory.createTitledBorder("Chi tiết sản phẩm"));
-        String[] tieude = {"Mã sản phẩm", "Tên sản phẩm", "Đơn giá", "Số lượng", "Thành tiền"};
+        String[] tieude = {"Mã sản phẩm", "Tên sản phẩm", "Đơn giá", "Số lượng tồn", "Loại sản phẩm"};
         tableModel = new DefaultTableModel(tieude, 0);
         table = SwingHelper.createProjectJTable(tableModel);
         pCenter.add(new JScrollPane(table), BorderLayout.CENTER); 
 
         
-     // phần hóa đơn đẹp hơn
+     // Phần hóa đơn đẹp hơn
         JPanel pnHD = new JPanel();
-        pnHD.setBorder(BorderFactory.createTitledBorder("Hóa đơn được tạo"));
+        pnHD.setBackground(new Color(255, 245, 245)); 
+
+        TitledBorder borderHD = BorderFactory.createTitledBorder(
+            BorderFactory.createLineBorder(Color.RED, 2), "HÓA ĐƠN"
+        );
+        borderHD.setTitleColor(new Color(220, 20, 60));
+        borderHD.setTitleFont(new Font("Arial", Font.BOLD, 16)); 
+        pnHD.setBorder(borderHD);
+
         pnHD.setLayout(new BoxLayout(pnHD, BoxLayout.Y_AXIS));
 
         // Tiêu đề
-        JLabel lblTitleHD = SwingHelper.createProjectJLabel("THÔNG TIN HÓA ĐƠN             ", 15);
-        lblTitleHD.setAlignmentX(LEFT_ALIGNMENT);
+        JLabel lblTitleHD = SwingHelper.createProjectJLabel("THÔNG TIN HÓA ĐƠN", 20);
+        lblTitleHD.setForeground(new Color(178, 34, 34)); 
+        lblTitleHD.setAlignmentX(Component.CENTER_ALIGNMENT);
         pnHD.add(lblTitleHD);
-        pnHD.add(Box.createVerticalStrut(10));
+        pnHD.add(Box.createVerticalStrut(15));
 
-        // Thông tin hóa đơn hiển thị dạng lưới
-        JPanel pnHDInfo = new JPanel(new GridLayout(0, 2, 10, 10));
-        pnHDInfo.setMaximumSize(new Dimension(350, 250));
-        pnHDInfo.setAlignmentX(CENTER_ALIGNMENT);
+        // Panel thông tin hóa đơn
+        JPanel pnHDInfo = new JPanel(new GridLayout(8, 2, 12, 12)); 
+        pnHDInfo.setBackground(new Color(255, 245, 245));
+        pnHDInfo.setAlignmentX(Component.CENTER_ALIGNMENT);
+        pnHDInfo.setMaximumSize(new Dimension(450, 320)); 
 
-        // Các label hiển thị (sau này bạn có thể gán .setText(...) để cập nhật)
-        lblMaDon = new JLabel("...");
-        lblTenKH_HD = new JLabel("...");
-        lblSDT_HD = new JLabel("...");
-        lblNgayTao_HD = new JLabel("...");
-        lblNhanVien_HD = new JLabel("...");
-        lblSanPham_HD = new JLabel("...");
-        lblTongTien = new JLabel("...");
-        lblDiaChi_HD = new JLabel("...");
+        // Tạo nhãn giá trị
+        lblMaDon = SwingHelper.createProjectJLabel("...");
+        lblMaKH_HD = SwingHelper.createProjectJLabel("...");
+        lblMaSP_HD = SwingHelper.createProjectJLabel("...");
+        lblTenNV_HD = SwingHelper.createProjectJLabel("...");
+        lblNgayTao_HD = SwingHelper.createProjectJLabel("...");
+        lblDonGia_HD = SwingHelper.createProjectJLabel("...");
+        lblSoLuong_HD = SwingHelper.createProjectJLabel("...");
+        lblThanhTien_HD = SwingHelper.createProjectJLabel("...");
 
-
+        // Thêm nhãn và giá trị vào grid
         pnHDInfo.add(SwingHelper.createProjectJLabel("Mã hóa đơn:"));
         pnHDInfo.add(lblMaDon);
 
-        pnHDInfo.add(SwingHelper.createProjectJLabel("Tên khách hàng:"));
-        pnHDInfo.add(lblTenKH_HD);
+        pnHDInfo.add(SwingHelper.createProjectJLabel("Mã khách hàng:"));
+        pnHDInfo.add(lblMaKH_HD);
 
-        pnHDInfo.add(SwingHelper.createProjectJLabel("Số điện thoại:"));
-        pnHDInfo.add(lblSDT_HD);
-        
-        pnHDInfo.add(SwingHelper.createProjectJLabel("Địa chỉ:"));
-        pnHDInfo.add(lblDiaChi_HD);
+        pnHDInfo.add(SwingHelper.createProjectJLabel("Mã sản phẩm:"));
+        pnHDInfo.add(lblMaSP_HD);
 
+        pnHDInfo.add(SwingHelper.createProjectJLabel("Tên nhân viên:"));
+        pnHDInfo.add(lblTenNV_HD);
 
-        pnHDInfo.add(SwingHelper.createProjectJLabel("Ngày lập:"));
+        pnHDInfo.add(SwingHelper.createProjectJLabel("Ngày lập hóa đơn:"));
         pnHDInfo.add(lblNgayTao_HD);
 
-        pnHDInfo.add(SwingHelper.createProjectJLabel("Nhân viên xử lý:"));
-        pnHDInfo.add(lblNhanVien_HD);
+        pnHDInfo.add(SwingHelper.createProjectJLabel("Đơn giá:"));
+        pnHDInfo.add(lblDonGia_HD);
 
-        pnHDInfo.add(SwingHelper.createProjectJLabel("Tên sản phẩm:"));
-        pnHDInfo.add(lblSanPham_HD);
+        pnHDInfo.add(SwingHelper.createProjectJLabel("Số lượng:"));
+        pnHDInfo.add(lblSoLuong_HD);
 
-        pnHDInfo.add(SwingHelper.createProjectJLabel("Tổng tiền:"));
-        pnHDInfo.add(lblTongTien);
+        pnHDInfo.add(SwingHelper.createProjectJLabel("Thành tiền:"));
+        pnHDInfo.add(lblThanhTien_HD);
 
+        // Thêm vào panel chính
         pnHD.add(pnHDInfo);
+
+        // Nút lưu hóa đơn
+        pnHD.add(Box.createVerticalStrut(20));
+        btnLuuHD = SwingHelper.createProjectJButton("Lưu hóa đơn");
+        btnLuuHD.setAlignmentX(Component.CENTER_ALIGNMENT);
+        btnLuuHD.setBackground(new Color(220, 20, 60)); // nền nút đỏ đẹp
+        btnLuuHD.setForeground(Color.WHITE);            // chữ trắng
+        pnHD.add(btnLuuHD);
 
 
 
@@ -238,7 +312,7 @@ public class PnlTaoDonHang extends JPanel implements ActionListener, MouseListen
         JPanel pnButtons = new JPanel();
 
         pnButtons.setBorder(BorderFactory.createTitledBorder("Chức năng"));
-        btnTaoDon = SwingHelper.createProjectJButton("Tạo đơn hàng");
+        btnTaoDon = SwingHelper.createProjectJButton("Tạo hóa đơn");
         btnLamMoi = SwingHelper.createProjectJButton("Làm mới");
         JButton btnThoat = SwingHelper.createProjectJButton("Thoát");
         pnButtons.add(btnTaoDon);
@@ -272,6 +346,7 @@ public class PnlTaoDonHang extends JPanel implements ActionListener, MouseListen
         table.addMouseListener(this);
         btnLamMoi.addActionListener(this);
         cboxSanPham.addActionListener(this);  
+        btnLuuHD.addActionListener(this);
 
 
         // Nút Thoát: đóng cửa sổ nếu panel nằm trong JFrame
@@ -297,7 +372,7 @@ public class PnlTaoDonHang extends JPanel implements ActionListener, MouseListen
                     sp.getTenSP(),
                     sp.getGiaBan(),
                     sp.getSoLuongTon(),
-                    sp.getGiaBan() * sp.getSoLuongTon() // Thành tiền
+                    sp.getLoaiSP() 
                 };
                 tableModel.addRow(rowData);
             }
@@ -331,6 +406,7 @@ public class PnlTaoDonHang extends JPanel implements ActionListener, MouseListen
             java.util.List<String> tenSanPhamList = taoDonHangDao.getTenSanPhamList();
             // Clear dữ liệu cũ trong comboBox
             cboxSanPham.removeAllItems();
+            cboxSanPham.addItem("-- Chọn sản phẩm --");
             // Thêm sản phẩm vào ComboBox
             for (String tenSP : tenSanPhamList) {
                 cboxSanPham.addItem(tenSP);
@@ -358,12 +434,51 @@ public class PnlTaoDonHang extends JPanel implements ActionListener, MouseListen
 			timkiem();
 			txtTimKiem.setText("");
 		}
-		if (o == cboxSanPham) {        
+		if (o == cboxSanPham) {    
 		     loadSanPhamByTen();
 		 }
-
+		if(o == btnLuuHD) {
+			luuHoaDon();
+		}
 	}
 
+
+
+
+	private void luuHoaDon() {
+		 try {
+	            // Lấy dữ liệu từ các JLabel
+	            String maHD = lblMaDon.getText();
+	            String maSP = lblMaSP_HD.getText();
+	            String tenNV = lblTenNV_HD.getText(); 
+	            String ngayLapStr = lblNgayTao_HD.getText();
+	            double donGia = Double.parseDouble(lblDonGia_HD.getText());
+	            int soLuong = Integer.parseInt(lblSoLuong_HD.getText());
+	            double thanhTien = Double.parseDouble(lblThanhTien_HD.getText());
+	            String maKH = lblMaKH_HD.getText();
+	            // gọi dao tìm mã nhân viên theo tên
+	            String maNhanVien = taoDonHangDao.getMaNhanVienByTen(tenNV);
+	            // Chuyển đổi ngày (giả sử định dạngy yyy-MM-dd)
+	            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	            java.util.Date utilDate = sdf.parse(ngayLapStr);
+	            java.sql.Date ngayLapHD = new java.sql.Date(utilDate.getTime());
+
+	            boolean insertedKh = taoDonHangDao.insertKhachHang(maKH, txtTenKH.getText(), txtDiaChi.getText(),txtSDT.getText(), txtEmail.getText());
+	            boolean insertedHD = taoDonHangDao.insertHoaDon(maHD, ngayLapHD, thanhTien, maKH, maNhanVien);
+	            boolean insertedCT = taoDonHangDao.insertChiTietHoaDon(maHD, maSP, soLuong, donGia);
+	            
+
+	            if (insertedHD && insertedCT && insertedKh) {
+	                JOptionPane.showMessageDialog(null, "Lưu hóa đơn thành công!");
+	            } else {
+	                JOptionPane.showMessageDialog(null, "Lưu hóa đơn thất bại!");
+	            }
+	        } catch (Exception ex) {
+	            ex.printStackTrace();
+	            JOptionPane.showMessageDialog(null, "Lỗi lưu hóa đơn!");
+	        }
+		
+	}
 
 
 
@@ -372,7 +487,8 @@ public class PnlTaoDonHang extends JPanel implements ActionListener, MouseListen
 	    try {
 	        // Lấy danh sách sản phẩm từ DAO
 	        List<SanPham> sanPhamList = taoDonHangDao.getSanPhamList();
-	        
+	        if (cboxSanPham.getSelectedIndex() <= 0) return; // bỏ qua dòng mặc định
+
 	        // Xóa dữ liệu cũ trong bảng
 	        tableModel.setRowCount(0);
 	        
@@ -384,7 +500,7 @@ public class PnlTaoDonHang extends JPanel implements ActionListener, MouseListen
 	                    sp.getTenSP(),
 	                    sp.getGiaBan(),
 	                    sp.getSoLuongTon(),
-	                    sp.getGiaBan() * sp.getSoLuongTon() // Thành tiền
+	                    sp.getLoaiSP()
 	                };
 	                tableModel.addRow(rowData);
 	            }
@@ -418,7 +534,7 @@ public class PnlTaoDonHang extends JPanel implements ActionListener, MouseListen
 	            ketQua.getTenSP(),
 	            ketQua.getGiaBan(),
 	            ketQua.getSoLuongTon(),
-	            ketQua.getGiaBan() * ketQua.getSoLuongTon()
+	            ketQua.getLoaiSP()
 	        };
 	        tableModel.addRow(rowData);
 	    } else {
@@ -441,58 +557,82 @@ public class PnlTaoDonHang extends JPanel implements ActionListener, MouseListen
 	}
 	// kiểm tra nhập liệu
 	public boolean validData() {
-        String maKhachHang = txtMaKH.getText().trim();
-        String tenKhachHang = txtTenKH.getText().trim();
-        String soDienThoai = txtSDT.getText().trim();
-        String diaChi = txtDiaChi.getText().trim();
-        String maDonHang = txtMaDH.getText().trim();
+	    String maKhachHang = txtMaKH.getText().trim();
+	    String tenKhachHang = txtTenKH.getText().trim();
+	    String soDienThoai = txtSDT.getText().trim();
+	    String diaChi = txtDiaChi.getText().trim();
+	    String maDonHang = txtMaDH.getText().trim();
+	    String soLuong = txtSoLuong.getText().trim();
 
-        if (maKhachHang.isEmpty() || tenKhachHang.isEmpty() || soDienThoai.isEmpty() || diaChi.isEmpty() || maDonHang.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Không được để trống ô nhập liệu.");
-            return false;
-        }
+	    if (maKhachHang.isEmpty() || tenKhachHang.isEmpty() || soDienThoai.isEmpty() || diaChi.isEmpty() || maDonHang.isEmpty() || soLuong.isEmpty()) {
+	        JOptionPane.showMessageDialog(null, "Không được để trống ô nhập liệu.");
+	        return false;
+	    }
 
-        if (!maKhachHang.matches("^KH\\d{3}$")) {
-            JOptionPane.showMessageDialog(null, "Mã khách hàng phải có dạng KH###.");
-            txtMaKH.requestFocus();
-            return false;
-        }
+	    if (!maKhachHang.matches("^KH\\d{3}$")) {
+	        JOptionPane.showMessageDialog(null, "Mã khách hàng phải có dạng KH###.");
+	        txtMaKH.requestFocus();
+	        return false;
+	    }
 
-        if (!tenKhachHang.matches("([A-Z][a-z]*)(\\s[A-Z][a-z]*)*")) {
-            JOptionPane.showMessageDialog(null, "Tên khách hàng bắt đầu bằng kí tự hoa và ngăn cách bởi dấy phẩy.");
-            txtTenKH.requestFocus();
-            return false;
-        }
+	    if (!tenKhachHang.matches("([A-Z][a-z]*)(\\s[A-Z][a-z]*)*")) {
+	        JOptionPane.showMessageDialog(null, "Tên khách hàng bắt đầu bằng kí tự hoa và ngăn cách bởi dấu cách.");
+	        txtTenKH.requestFocus();
+	        return false;
+	    }
 
-        if (!soDienThoai.matches("^0\\d{9}$")) {
-            JOptionPane.showMessageDialog(null, "Số điện thoại phải bắt đầu bằng 0 và gồm 10 chữ số.");
-            txtSDT.requestFocus();
-            return false;
-        }
+	    if (!soDienThoai.matches("^0\\d{9}$")) {
+	        JOptionPane.showMessageDialog(null, "Số điện thoại phải bắt đầu bằng 0 và gồm 10 chữ số.");
+	        txtSDT.requestFocus();
+	        return false;
+	    }
 
-        if (!maDonHang.matches("^DH\\d{3}$")) {
-            JOptionPane.showMessageDialog(null, "Mã đơn hàng phải có dạng DH###.");
-            txtMaDH.requestFocus();
-            return false;
-        }
+	    if (!maDonHang.matches("^HD\\d{3}$")) {
+	        JOptionPane.showMessageDialog(null, "Mã HD phải có dạng HD###.");
+	        txtMaDH.requestFocus();
+	        return false;
+	    }
 
-        return true;
-    }
+	    // Kiểm tra số lượng phải là số nguyên dương
+	    if (!soLuong.matches("\\d+") || Integer.parseInt(soLuong) <= 0) {
+	        JOptionPane.showMessageDialog(null, "Số lượng phải là số nguyên dương lớn hơn 0.");
+	        txtSoLuong.requestFocus();
+	        return false;
+	    }
+
+	    return true;
+	}
+
 	
 	private void taoDH() {
-		if(validData()) {
-			lblMaDon.setText(txtMaDH.getText());
-			lblTenKH_HD.setText(txtTenKH.getText());
-			lblSDT_HD.setText(txtSDT.getText());
-			lblDiaChi_HD.setText(txtDiaChi.getText());
-			lblNgayTao_HD.setText(String.valueOf((Date)spinner.getValue()));
-			lblNhanVien_HD.setText(cboxNhanVien.getSelectedItem().toString());
-			lblSanPham_HD.setText(cboxSanPham.getSelectedItem().toString());
-			// lblTongTien.setText(...) // bạn tự tính dựa trên bảng chi tiết sản phẩm
-			JOptionPane.showMessageDialog(this, "Tạo hóa đơn thành công!!");
-			xoaRong();
-		}
+	    if (validData()) {
+
+
+	        // Lấy dữ liệu từ bảng
+	        String maDH = txtMaDH.getText();
+	        String tenNV = (String) cboxNhanVien.getSelectedItem();  
+	        String maSP = tableModel.getValueAt(0, 0).toString();
+	        String maKH = txtMaKH.getText();
+	        String donGiaStr = tableModel.getValueAt(0, 2).toString(); 
+	        String soLuongStr = txtSoLuong.getText(); 
+
+	        // Tính thành tiền
+	        int soLuong = Integer.parseInt(soLuongStr);
+	        double donGia = Double.parseDouble(donGiaStr);
+	        double thanhTien = soLuong * donGia;
+
+	        // Cập nhật các JLabel trong pnHD
+	        lblMaDon.setText(maDH);
+	        lblMaKH_HD.setText(maKH);
+	        lblTenNV_HD.setText(tenNV);
+	        lblMaSP_HD.setText(maSP);
+	        lblNgayTao_HD.setText(java.time.LocalDate.now().toString());
+	        lblDonGia_HD.setText(String.format("%.2f", donGia));
+	        lblSoLuong_HD.setText(String.valueOf(soLuong));
+	        lblThanhTien_HD.setText(String.format("%.2f", thanhTien));
+	    }
 	}
+
 	@Override
 	public void mouseClicked(MouseEvent e) {
 	    int selectedRow = table.getSelectedRow();
