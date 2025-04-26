@@ -308,6 +308,7 @@ public class PnlNhapHang extends JPanel implements ActionListener, MouseListener
 	        SanPham sp = getSanPhamFromFields();
 	        if (nhapHangDao.themSanPham(sp)) {
 	            JOptionPane.showMessageDialog(this, "Thêm thành công!");
+	            xoaTrangActions();
 	            hienTable();
 	        } else {
 	            JOptionPane.showMessageDialog(this, "Thêm thất bại!");
