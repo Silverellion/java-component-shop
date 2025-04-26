@@ -56,7 +56,7 @@ public class PnlThongKeDonHang extends JPanel implements ActionListener {
         cboThoiGian = new JComboBox<>(new String[]{"Tất cả", "Hôm nay", "Tuần này", "Tháng này", "Năm nay"});
         pnlFilter.add(cboThoiGian);
 
-        btnRefresh = new JButton("Làm mới");
+        btnRefresh = SwingHelper.createProjectJButton("Làm mới");
         btnRefresh.addActionListener(this);
         pnlFilter.add(btnRefresh);
 

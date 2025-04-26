@@ -19,7 +19,6 @@ import javax.swing.table.DefaultTableModel;
 
 import dao.NhapHang_Dao;
 import entity.NhaCungCap;
-import entity.QuanLyKho;
 import entity.SanPham;
 
 public class PnlNhapHang extends JPanel implements ActionListener, MouseListener{
@@ -45,7 +44,6 @@ public class PnlNhapHang extends JPanel implements ActionListener, MouseListener
 	private JButton btnTim;
 	private JTextField txtTim;
 	private JLabel lblTim;
-	private QuanLyKho dssp=new QuanLyKho();
 	private NhapHang_Dao nhapHangDao = new NhapHang_Dao();
 	private ArrayList<NhaCungCap> dsNCC;
 	private JComboBox<String> cboxNCC;

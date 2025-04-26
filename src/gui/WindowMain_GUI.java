@@ -4,7 +4,6 @@ import entity.TaiKhoan;
 import gui.DonHang.PnlTaoDonHang;
 import gui.DonHang.PnlThongKeDonHang;
 import gui.Kho.PnlNhapHang;
-import gui.Kho.PnlThongKeKho;
 import gui.NhanVien.PnlCapNhatNhanVien;
 import gui.NhanVien.PnlThemNhanVien;
 
@@ -23,7 +22,7 @@ public class WindowMain_GUI extends JFrame implements ActionListener {
     private static final long serialVersionUID = 1L;
 
     private JButton btnSelected = null;
-    private final JButton btnQuanLyKhoPanel;
+    private final JButton btnNhapHangPanel;
     private final JButton btnDonHangPnl;
     private final JButton btnQuanLyNhanVienPnl;
     private final JButton btnTrangChuPanel;
@@ -31,7 +30,6 @@ public class WindowMain_GUI extends JFrame implements ActionListener {
     private final JPanel pnlEast;
 
     PnlNhapHang pnlNhapHang;
-    PnlThongKeKho pnlThongKeKho;
     PnlTaoDonHang pnlTaoDonHang;
     PnlThongKeDonHang pnlThongKeDonHang;
     PnlThemNhanVien pnlThemNhanVien;
@@ -49,7 +47,6 @@ public class WindowMain_GUI extends JFrame implements ActionListener {
 
         pnlTrangChu = new PnlTrangChu(tkHienTai);
         pnlNhapHang = new PnlNhapHang();
-        pnlThongKeKho = new PnlThongKeKho();
         pnlTaoDonHang = new PnlTaoDonHang();
         pnlThongKeDonHang = new PnlThongKeDonHang();
         pnlThemNhanVien = new PnlThemNhanVien();
@@ -63,13 +60,13 @@ public class WindowMain_GUI extends JFrame implements ActionListener {
         pnlSidebar.setLayout(new BoxLayout(pnlSidebar, BoxLayout.Y_AXIS));
 
         btnTrangChuPanel = createSidebarButton("Trang chủ", "home.png");
-        btnQuanLyKhoPanel = createSidebarButton("Quản lý kho", "inventory.png");
+        btnNhapHangPanel = createSidebarButton("Nhập hàng", "inventory.png");
         btnDonHangPnl = createSidebarButton("Hóa đơn", "receipt.png");
         btnQuanLyNhanVienPnl = createSidebarButton("Quản lý nhân viên", "multiple-users.png");
         btnDangXuat = createSidebarButton("Đăng xuất", "logout.png");
 
         pnlSidebar.add(btnTrangChuPanel);
-        pnlSidebar.add(btnQuanLyKhoPanel);
+        pnlSidebar.add(btnNhapHangPanel);
         pnlSidebar.add(btnDonHangPnl);
         pnlSidebar.add(btnQuanLyNhanVienPnl);
         pnlSidebar.add(btnDangXuat);
@@ -83,10 +80,8 @@ public class WindowMain_GUI extends JFrame implements ActionListener {
         setVisible(true);
 
         btnTrangChuPanel.addActionListener(this);
+        btnNhapHangPanel.addActionListener(this);
         btnDangXuat.addActionListener(this);
-
-        registerDropdown(btnQuanLyKhoPanel, "Nhập hàng", pnlNhapHang, pnlEast);
-        registerDropdown(btnQuanLyKhoPanel, "Thống kê kho", pnlThongKeKho, pnlEast);
 
         registerDropdown(btnDonHangPnl, "Tạo hóa đơn", pnlTaoDonHang, pnlEast);
         registerDropdown(btnDonHangPnl, "Thống kê hóa đơn", pnlThongKeDonHang, pnlEast);
@@ -141,6 +136,8 @@ public class WindowMain_GUI extends JFrame implements ActionListener {
 
         if(src == btnTrangChuPanel)
             loadPnlEast(btnTrangChuPanel, pnlTrangChu);
+        if(src == btnNhapHangPanel)
+            loadPnlEast(btnNhapHangPanel, pnlNhapHang);
         if (src == btnDangXuat) {
             this.dispose();
             new WindowLogin_GUI();
@@ -160,7 +157,7 @@ public class WindowMain_GUI extends JFrame implements ActionListener {
 
     private void resetSidebarColors() {
         btnTrangChuPanel.setBackground(new Color(200, 60, 60));
-        btnQuanLyKhoPanel.setBackground(new Color(200, 60, 60));
+        btnNhapHangPanel.setBackground(new Color(200, 60, 60));
         btnDonHangPnl.setBackground(new Color(200, 60, 60));
         btnQuanLyNhanVienPnl.setBackground(new Color(200, 60, 60));
     }
