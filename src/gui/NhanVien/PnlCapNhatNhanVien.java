@@ -654,6 +654,7 @@ public class PnlCapNhatNhanVien extends JPanel implements ActionListener {
         txtDiaChi.setText("");
         txtTenDangNhap.setText("");
         txtMatKhau.setText("");
+        txtTim.setText("");
 
         txtMaNV.requestFocus();
     }
