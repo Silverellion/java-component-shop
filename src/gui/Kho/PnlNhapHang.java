@@ -10,10 +10,14 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.Serial;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
+import dao.NhapHang_Dao;
 import entity.NhaCungCap;
 import entity.QuanLyKho;
 import entity.SanPham;
@@ -42,6 +46,8 @@ public class PnlNhapHang extends JPanel implements ActionListener, MouseListener
 	private JTextField txtTim;
 	private JLabel lblTim;
 	private QuanLyKho dssp=new QuanLyKho();
+	private NhapHang_Dao nhapHangDao = new NhapHang_Dao();
+	private ArrayList<NhaCungCap> dsNCC;
 	private JComboBox<String> cboxNCC;
 	
 	public PnlNhapHang() {
@@ -146,17 +152,32 @@ public class PnlNhapHang extends JPanel implements ActionListener, MouseListener
 		btnTim.addActionListener(this);
 		
 		hienTable();
-		
+		loadComboBoxNCC();
 	}
 	
-	public void hienTable() {
-		for(int i=0;i<dssp.tong();i++) {
-			SanPham sp=dssp.getSanPham(i);
-			String[] dataRow= {sp.getMaSP(), sp.getTenSP(), sp.getLoaiSP(), sp.getGiaBan() + "",
-				sp.getSoLuongTon() + "", sp.getNcc().getTenNCC()};
-			tableModel.addRow(dataRow);
-		}
+	private void loadComboBoxNCC() {
+	    dsNCC = nhapHangDao.getAllNhaCungCap();
+	    cboxNCC.removeAllItems();
+	    for (NhaCungCap ncc : dsNCC) {
+	        cboxNCC.addItem(ncc.getTenNCC());
+	    }
 	}
+
+	
+	public void hienTable() {
+	    tableModel.setRowCount(0);
+	    for (SanPham sp : nhapHangDao.getAllSanPham()) {
+	        tableModel.addRow(new Object[]{
+	            sp.getMaSP(),
+	            sp.getTenSP(),
+	            sp.getLoaiSP(),
+	            sp.getGiaBan(),
+	            sp.getSoLuongTon(),
+	            sp.getNcc().getTenNCC()
+	        });
+	    }
+	}
+
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -176,126 +197,102 @@ public class PnlNhapHang extends JPanel implements ActionListener, MouseListener
 	}
 	
 	private void suaActions() {
-		int row = table.getSelectedRow();
-        if (row == -1) {
-            JOptionPane.showMessageDialog(null, "Vui lòng chọn sản phẩm cần sửa.");
-            return;
-        }
-
-        try {
-            String maSP = txtMaSP.getText();
-            String tenSP = txtTenSP.getText();
-            String loai = txtLoaiSP.getText();
-            int soluong = Integer.parseInt(txtSoLuong.getText());
-            double gia = Double.parseDouble(txtGiaSP.getText());
-
-            SanPham sp = new SanPham(maSP, tenSP, loai, gia, soluong, null);
-            
-            if (dssp.suaSanPham(sp)) {
-                tableModel.setValueAt(sp.getTenSP(), row, 1);
-                tableModel.setValueAt(sp.getLoaiSP(), row, 2);
-                tableModel.setValueAt(sp.getGiaBan() + "", row, 3);
-                tableModel.setValueAt(sp.getSoLuongTon() + "", row, 4);
-                tableModel.setValueAt(sp.getNcc().getTenNCC(), row, 5);
-                JOptionPane.showMessageDialog(null, "Sửa thông tin sản phẩm thành công.");
-            } else {
-                JOptionPane.showMessageDialog(null, "Không tìm thấy sản phẩm để sửa.");
-            }
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Lỗi nhập liệu.");
-        }
-		
+		 try {
+		        SanPham sp = getSanPhamFromFields();
+		        if (nhapHangDao.suaSanPham(sp)) {
+		            JOptionPane.showMessageDialog(this, "Cập nhật thành công!");
+		            hienTable();
+		        } else {
+		            JOptionPane.showMessageDialog(this, "Cập nhật thất bại!");
+		        }
+		    } catch (Exception e) {
+		        JOptionPane.showMessageDialog(this, "Lỗi khi cập nhật!");
+		        e.printStackTrace();
+		    }
 	}
 
 	private void xoaTrangActions() {
 		txtMaSP.setText("");
-		txtTenSP.setText("");
-		txtLoaiSP.setText("");
-		txtGiaSP.setText("");
-		txtSoLuong.setText("");
-		txtMaSP.requestFocus();
-		
+	    txtTenSP.setText("");
+	    txtLoaiSP.setText("");
+	    txtGiaSP.setText("");
+	    txtSoLuong.setText("");
+	    cboxNCC.setSelectedIndex(0);
+	    txtMaSP.requestFocus();
 	}
 
 	private void xoaActions() {
-		int row=table.getSelectedRow();
-		if(row!=-1) {
-			String maSP=(String)table.getModel().getValueAt(row, 0);
-			int hoiXacNhan=JOptionPane.showConfirmDialog(this, "Chắc chẵn xóa không?", "Chú ý", JOptionPane.YES_NO_OPTION);
-			if(hoiXacNhan==JOptionPane.YES_OPTION) {
-				if(dssp.xoaSanPham(maSP)) {
-					tableModel.removeRow(row);
-					xoaTrangActions();
-				}
-			}
-		}
-		
+		 String maSP = txtMaSP.getText().trim();
+		    if (nhapHangDao.xoaSanPham(maSP)) {
+		        JOptionPane.showMessageDialog(this, "Xóa thành công!");
+		        hienTable();
+		    } else {
+		        JOptionPane.showMessageDialog(this, "Xóa thất bại!");
+		    }
 	}
 
 	private void themActions() {
 		try {
-			SanPham sp=null;
-			String maSP=txtMaSP.getText();
-			String tenSP=txtTenSP.getText();
-			String loai=txtLoaiSP.getText();
-			int soLuong=Integer.parseInt(txtSoLuong.getText());
-			double giaBan=Double.parseDouble(txtGiaSP.getText());
-			String ncc=cboxNCC.getSelectedItem().toString();
-			sp=new SanPham(maSP, tenSP, loai, giaBan, soLuong, null);
-			if(dssp.themSanPham(sp)) {
-				String[] row= {sp.getMaSP(), sp.getTenSP(), sp.getLoaiSP(), sp.getGiaBan() + "",
-					sp.getSoLuongTon() + "", sp.getNcc().getTenNCC()};
-				tableModel.addRow(row);
-				xoaTrangActions();
-			}else {
-				JOptionPane.showMessageDialog(null, "Trùng mã sản phẩm!");
-				txtMaSP.selectAll();
-				txtMaSP.requestFocus();
-			}
-			
-		}catch(Exception ex1) {
-			JOptionPane.showMessageDialog(null, "Lỗi nhập liệu!");
-			return;
-		}
-		
+	        SanPham sp = getSanPhamFromFields();
+	        if (nhapHangDao.themSanPham(sp)) {
+	            JOptionPane.showMessageDialog(this, "Thêm thành công!");
+	            hienTable();
+	        } else {
+	            JOptionPane.showMessageDialog(this, "Thêm thất bại!");
+	        }
+	    } catch (Exception ex) {
+	        JOptionPane.showMessageDialog(this, "Lỗi dữ liệu!");
+	    }
 	}
 	
 	private void timActions() {
-		String maSP=txtTim.getText().trim();
-		if(maSP.isEmpty()) {
-			JOptionPane.showMessageDialog(this, "Vui lòng nhập mã sản phẩm cần tìm!");
-			return;
-		}
-		boolean found=false;
-		for(int i=0;i<dssp.tong();i++) {
-			SanPham sp=dssp.getSanPham(i);
-			if(String.valueOf(sp.getMaSP()).equals(maSP)) {
-				table.setRowSelectionInterval(i, i);
-				txtMaSP.setText(String.valueOf(sp.getMaSP()));
-				txtTenSP.setText(sp.getTenSP());
-				txtLoaiSP.setText(sp.getLoaiSP());
-				txtGiaSP.setText(String.valueOf(sp.getGiaBan()));
-				txtSoLuong.setText(String.valueOf(sp.getSoLuongTon()));
-				found=true;
-				break;
-			}
-		}
-		if(!found) {
-			JOptionPane.showMessageDialog(this, "Không tìm thấy nhân viên với mã: " + maSP);
-			
-		}
-		
+		 String maTim = txtTim.getText().trim();
+		    SanPham sp = nhapHangDao.timSanPhamTheoMa(maTim);
+		    tableModel.setRowCount(0);
+		    if (sp != null) {
+		        tableModel.addRow(new Object[]{
+		            sp.getMaSP(),
+		            sp.getTenSP(),
+		            sp.getLoaiSP(),
+		            sp.getGiaBan(),
+		            sp.getSoLuongTon(),
+		            sp.getNcc().getTenNCC()
+		        });
+		    } else {
+		        JOptionPane.showMessageDialog(this, "Không tìm thấy sản phẩm.");
+		    }
 	}
+	
+	private SanPham getSanPhamFromFields() {
+	    String maSP = txtMaSP.getText().trim();
+	    String tenSP = txtTenSP.getText().trim();
+	    String loaiSP = txtLoaiSP.getText().trim();
+	    double gia = Double.parseDouble(txtGiaSP.getText().trim());
+	    int soLuong = Integer.parseInt(txtSoLuong.getText().trim());
+	    int indexNCC = cboxNCC.getSelectedIndex();
+	    NhaCungCap ncc = dsNCC.get(indexNCC);
+	    return new SanPham(maSP, tenSP, loaiSP, gia, soLuong, ncc);
+	}
+
 	
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-		int row=table.getSelectedRow();
-		txtMaSP.setText(table.getValueAt(row, 0).toString());
-		txtTenSP.setText(table.getValueAt(row, 1).toString());
-		txtLoaiSP.setText(table.getValueAt(row, 2).toString());
-		txtGiaSP.setText(table.getValueAt(row, 3).toString());
-		txtSoLuong.setText(table.getValueAt(row, 4).toString());
+		int row = table.getSelectedRow();
+	    if (row != -1) {
+	        txtMaSP.setText(tableModel.getValueAt(row, 0).toString());
+	        txtTenSP.setText(tableModel.getValueAt(row, 1).toString());
+	        txtLoaiSP.setText(tableModel.getValueAt(row, 2).toString());
+	        txtGiaSP.setText(tableModel.getValueAt(row, 3).toString());
+	        txtSoLuong.setText(tableModel.getValueAt(row, 4).toString());
+
+	        String tenNCC = tableModel.getValueAt(row, 5).toString();
+	        for (int i = 0; i < cboxNCC.getItemCount(); i++) {
+	            if (cboxNCC.getItemAt(i).equalsIgnoreCase(tenNCC)) {
+	                cboxNCC.setSelectedIndex(i);
+	                break;
+	            }
+	        }
+	    }
 	}
 	@Override
 	public void mouseEntered(MouseEvent e) {
