@@ -281,6 +281,7 @@ public class PnlNhapHang extends JPanel implements ActionListener, MouseListener
 	    txtSoLuong.setText("");
 	    cboxNCC.setSelectedIndex(0);
 	    txtMaSP.requestFocus();
+	    hienTable();
 	}
 
 	private void xoaActions() {
