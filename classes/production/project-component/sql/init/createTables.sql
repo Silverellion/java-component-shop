@@ -62,7 +62,7 @@ BEGIN
     CREATE TABLE HoaDon (
         maHD NVARCHAR(20) PRIMARY KEY,
         ngayLapHD DATE,
-        tongTien FLOAT,
+        thanhTien FLOAT,
         maKH NVARCHAR(20),
         maNhanVien NVARCHAR(8),
         FOREIGN KEY (maKH) REFERENCES KhachHang(maKH),
@@ -76,7 +76,7 @@ BEGIN
         maHD NVARCHAR(20),
         maSP NVARCHAR(20),
         soLuong INT,
-        thanhTien FLOAT,
+        donGia FLOAT,
         PRIMARY KEY (maHD, maSP),
         FOREIGN KEY (maHD) REFERENCES HoaDon(maHD),
         FOREIGN KEY (maSP) REFERENCES SanPham(maSP)
