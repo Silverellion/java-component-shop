@@ -196,7 +196,69 @@ public class PnlNhapHang extends JPanel implements ActionListener, MouseListener
 		}
 	}
 	
+	private boolean validateData() {
+	    String maSP = txtMaSP.getText().trim();
+	    String tenSP = txtTenSP.getText().trim();
+	    String loaiSP = txtLoaiSP.getText().trim();
+	    String giaStr = txtGiaSP.getText().trim();
+	    String soLuongStr = txtSoLuong.getText().trim();
+	    
+	    // Regex cho maSP: SP + 3 chữ số
+	    if (!maSP.matches("^SP\\d{3}$")) {
+	        JOptionPane.showMessageDialog(this, "Mã sản phẩm phải có dạng SP + 3 chữ số (ví dụ: SP001).");
+	        txtMaSP.requestFocus();
+	        return false;
+	    }
+	    
+	    // Tên sản phẩm không được để trống, cho phép chữ cái, số và khoảng trắng
+	    if (!tenSP.matches("^[\\p{L}0-9\\s]+$")) {
+	        JOptionPane.showMessageDialog(this, "Tên sản phẩm không được để trống và chỉ chứa chữ, số, khoảng trắng.");
+	        txtTenSP.requestFocus();
+	        return false;
+	    }
+	    
+	    // Loại sản phẩm không được để trống
+	    if (loaiSP.isEmpty()) {
+	        JOptionPane.showMessageDialog(this, "Loại sản phẩm không được để trống.");
+	        txtLoaiSP.requestFocus();
+	        return false;
+	    }
+	    
+	    // Giá bán phải là số > 0
+	    try {
+	        double gia = Double.parseDouble(giaStr);
+	        if (gia <= 0) {
+	            JOptionPane.showMessageDialog(this, "Giá bán phải lớn hơn 0.");
+	            txtGiaSP.requestFocus();
+	            return false;
+	        }
+	    } catch (NumberFormatException e) {
+	        JOptionPane.showMessageDialog(this, "Giá bán phải là số hợp lệ.");
+	        txtGiaSP.requestFocus();
+	        return false;
+	    }
+	    
+	    // Số lượng tồn phải là số nguyên >= 0
+	    try {
+	        int soLuong = Integer.parseInt(soLuongStr);
+	        if (soLuong < 0) {
+	            JOptionPane.showMessageDialog(this, "Số lượng tồn phải lớn hơn hoặc bằng 0.");
+	            txtSoLuong.requestFocus();
+	            return false;
+	        }
+	    } catch (NumberFormatException e) {
+	        JOptionPane.showMessageDialog(this, "Số lượng tồn phải là số nguyên hợp lệ.");
+	        txtSoLuong.requestFocus();
+	        return false;
+	    }
+	    
+	    return true; // Nếu tất cả hợp lệ
+	}
+
+	
 	private void suaActions() {
+		if (!validateData()) 
+			return; // Thoát nếu dữ liệu sai
 		 try {
 		        SanPham sp = getSanPhamFromFields();
 		        if (nhapHangDao.suaSanPham(sp)) {
@@ -222,16 +284,25 @@ public class PnlNhapHang extends JPanel implements ActionListener, MouseListener
 	}
 
 	private void xoaActions() {
-		 String maSP = txtMaSP.getText().trim();
-		    if (nhapHangDao.xoaSanPham(maSP)) {
-		        JOptionPane.showMessageDialog(this, "Xóa thành công!");
-		        hienTable();
-		    } else {
-		        JOptionPane.showMessageDialog(this, "Xóa thất bại!");
-		    }
+		int row=table.getSelectedRow();
+		if(row!=-1) {
+			String maSP = (String)table.getModel().getValueAt(row, 0);
+			int hoiXacNhan=JOptionPane.showConfirmDialog(this, "Chắc chẵn xóa không?", "Chú ý", JOptionPane.YES_NO_OPTION);
+			if(hoiXacNhan==JOptionPane.YES_OPTION) {
+				if (nhapHangDao.xoaSanPham(maSP)) {
+					JOptionPane.showMessageDialog(this, "Xóa thành công!");
+				    hienTable();
+				} else {
+				    JOptionPane.showMessageDialog(this, "Xóa thất bại!");
+				}
+			}
+		}
+		 
 	}
 
 	private void themActions() {
+		if (!validateData()) 
+			return; // Thoát nếu dữ liệu sai
 		try {
 	        SanPham sp = getSanPhamFromFields();
 	        if (nhapHangDao.themSanPham(sp)) {
