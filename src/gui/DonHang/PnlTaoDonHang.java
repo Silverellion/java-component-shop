@@ -4,25 +4,17 @@ import utils.SwingHelper;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.text.MaskFormatter;
 
 import dao.TaoDonHang_Dao;
 import entity.SanPham;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.GridLayout;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.io.Serial;
+import java.io.*;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class PnlTaoDonHang extends JPanel implements ActionListener, MouseListener{
@@ -56,7 +48,7 @@ public class PnlTaoDonHang extends JPanel implements ActionListener, MouseListen
 	private JLabel lblSoLuong_HD;
 	private JLabel lblThanhTien_HD;
 	private JLabel lblTenNV_HD;
-	private JButton btnLuuHD;
+	private JButton btnXuatHD;
 	private JLabel lblMaKH_HD;
 	private JTextField txtEmail;
 	
@@ -296,14 +288,9 @@ public class PnlTaoDonHang extends JPanel implements ActionListener, MouseListen
 
         // Nút lưu hóa đơn
         pnHD.add(Box.createVerticalStrut(20));
-        btnLuuHD = SwingHelper.createProjectJButton("Lưu hóa đơn");
-        btnLuuHD.setAlignmentX(Component.CENTER_ALIGNMENT);
-        btnLuuHD.setBackground(new Color(220, 20, 60)); // nền nút đỏ đẹp
-        btnLuuHD.setForeground(Color.WHITE);            // chữ trắng
-        pnHD.add(btnLuuHD);
-
-
-
+        btnXuatHD = SwingHelper.createProjectJButton("Xuất hóa đơn");
+        btnXuatHD.setAlignmentX(Component.CENTER_ALIGNMENT);
+        pnHD.add(btnXuatHD);
 
      // ==== Phần south: các nút điều khiển và thanh tìm kiếm ====
         JPanel pnSouth = new JPanel();
@@ -346,7 +333,7 @@ public class PnlTaoDonHang extends JPanel implements ActionListener, MouseListen
         table.addMouseListener(this);
         btnLamMoi.addActionListener(this);
         cboxSanPham.addActionListener(this);  
-        btnLuuHD.addActionListener(this);
+        btnXuatHD.addActionListener(this);
 
 
         // Nút Thoát: đóng cửa sổ nếu panel nằm trong JFrame
@@ -359,8 +346,6 @@ public class PnlTaoDonHang extends JPanel implements ActionListener, MouseListen
         loadNhanVienToComboBox();
         loadSanPhamToComboBox();
     }
-    
-   
 
     private void loadSanPhamToTable() {
         tableModel.setRowCount(0); // Xóa dữ liệu cũ
@@ -416,9 +401,6 @@ public class PnlTaoDonHang extends JPanel implements ActionListener, MouseListen
             JOptionPane.showMessageDialog(this, "Lỗi khi tải dữ liệu sản phẩm!", "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
     }
-
-
-	
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -437,82 +419,164 @@ public class PnlTaoDonHang extends JPanel implements ActionListener, MouseListen
 		if (o == cboxSanPham) {    
 		     loadSanPhamByTen();
 		 }
-		if(o == btnLuuHD) {
-			luuHoaDon();
+		if(o == btnXuatHD) {
+            xuatHoaDon();
 		}
 	}
 
+    private void xuatHoaDon() {
+        try {
+            String maHD = lblMaDon.getText();
+            String maSP = lblMaSP_HD.getText();
+            String tenNV = lblTenNV_HD.getText();
+            String ngayLapStr = lblNgayTao_HD.getText();
+            double donGia = Double.parseDouble(lblDonGia_HD.getText());
+            int soLuong = Integer.parseInt(lblSoLuong_HD.getText());
+            double thanhTien = Double.parseDouble(lblThanhTien_HD.getText());
+            String maKH = lblMaKH_HD.getText();
 
+            String maNhanVien = taoDonHangDao.getMaNhanVienByTen(tenNV);
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            java.util.Date utilDate = sdf.parse(ngayLapStr);
+            java.sql.Date ngayLapHD = new java.sql.Date(utilDate.getTime());
 
+            boolean insertedKh = false;
+            try {
+                insertedKh = taoDonHangDao.insertKhachHang(maKH, txtTenKH.getText(), txtDiaChi.getText(), txtSDT.getText(), txtEmail.getText());
+                if (!insertedKh) {
+                    JOptionPane.showMessageDialog(null, "Không thể thêm khách hàng - Mã khách hàng có thể đã tồn tại!");
+                    return;
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Lỗi khi thêm khách hàng: " + e.getMessage());
+                return;
+            }
 
-	private void luuHoaDon() {
-	    try {
-	        // Lấy dữ liệu từ các JLabel
-	        String maHD = lblMaDon.getText();
-	        String maSP = lblMaSP_HD.getText();
-	        String tenNV = lblTenNV_HD.getText();
-	        String ngayLapStr = lblNgayTao_HD.getText();
-	        double donGia = Double.parseDouble(lblDonGia_HD.getText());
-	        int soLuong = Integer.parseInt(lblSoLuong_HD.getText());
-	        double thanhTien = Double.parseDouble(lblThanhTien_HD.getText());
-	        String maKH = lblMaKH_HD.getText();
-	        // gọi dao tìm mã nhân viên theo tên
-	        String maNhanVien = taoDonHangDao.getMaNhanVienByTen(tenNV);
-	        // Chuyển đổi ngày (giả sử định dạngy yyy-MM-dd)
-	        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-	        java.util.Date utilDate = sdf.parse(ngayLapStr);
-	        java.sql.Date ngayLapHD = new java.sql.Date(utilDate.getTime());
+            boolean insertedHD = false;
+            try {
+                insertedHD = taoDonHangDao.insertHoaDon(maHD, ngayLapHD, thanhTien, maKH, maNhanVien);
+                if (!insertedHD) {
+                    JOptionPane.showMessageDialog(null, "Không thể thêm hóa đơn - Mã hóa đơn có thể đã tồn tại!");
+                    return;
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Lỗi khi thêm hóa đơn: " + e.getMessage());
+                return;
+            }
 
-	        // Thử chèn thông tin khách hàng
-	        boolean insertedKh = false;
-	        try {
-	            insertedKh = taoDonHangDao.insertKhachHang(maKH, txtTenKH.getText(), txtDiaChi.getText(), txtSDT.getText(), txtEmail.getText());
-	            if (!insertedKh) {
-	                JOptionPane.showMessageDialog(null, "Không thể thêm khách hàng - Mã khách hàng có thể đã tồn tại!");
-	                return; // Dừng chương trình nếu không thêm được khách hàng
-	            }
-	        } catch (Exception e) {
-	            JOptionPane.showMessageDialog(null, "Lỗi khi thêm khách hàng: " + e.getMessage());
-	            return; // Dừng chương trình khi gặp lỗi
-	        }
+            boolean insertedCT = false;
+            try {
+                insertedCT = taoDonHangDao.insertChiTietHoaDon(maHD, maSP, soLuong, donGia);
+                if (!insertedCT) {
+                    JOptionPane.showMessageDialog(null, "Không thể thêm chi tiết hóa đơn!");
+                    return;
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Lỗi khi thêm chi tiết hóa đơn: " + e.getMessage());
+                return;
+            }
 
-	        // Thử chèn hóa đơn
-	        boolean insertedHD = false;
-	        try {
-	            insertedHD = taoDonHangDao.insertHoaDon(maHD, ngayLapHD, thanhTien, maKH, maNhanVien);
-	            if (!insertedHD) {
-	                JOptionPane.showMessageDialog(null, "Không thể thêm hóa đơn - Mã hóa đơn có thể đã tồn tại!");
-	                return; // Dừng chương trình nếu không thêm được hóa đơn
-	            }
-	        } catch (Exception e) {
-	            JOptionPane.showMessageDialog(null, "Lỗi khi thêm hóa đơn: " + e.getMessage());
-	            return; // Dừng chương trình khi gặp lỗi
-	        }
+            // Sau khi lưu thành công vào database, xuất file txt
+            File cacheDir = new File("C:\\componentShopCache");
+            if (!cacheDir.exists()) {
+                cacheDir.mkdirs();
+            }
 
-	        // Thử chèn chi tiết hóa đơn
-	        boolean insertedCT = false;
-	        try {
-	            insertedCT = taoDonHangDao.insertChiTietHoaDon(maHD, maSP, soLuong, donGia);
-	            if (!insertedCT) {
-	                JOptionPane.showMessageDialog(null, "Không thể thêm chi tiết hóa đơn!");
-	                return; // Dừng chương trình nếu không thêm được chi tiết hóa đơn
-	            }
-	        } catch (Exception e) {
-	            JOptionPane.showMessageDialog(null, "Lỗi khi thêm chi tiết hóa đơn: " + e.getMessage());
-	            return; // Dừng chương trình khi gặp lỗi
-	        }
+            // Tạo tên file với timestamp
+            java.time.LocalDateTime now = java.time.LocalDateTime.now();
+            String fileName = "HoaDon_" + maHD + "_" + now.getYear() + now.getMonthValue() +
+                    now.getDayOfMonth() + "_" + now.getHour() + now.getMinute() + ".txt";
+            File txtFile = new File(cacheDir, fileName);
 
-	        // Nếu tất cả đều thành công
-	        JOptionPane.showMessageDialog(null, "Lưu hóa đơn thành công!");
-	        xoaTrangHoaDon();
-			xoaRong();
-	    } catch (Exception ex) {
-	        ex.printStackTrace();
-	        JOptionPane.showMessageDialog(null, "Lỗi lưu hóa đơn: " + ex.getMessage());
-	    }
-	}
+            try (OutputStreamWriter writer = new OutputStreamWriter(
+                    new FileOutputStream(txtFile), java.nio.charset.StandardCharsets.UTF_8);
+                 BufferedWriter bufferedWriter = new BufferedWriter(writer)) {
 
+                // Add UTF-8 BOM
+                bufferedWriter.write('\ufeff');
 
+                bufferedWriter.write("===========================================");
+                bufferedWriter.newLine();
+                bufferedWriter.write("             HÓA ĐƠN BÁN HÀNG             ");
+                bufferedWriter.newLine();
+                bufferedWriter.write("===========================================");
+                bufferedWriter.newLine();
+                bufferedWriter.newLine();
+
+                bufferedWriter.write("Mã hóa đơn: " + maHD);
+                bufferedWriter.newLine();
+                bufferedWriter.write("Ngày lập: " + ngayLapStr);
+                bufferedWriter.newLine();
+                bufferedWriter.write("Nhân viên: " + tenNV);
+                bufferedWriter.newLine();
+                bufferedWriter.newLine();
+
+                bufferedWriter.write("THÔNG TIN KHÁCH HÀNG:");
+                bufferedWriter.newLine();
+                bufferedWriter.write("Mã khách hàng: " + maKH);
+                bufferedWriter.newLine();
+                bufferedWriter.write("Tên khách hàng: " + txtTenKH.getText());
+                bufferedWriter.newLine();
+                bufferedWriter.write("Số điện thoại: " + txtSDT.getText());
+                bufferedWriter.newLine();
+                bufferedWriter.write("Địa chỉ: " + txtDiaChi.getText());
+                bufferedWriter.newLine();
+                bufferedWriter.write("Email: " + txtEmail.getText());
+                bufferedWriter.newLine();
+                bufferedWriter.newLine();
+
+                bufferedWriter.write("CHI TIẾT SẢN PHẨM:");
+                bufferedWriter.newLine();
+                bufferedWriter.write(String.format("%-15s %-30s %-15s %-10s %-15s",
+                        "Mã SP", "Tên SP", "Đơn giá", "Số lượng", "Thành tiền"));
+                bufferedWriter.newLine();
+
+                // Lấy tên sản phẩm từ bảng
+                String tenSP = "";
+                for (int i = 0; i < tableModel.getRowCount(); i++) {
+                    if (tableModel.getValueAt(i, 0).equals(maSP)) {
+                        tenSP = tableModel.getValueAt(i, 1).toString();
+                        break;
+                    }
+                }
+
+                bufferedWriter.write(String.format("%-15s %-30s %-15.2f %-10d %-15.2f",
+                        maSP, tenSP, donGia, soLuong, thanhTien));
+                bufferedWriter.newLine();
+                bufferedWriter.newLine();
+                bufferedWriter.write("===========================================");
+                bufferedWriter.newLine();
+                bufferedWriter.write(String.format("TỔNG TIỀN: %.2f VNĐ", thanhTien));
+                bufferedWriter.newLine();
+                bufferedWriter.write("===========================================");
+                bufferedWriter.newLine();
+                bufferedWriter.write("        Cảm ơn quý khách đã mua hàng!     ");
+                bufferedWriter.newLine();
+
+                int option = JOptionPane.showConfirmDialog(
+                        this,
+                        "Xuất hóa đơn thành công tại:\n" + txtFile.getAbsolutePath() + "\nBạn có muốn mở file?",
+                        "Xuất hóa đơn thành công",
+                        JOptionPane.YES_NO_OPTION
+                );
+
+                if (option == JOptionPane.YES_OPTION) {
+                    openFile(txtFile);
+                }
+
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Lỗi xuất hóa đơn: " + e.getMessage());
+                e.printStackTrace();
+            }
+
+            JOptionPane.showMessageDialog(null, "Lưu và xuất hóa đơn thành công!");
+            xoaTrangHoaDon();
+            xoaRong();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Lỗi xuất hóa đơn: " + ex.getMessage());
+        }
+    }
 
 	private void xoaTrangHoaDon() {
 		lblMaDon.setText("");
@@ -524,8 +588,6 @@ public class PnlTaoDonHang extends JPanel implements ActionListener, MouseListen
 		lblSoLuong_HD.setText("");
 		lblThanhTien_HD.setText("");
 	}
-
-
 
 	private void loadSanPhamByTen() {
 	    String tenSP = (String) cboxSanPham.getSelectedItem();
@@ -555,11 +617,6 @@ public class PnlTaoDonHang extends JPanel implements ActionListener, MouseListen
 	        JOptionPane.showMessageDialog(this, "Lỗi khi tải sản phẩm!", "Lỗi", JOptionPane.ERROR_MESSAGE);
 	    }
 	}
-
-
-
-
-
 
 	private void timkiem() {
 	    String keyword = txtTimKiem.getText().trim();
@@ -686,6 +743,21 @@ public class PnlTaoDonHang extends JPanel implements ActionListener, MouseListen
 	        lblThanhTien_HD.setText(String.format("%.2f", thanhTien));
 	    }
 	}
+
+    private void openFile(File file) {
+        try {
+            if (Desktop.isDesktopSupported()) {
+                Desktop.getDesktop().open(file);
+            } else {
+                JOptionPane.showMessageDialog(this,
+                        "Không thể tự động mở file. File được lưu tại:\n" + file.getAbsolutePath());
+            }
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this,
+                    "Lỗi khi mở file: " + e.getMessage(),
+                    "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
