@@ -96,11 +96,37 @@ public class TaoDonHang_Dao {
     }
 
 
-    public SanPham timSanPhamByMa(String maSPCanTim) {
+//    public SanPham timSanPhamByMa(String maSPCanTim) {
+//        SanPham sanPham = null;
+//        String sql = "SELECT * FROM SanPham WHERE maSP = ?";
+//
+//        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+//            stmt.setString(1, maSPCanTim);
+//            try (ResultSet rs = stmt.executeQuery()) {
+//                if (rs.next()) {
+//                    String maSP = rs.getString("maSP");
+//                    String tenSP = rs.getString("tenSP");
+//                    String loaiSP = rs.getString("loaiSP");
+//                    double giaBan = rs.getDouble("giaBan");
+//                    int soLuongTon = rs.getInt("soLuongTon");
+//                    String maNCC = rs.getString("maNCC");
+//
+//                    NhaCungCap ncc = getNhaCungCap(maNCC);
+//                    sanPham = new SanPham(maSP, tenSP, loaiSP, giaBan, soLuongTon, ncc);
+//                }
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//
+//        return sanPham;
+//    }
+    //
+    public SanPham getSanPhamByMa(String maSPCanTim) {
         SanPham sanPham = null;
-        String sql = "SELECT * FROM SanPham WHERE maSP = ?";
+        String sql = "{call sp_TimSanPhamByMa(?)}";
 
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+        try (CallableStatement stmt = connection.prepareCall(sql)) {
             stmt.setString(1, maSPCanTim);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
@@ -111,7 +137,7 @@ public class TaoDonHang_Dao {
                     int soLuongTon = rs.getInt("soLuongTon");
                     String maNCC = rs.getString("maNCC");
 
-                    NhaCungCap ncc = getNhaCungCap(maNCC);
+                    NhaCungCap ncc = getNhaCungCap(maNCC); // Hàm lấy nhà cung cấp
                     sanPham = new SanPham(maSP, tenSP, loaiSP, giaBan, soLuongTon, ncc);
                 }
             }
@@ -185,5 +211,6 @@ public class TaoDonHang_Dao {
         }
         return null; // Không tìm thấy
     }
+    
 
 }
