@@ -56,6 +56,7 @@ public class HoaDon {
 	public void setChitiethoadon(ChiTietHoaDon chitiethoadon) {
 		this.chitiethoadon = chitiethoadon;
 	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(chitiethoadon, hoaDon, khachHang, ngayLapHD, nhanVien, tongTien);
@@ -74,6 +75,5 @@ public class HoaDon {
 				&& Objects.equals(nhanVien, other.nhanVien)
 				&& Double.doubleToLongBits(tongTien) == Double.doubleToLongBits(other.tongTien);
 	}
-	
 	
 }

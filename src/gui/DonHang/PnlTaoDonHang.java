@@ -68,8 +68,11 @@ public class PnlTaoDonHang extends JPanel implements ActionListener, MouseListen
         JPanel pnNorth = new JPanel();
         pnNorth.setLayout(new BoxLayout(pnNorth, BoxLayout.Y_AXIS));
         JLabel lblTitle = SwingHelper.createProjectJLabel("Tạo Hóa Đơn", 30);
+        lblTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
+        JPanel titlePanel = new JPanel();
+        titlePanel.add(lblTitle);
        
-     // Phần thông tin khách hàng
+        // Phần thông tin khách hàng
         JPanel pnKH = new JPanel();
         pnKH.setLayout(new BoxLayout(pnKH, BoxLayout.Y_AXIS));
         pnKH.setBorder(BorderFactory.createTitledBorder("Thông tin khách hàng"));
