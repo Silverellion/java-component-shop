@@ -1,7 +1,7 @@
 package gui.DonHang;
 
 import utils.SwingHelper;
-import dao.ThongKeDao;
+import dao.ThongKe_Dao;
 import entity.ThongKeSanPham;
 import entity.ThongKeNhanVien;
 
@@ -24,7 +24,7 @@ public class PnlThongKeDonHang extends JPanel implements ActionListener {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    private ThongKeDao thongKeDao;
+    private ThongKe_Dao thongKeDao;
     private JPanel pnlChartContainer;
     private JComboBox<String> cboThoiGian;
     private JPanel pnlProducts;
@@ -32,22 +32,16 @@ public class PnlThongKeDonHang extends JPanel implements ActionListener {
     private JButton btnRefresh;
 
     public PnlThongKeDonHang() {
-
-        thongKeDao = new ThongKeDao();
-
-
+        thongKeDao = new ThongKe_Dao();
         setLayout(new BorderLayout());
-
 
         JPanel pnlNorth = new JPanel();
         pnlNorth.setLayout(new BoxLayout(pnlNorth, BoxLayout.Y_AXIS));
 
-        // Title
         JLabel lblTitle = SwingHelper.createProjectJLabel("Thống Kê Doanh Thu", 30);
         lblTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
         pnlNorth.add(lblTitle);
         pnlNorth.add(Box.createVerticalStrut(15));
-
 
         JPanel pnlFilter = new JPanel();
         pnlFilter.setBorder(BorderFactory.createTitledBorder("Tùy chọn thống kê"));
@@ -89,18 +83,13 @@ public class PnlThongKeDonHang extends JPanel implements ActionListener {
     }
 
     private void loadProductRevenueChart() {
-
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-
         try {
-
             List<ThongKeSanPham> productRevenueList = thongKeDao.getProductRevenue(getSelectedTimeFilter());
-
             // Add data to dataset
             for (ThongKeSanPham item : productRevenueList) {
                 dataset.addValue(item.getDoanhThu(), "Doanh Thu", item.getTenSanPham());
             }
-
 
             JFreeChart chart = ChartFactory.createBarChart(
                     "Top 10 Sản Phẩm Theo Doanh Thu",
@@ -113,11 +102,9 @@ public class PnlThongKeDonHang extends JPanel implements ActionListener {
                     false
             );
 
-
             CategoryPlot plot = chart.getCategoryPlot();
             BarRenderer renderer = (BarRenderer) plot.getRenderer();
             renderer.setSeriesPaint(0, new Color(79, 129, 189));
-
 
             ChartPanel chartPanel = new ChartPanel(chart);
             chartPanel.setPreferredSize(new Dimension(400, 300));
@@ -129,24 +116,18 @@ public class PnlThongKeDonHang extends JPanel implements ActionListener {
             pnlProducts.repaint();
 
         } catch (Exception e) {
-            e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Lỗi khi tải dữ liệu thống kê sản phẩm", "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
     }
 
     private void loadEmployeeRevenueChart() {
-
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-
         try {
-
             List<ThongKeNhanVien> employeeRevenueList = thongKeDao.getEmployeeRevenue(getSelectedTimeFilter());
-
             // Add data to dataset
             for (ThongKeNhanVien item : employeeRevenueList) {
                 dataset.addValue(item.getDoanhThu(), "Doanh Thu", item.getTenNhanVien());
             }
-
 
             JFreeChart chart = ChartFactory.createBarChart(
                     "Doanh Thu Theo Nhân Viên",
@@ -158,17 +139,13 @@ public class PnlThongKeDonHang extends JPanel implements ActionListener {
                     true,
                     false
             );
-
-
             CategoryPlot plot = chart.getCategoryPlot();
             BarRenderer renderer = (BarRenderer) plot.getRenderer();
             renderer.setSeriesPaint(0, new Color(192, 80, 77));
 
-
             ChartPanel chartPanel = new ChartPanel(chart);
             chartPanel.setPreferredSize(new Dimension(400, 300));
 
-  
             pnlEmployees.removeAll();
             pnlEmployees.add(chartPanel, BorderLayout.CENTER);
             pnlEmployees.revalidate();

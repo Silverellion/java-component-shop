@@ -7,20 +7,13 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ThongKeDao {
+public class ThongKe_Dao {
     private Connection conn;
 
-    public ThongKeDao() {
-        // Assuming you have a ConnectDB class like in your TaoDonHang_Dao
+    public ThongKe_Dao() {
         conn = ConnectDB.getConn();
     }
 
-    /**
-     * Get product revenue statistics based on time filter
-     * @param timeFilter "today", "week", "month", "year", or "all"
-     * @return List of product revenue data
-     * @throws SQLException
-     */
     public List<ThongKeSanPham> getProductRevenue(String timeFilter) throws SQLException {
         List<ThongKeSanPham> list = new ArrayList<>();
 
@@ -52,12 +45,6 @@ public class ThongKeDao {
         return list;
     }
 
-    /**
-     * Get employee revenue statistics based on time filter
-     * @param timeFilter "today", "week", "month", "year", or "all"
-     * @return List of employee revenue data
-     * @throws SQLException
-     */
     public List<ThongKeNhanVien> getEmployeeRevenue(String timeFilter) throws SQLException {
         List<ThongKeNhanVien> list = new ArrayList<>();
 
@@ -86,12 +73,6 @@ public class ThongKeDao {
         return list;
     }
 
-    /**
-     * Get total revenue based on time filter
-     * @param timeFilter "today", "week", "month", "year", or "all"
-     * @return Total revenue
-     * @throws SQLException
-     */
     public double getTotalRevenue(String timeFilter) throws SQLException {
         double totalRevenue = 0;
 
@@ -111,11 +92,6 @@ public class ThongKeDao {
         return totalRevenue;
     }
 
-    /**
-     * Generate SQL time condition based on filter
-     * @param timeFilter "today", "week", "month", "year", or "all"
-     * @return SQL WHERE condition for time filter
-     */
     private String getTimeCondition(String timeFilter) {
         switch (timeFilter) {
             case "today":
