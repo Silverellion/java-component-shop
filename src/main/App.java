@@ -17,6 +17,7 @@ public class App {
 	public static void main(String[] args) throws ParseException  {
 		try {
 			ConnectDB.initialize(url, user, password);
+			ConnectDB.generateTempData(); //Comment this code to not generate NhaCungCap and SanPham tables in SQL.
 			//new WindowLogin_GUI(); //COMMENT THIS CODE THEN UNCOMMENT THE CODEBLOCK BELOW IF YOU DIDN'T CREATE AN ACCOUNT
 			new WindowMain_GUI(new TaiKhoan("testAccount", "12345678",
 					new NhanVien(
