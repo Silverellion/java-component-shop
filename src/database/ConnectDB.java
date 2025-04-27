@@ -12,17 +12,17 @@ public class ConnectDB {
         executeSQLFile(conn, "createDatabase.sql");
         executeSQLFile(conn, "useDatabase.sql");
         executeSQLFile(conn, "createTables.sql");
+        executeSQLFile(conn, "createProcedures.sql");
     }
 
     public static Connection getConn() {
         return conn;
     }
 
-    public static void closeConnection() throws SQLException {
-        if (conn != null && !conn.isClosed()) {
-            conn.close();
-            conn = null;
-        }
+    public static void generateTempData() throws SQLException, IOException {
+        if(conn == null)
+            return;
+        executeSQLFile(conn, "insertData.sql");
     }
 
     private static void executeSQLFile(Connection conn, String filename) throws IOException, SQLException {
