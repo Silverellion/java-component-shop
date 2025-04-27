@@ -40,10 +40,7 @@ public class PnlTaoDonHang extends JPanel implements ActionListener, MouseListen
 	private JLabel lblMaDon;
 	private JLabel lblTenKH_HD;
 	private JLabel lblNgayTao_HD;
-	private JLabel lblNhanVien_HD;
 	private JLabel lblSanPham_HD;
-	private JLabel lblTongTien;
-	private JLabel lblSDT_HD;
 	
 	private TaoDonHang_Dao taoDonHangDao;
 	private JButton btnTaoDon;
@@ -446,38 +443,83 @@ public class PnlTaoDonHang extends JPanel implements ActionListener, MouseListen
 
 
 	private void luuHoaDon() {
-		 try {
-	            // Lấy dữ liệu từ các JLabel
-	            String maHD = lblMaDon.getText();
-	            String maSP = lblMaSP_HD.getText();
-	            String tenNV = lblTenNV_HD.getText(); 
-	            String ngayLapStr = lblNgayTao_HD.getText();
-	            double donGia = Double.parseDouble(lblDonGia_HD.getText());
-	            int soLuong = Integer.parseInt(lblSoLuong_HD.getText());
-	            double thanhTien = Double.parseDouble(lblThanhTien_HD.getText());
-	            String maKH = lblMaKH_HD.getText();
-	            // gọi dao tìm mã nhân viên theo tên
-	            String maNhanVien = taoDonHangDao.getMaNhanVienByTen(tenNV);
-	            // Chuyển đổi ngày (giả sử định dạngy yyy-MM-dd)
-	            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-	            java.util.Date utilDate = sdf.parse(ngayLapStr);
-	            java.sql.Date ngayLapHD = new java.sql.Date(utilDate.getTime());
+	    try {
+	        // Lấy dữ liệu từ các JLabel
+	        String maHD = lblMaDon.getText();
+	        String maSP = lblMaSP_HD.getText();
+	        String tenNV = lblTenNV_HD.getText();
+	        String ngayLapStr = lblNgayTao_HD.getText();
+	        double donGia = Double.parseDouble(lblDonGia_HD.getText());
+	        int soLuong = Integer.parseInt(lblSoLuong_HD.getText());
+	        double thanhTien = Double.parseDouble(lblThanhTien_HD.getText());
+	        String maKH = lblMaKH_HD.getText();
+	        // gọi dao tìm mã nhân viên theo tên
+	        String maNhanVien = taoDonHangDao.getMaNhanVienByTen(tenNV);
+	        // Chuyển đổi ngày (giả sử định dạngy yyy-MM-dd)
+	        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	        java.util.Date utilDate = sdf.parse(ngayLapStr);
+	        java.sql.Date ngayLapHD = new java.sql.Date(utilDate.getTime());
 
-	            boolean insertedKh = taoDonHangDao.insertKhachHang(maKH, txtTenKH.getText(), txtDiaChi.getText(),txtSDT.getText(), txtEmail.getText());
-	            boolean insertedHD = taoDonHangDao.insertHoaDon(maHD, ngayLapHD, thanhTien, maKH, maNhanVien);
-	            boolean insertedCT = taoDonHangDao.insertChiTietHoaDon(maHD, maSP, soLuong, donGia);
-	            
-
-	            if (insertedHD && insertedCT && insertedKh) {
-	                JOptionPane.showMessageDialog(null, "Lưu hóa đơn thành công!");
-	            } else {
-	                JOptionPane.showMessageDialog(null, "Lưu hóa đơn thất bại!");
+	        // Thử chèn thông tin khách hàng
+	        boolean insertedKh = false;
+	        try {
+	            insertedKh = taoDonHangDao.insertKhachHang(maKH, txtTenKH.getText(), txtDiaChi.getText(), txtSDT.getText(), txtEmail.getText());
+	            if (!insertedKh) {
+	                JOptionPane.showMessageDialog(null, "Không thể thêm khách hàng - Mã khách hàng có thể đã tồn tại!");
+	                return; // Dừng chương trình nếu không thêm được khách hàng
 	            }
-	        } catch (Exception ex) {
-	            ex.printStackTrace();
-	            JOptionPane.showMessageDialog(null, "Lỗi lưu hóa đơn!");
+	        } catch (Exception e) {
+	            JOptionPane.showMessageDialog(null, "Lỗi khi thêm khách hàng: " + e.getMessage());
+	            return; // Dừng chương trình khi gặp lỗi
 	        }
-		
+
+	        // Thử chèn hóa đơn
+	        boolean insertedHD = false;
+	        try {
+	            insertedHD = taoDonHangDao.insertHoaDon(maHD, ngayLapHD, thanhTien, maKH, maNhanVien);
+	            if (!insertedHD) {
+	                JOptionPane.showMessageDialog(null, "Không thể thêm hóa đơn - Mã hóa đơn có thể đã tồn tại!");
+	                return; // Dừng chương trình nếu không thêm được hóa đơn
+	            }
+	        } catch (Exception e) {
+	            JOptionPane.showMessageDialog(null, "Lỗi khi thêm hóa đơn: " + e.getMessage());
+	            return; // Dừng chương trình khi gặp lỗi
+	        }
+
+	        // Thử chèn chi tiết hóa đơn
+	        boolean insertedCT = false;
+	        try {
+	            insertedCT = taoDonHangDao.insertChiTietHoaDon(maHD, maSP, soLuong, donGia);
+	            if (!insertedCT) {
+	                JOptionPane.showMessageDialog(null, "Không thể thêm chi tiết hóa đơn!");
+	                return; // Dừng chương trình nếu không thêm được chi tiết hóa đơn
+	            }
+	        } catch (Exception e) {
+	            JOptionPane.showMessageDialog(null, "Lỗi khi thêm chi tiết hóa đơn: " + e.getMessage());
+	            return; // Dừng chương trình khi gặp lỗi
+	        }
+
+	        // Nếu tất cả đều thành công
+	        JOptionPane.showMessageDialog(null, "Lưu hóa đơn thành công!");
+	        xoaTrangHoaDon();
+			xoaRong();
+	    } catch (Exception ex) {
+	        ex.printStackTrace();
+	        JOptionPane.showMessageDialog(null, "Lỗi lưu hóa đơn: " + ex.getMessage());
+	    }
+	}
+
+
+
+	private void xoaTrangHoaDon() {
+		lblMaDon.setText("");
+		lblMaKH_HD.setText("");
+		lblMaSP_HD.setText("");
+		lblTenNV_HD.setText("");
+		lblNgayTao_HD.setText("");
+		lblDonGia_HD.setText("");
+		lblSoLuong_HD.setText("");
+		lblThanhTien_HD.setText("");
 	}
 
 
@@ -524,7 +566,7 @@ public class PnlTaoDonHang extends JPanel implements ActionListener, MouseListen
 	        return;
 	    }
 
-	    SanPham ketQua = taoDonHangDao.timSanPhamByMa(keyword);
+	    SanPham ketQua = taoDonHangDao.getSanPhamByMa(keyword);
 
 	    if (ketQua != null) {
 	        tableModel.setRowCount(0); // Chỉ xoá nếu tìm thấy để thay thế bằng kết quả mới
@@ -553,7 +595,8 @@ public class PnlTaoDonHang extends JPanel implements ActionListener, MouseListen
         spinner.setValue(new java.util.Date()); 
         cboxNhanVien.setSelectedIndex(0);
         cboxSanPham.setSelectedIndex(0);
-		
+		txtSoLuong.setText("");
+		txtEmail.setText("");
 	}
 	// kiểm tra nhập liệu
 	public boolean validData() {
@@ -563,6 +606,7 @@ public class PnlTaoDonHang extends JPanel implements ActionListener, MouseListen
 	    String diaChi = txtDiaChi.getText().trim();
 	    String maDonHang = txtMaDH.getText().trim();
 	    String soLuong = txtSoLuong.getText().trim();
+	    String email = txtEmail.getText().trim();
 
 	    if (maKhachHang.isEmpty() || tenKhachHang.isEmpty() || soDienThoai.isEmpty() || diaChi.isEmpty() || maDonHang.isEmpty() || soLuong.isEmpty()) {
 	        JOptionPane.showMessageDialog(null, "Không được để trống ô nhập liệu.");
@@ -586,16 +630,26 @@ public class PnlTaoDonHang extends JPanel implements ActionListener, MouseListen
 	        txtSDT.requestFocus();
 	        return false;
 	    }
-
+	    if (!email.matches("[\\w]+@gmail\\.com")) {
+	        JOptionPane.showMessageDialog(null, "Email phải theo định dạng @gmai.com");
+	        txtEmail.requestFocus();
+	        return false;
+	    }
 	    if (!maDonHang.matches("^HD\\d{3}$")) {
 	        JOptionPane.showMessageDialog(null, "Mã HD phải có dạng HD###.");
 	        txtMaDH.requestFocus();
 	        return false;
 	    }
 
+	    Object soLuongTon =  table.getValueAt(0, 3);
 	    // Kiểm tra số lượng phải là số nguyên dương
-	    if (!soLuong.matches("\\d+") || Integer.parseInt(soLuong) <= 0) {
-	        JOptionPane.showMessageDialog(null, "Số lượng phải là số nguyên dương lớn hơn 0.");
+	    if (!soLuong.matches("\\d+") || Integer.parseInt(soLuong) <= 0 ) {
+	        JOptionPane.showMessageDialog(null, "Số lượng phải là số nguyên dương lớn hơn 0");
+	        txtSoLuong.requestFocus();
+	        return false;
+	    }
+	    if (Integer.parseInt(soLuong) > Integer.parseInt(soLuongTon.toString())) {
+	        JOptionPane.showMessageDialog(null, "Số lượng phải nhỏ hơn hoặc bằng số lượng tồn.");
 	        txtSoLuong.requestFocus();
 	        return false;
 	    }
@@ -603,11 +657,8 @@ public class PnlTaoDonHang extends JPanel implements ActionListener, MouseListen
 	    return true;
 	}
 
-	
 	private void taoDH() {
 	    if (validData()) {
-
-
 	        // Lấy dữ liệu từ bảng
 	        String maDH = txtMaDH.getText();
 	        String tenNV = (String) cboxNhanVien.getSelectedItem();  

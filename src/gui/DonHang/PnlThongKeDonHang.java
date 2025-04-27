@@ -32,13 +32,13 @@ public class PnlThongKeDonHang extends JPanel implements ActionListener {
     private JButton btnRefresh;
 
     public PnlThongKeDonHang() {
-        // Initialize DAO
+
         thongKeDao = new ThongKeDao();
 
-        // Set up panel
+
         setLayout(new BorderLayout());
 
-        // North panel with title and filter options
+
         JPanel pnlNorth = new JPanel();
         pnlNorth.setLayout(new BoxLayout(pnlNorth, BoxLayout.Y_AXIS));
 
@@ -48,7 +48,7 @@ public class PnlThongKeDonHang extends JPanel implements ActionListener {
         pnlNorth.add(lblTitle);
         pnlNorth.add(Box.createVerticalStrut(15));
 
-        // Filter options
+
         JPanel pnlFilter = new JPanel();
         pnlFilter.setBorder(BorderFactory.createTitledBorder("Tùy chọn thống kê"));
         pnlFilter.add(SwingHelper.createProjectJLabel("Thời gian:"));
@@ -63,11 +63,11 @@ public class PnlThongKeDonHang extends JPanel implements ActionListener {
         pnlNorth.add(pnlFilter);
         add(pnlNorth, BorderLayout.NORTH);
 
-        // Chart container for center area
+
         pnlChartContainer = new JPanel(new GridLayout(1, 2, 10, 10));
         pnlChartContainer.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 
-        // Init chart panels
+
         pnlProducts = new JPanel(new BorderLayout());
         pnlProducts.setBorder(BorderFactory.createTitledBorder("Doanh Thu Theo Sản Phẩm"));
 
@@ -79,7 +79,7 @@ public class PnlThongKeDonHang extends JPanel implements ActionListener {
 
         add(pnlChartContainer, BorderLayout.CENTER);
 
-        // Initialize charts
+
         loadCharts();
     }
 
@@ -89,11 +89,11 @@ public class PnlThongKeDonHang extends JPanel implements ActionListener {
     }
 
     private void loadProductRevenueChart() {
-        // Create dataset for product revenue
+
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
         try {
-            // Get product revenue data from DAO
+
             List<ThongKeSanPham> productRevenueList = thongKeDao.getProductRevenue(getSelectedTimeFilter());
 
             // Add data to dataset
@@ -101,7 +101,7 @@ public class PnlThongKeDonHang extends JPanel implements ActionListener {
                 dataset.addValue(item.getDoanhThu(), "Doanh Thu", item.getTenSanPham());
             }
 
-            // Create chart
+
             JFreeChart chart = ChartFactory.createBarChart(
                     "Top 10 Sản Phẩm Theo Doanh Thu",
                     "Sản Phẩm",
@@ -113,16 +113,16 @@ public class PnlThongKeDonHang extends JPanel implements ActionListener {
                     false
             );
 
-            // Customize the chart
+
             CategoryPlot plot = chart.getCategoryPlot();
             BarRenderer renderer = (BarRenderer) plot.getRenderer();
             renderer.setSeriesPaint(0, new Color(79, 129, 189));
 
-            // Create panel
+
             ChartPanel chartPanel = new ChartPanel(chart);
             chartPanel.setPreferredSize(new Dimension(400, 300));
 
-            // Update UI
+
             pnlProducts.removeAll();
             pnlProducts.add(chartPanel, BorderLayout.CENTER);
             pnlProducts.revalidate();
@@ -135,11 +135,11 @@ public class PnlThongKeDonHang extends JPanel implements ActionListener {
     }
 
     private void loadEmployeeRevenueChart() {
-        // Create dataset for employee revenue
+
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
         try {
-            // Get employee revenue data from DAO
+
             List<ThongKeNhanVien> employeeRevenueList = thongKeDao.getEmployeeRevenue(getSelectedTimeFilter());
 
             // Add data to dataset
@@ -147,7 +147,7 @@ public class PnlThongKeDonHang extends JPanel implements ActionListener {
                 dataset.addValue(item.getDoanhThu(), "Doanh Thu", item.getTenNhanVien());
             }
 
-            // Create chart
+
             JFreeChart chart = ChartFactory.createBarChart(
                     "Doanh Thu Theo Nhân Viên",
                     "Nhân Viên",
@@ -159,16 +159,16 @@ public class PnlThongKeDonHang extends JPanel implements ActionListener {
                     false
             );
 
-            // Customize the chart
+
             CategoryPlot plot = chart.getCategoryPlot();
             BarRenderer renderer = (BarRenderer) plot.getRenderer();
             renderer.setSeriesPaint(0, new Color(192, 80, 77));
 
-            // Create panel
+
             ChartPanel chartPanel = new ChartPanel(chart);
             chartPanel.setPreferredSize(new Dimension(400, 300));
 
-            // Update UI
+  
             pnlEmployees.removeAll();
             pnlEmployees.add(chartPanel, BorderLayout.CENTER);
             pnlEmployees.revalidate();
