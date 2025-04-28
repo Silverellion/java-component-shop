@@ -309,7 +309,7 @@ public class PnlNhapHang extends JPanel implements ActionListener, MouseListener
 	            xoaTrangActions();
 	            hienTable();
 	        } else {
-	            JOptionPane.showMessageDialog(this, "Thêm thất bại!");
+	            JOptionPane.showMessageDialog(this, "Thêm thất bại, mã nhân viên trùng!");
 	        }
 	    } catch (Exception ex) {
 	        JOptionPane.showMessageDialog(this, "Lỗi dữ liệu!");
