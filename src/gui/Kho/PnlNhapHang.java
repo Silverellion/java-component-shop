@@ -106,7 +106,7 @@ public class PnlNhapHang extends JPanel implements ActionListener, MouseListener
 		JPanel pTim=new JPanel();
 		pTim.add(lblTim=SwingHelper.createProjectJLabel("Nhập mã sản phẩm cần tìm: "));
 		pTim.add(txtTim=new JTextField(20));
-		pTim.add(btnTim=SwingHelper.createProjectJButton("Tìm"));
+		pTim.add(btnTim=SwingHelper.createProjectJButton("Tìm", "search.png"));
 		JPanel pButton=new JPanel();
 		pButton.add(btnThem = SwingHelper.createProjectJButton("Thêm", "icons8-add-50.png"));
 		pButton.add(btnSua=SwingHelper.createProjectJButton("Cập nhật", "icons8-up-50.png"));

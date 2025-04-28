@@ -288,7 +288,7 @@ public class PnlTaoDonHang extends JPanel implements ActionListener, MouseListen
 
         // Nút lưu hóa đơn
         pnHD.add(Box.createVerticalStrut(20));
-        btnXuatHD = SwingHelper.createProjectJButton("Xuất hóa đơn");
+        btnXuatHD = SwingHelper.createProjectJButton("Xuất hóa đơn", "export.png");
         btnXuatHD.setAlignmentX(Component.CENTER_ALIGNMENT);
         pnHD.add(btnXuatHD);
 
@@ -299,18 +299,16 @@ public class PnlTaoDonHang extends JPanel implements ActionListener, MouseListen
         JPanel pnButtons = new JPanel();
 
         pnButtons.setBorder(BorderFactory.createTitledBorder("Chức năng"));
-        btnTaoDon = SwingHelper.createProjectJButton("Tạo hóa đơn");
-        btnLamMoi = SwingHelper.createProjectJButton("Làm mới");
-        JButton btnThoat = SwingHelper.createProjectJButton("Thoát");
+        btnTaoDon = SwingHelper.createProjectJButton("Tạo hóa đơn", "icons8-add-50.png");
+        btnLamMoi = SwingHelper.createProjectJButton("Làm mới", "icons8-reload-50.png");
         pnButtons.add(btnTaoDon);
         pnButtons.add(btnLamMoi);
-        pnButtons.add(btnThoat);
 
         // ====== Panel chứa thanh tìm kiếm ======
         JPanel pnSearch = new JPanel();
         pnSearch.setBorder(BorderFactory.createTitledBorder("Tìm kiếm"));
         txtTimKiem = new JTextField(15);
-        btnTim = SwingHelper.createProjectJButton("Tìm");
+        btnTim = SwingHelper.createProjectJButton("Tìm", "search.png");
         pnSearch.add(SwingHelper.createProjectJLabel("Tìm sản phẩm:"));
         pnSearch.add(txtTimKiem);
         pnSearch.add(btnTim);
@@ -335,12 +333,6 @@ public class PnlTaoDonHang extends JPanel implements ActionListener, MouseListen
         cboxSanPham.addActionListener(this);  
         btnXuatHD.addActionListener(this);
 
-
-        // Nút Thoát: đóng cửa sổ nếu panel nằm trong JFrame
-        btnThoat.addActionListener(e -> {
-            SwingUtilities.getWindowAncestor(this).dispose();
-        });
-              
         taoDonHangDao = new TaoDonHang_Dao();  // đảm bảo đã khởi tạo DAO
         loadSanPhamToTable();
         loadNhanVienToComboBox();
